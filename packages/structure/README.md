@@ -1,32 +1,53 @@
 # Structure package
 
-化学结构与结构派生数据包，也是仓库内 **Structure canonical owner**。
+`packages/structure/` is the **canonical owner** of chemical-structure identity and normalized structure records for `chem-knowledge-data`.
 
-其他并行工作流可以读取并引用本包已经 `published` 的 `structure_id`，但不直接修改、复制或在自己的包内重建 canonical structure 记录。完整边界见 [`CONTRACT.md`](./CONTRACT.md)。
+Other parallel workstreams may read published structures and store `structure_id` references. They must not modify this directory or create competing canonical structure records.
 
-## Ownership
+## Current published seed
 
-本包独立负责：
+Release `structure-seed-1.0.0` contains 33 verified records:
 
-- canonical / isomeric SMILES
-- Standard InChI / InChIKey
-- structure scope 与 formal charge
-- 结构规范化与校验
-- 2D / 3D 可再生成的派生数据与元数据
-- 基础结构描述符
-- 外部结构 ID 与 provenance
-- `Substance ↔ Structure` 关联候选与最终结构侧接受
+- 14 molecules;
+- 9 ions;
+- 10 formula units.
 
-本包不重新定义无机/有机教学分类，也不拥有 Reaction / Experiment / Phenomenon / Concept 数据。
+The seed intentionally includes both inorganic and organic/common molecular structures because Structure is cross-cutting. Curriculum classification remains owned by Inorganic/Organic.
 
-## Canonical files
+## What Structure owns
 
-- [`CONTRACT.md`](./CONTRACT.md)：跨工作流边界、ID 与 ownership
-- [`schema/structure-record.schema.json`](./schema/structure-record.schema.json)：canonical record schema
-- [`sources/registry.json`](./sources/registry.json)：结构来源与工具角色
-- [`data/README.md`](./data/README.md)：数据布局和 publication 状态
-- [`validation/README.md`](./validation/README.md)：结构校验标准
+- source-neutral deterministic `structure_id`;
+- structure scope (`molecule`, `ion`, `formula_unit`, `coordination_entity`, `crystal`, `other`);
+- canonical/isomeric SMILES where appropriate;
+- Standard InChI/InChIKey;
+- Hill/no-charge machine formula and formal charge;
+- deterministic descriptors and derivation metadata;
+- source identifiers/provenance;
+- accepted Substance ↔ Structure links.
 
-## Parallel rule
+## Read first
 
-`WORKSTREAMS.md` 标记本包为 `ACTIVE / LOCKED` 时，只有当前 Structure workstream 写入 `packages/structure/**`。无机与有机工作流如需结构，只保存/提出 `structure_id` 引用或待整合请求，不直接修改本包。
+- `CONTRACT.md` — ownership, identity and representation rules.
+- `INTEGRATION.md` — exact rules for Inorganic/Organic callers.
+- `schema/structure-record.schema.json` — canonical record contract.
+- `schema/structure-request.schema.json` — request shape stored in the caller's package.
+- `schema/structure-link.schema.json` — accepted link contract.
+- `sources/SOURCE_POLICY.md` — evidence roles and conflict handling.
+- `data/manifest.json` — current release counts/hashes.
+- `validation/README.md` — publication checks.
+
+## Rebuild and verify
+
+```bash
+python packages/structure/pipelines/build_seed.py
+python packages/structure/validation/validate_dataset.py --strict
+python -m unittest discover -s packages/structure/tests -v
+```
+
+`build_seed.py` rebuilds checked-in canonical JSONL from pinned minimal PubChem evidence and RDKit normalization. It does not require network access.
+
+## Boundary
+
+Structure does not own inorganic/organic taxonomy, names, teaching copy, Reaction, Experiment, Phenomenon, Concept, Question or ExamTag data.
+
+A formula is not automatically a molecule. In particular, common salts are represented as `formula_unit` records instead of being mislabeled as molecular structures.
