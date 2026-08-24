@@ -41,7 +41,7 @@ records:
     formula: C6H5NO2
     category: other_organic
     aliases: []
-    functional_group_refs: []
+    functional_group_refs: [org-fg:nitro]
     structure_ref: null
     teaching_priority: common
     verification_status: seed
