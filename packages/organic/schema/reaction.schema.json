@@ -54,7 +54,7 @@
           "formula_literal": {"type": ["string", "null"]},
           "phase": {"type": ["string", "null"], "enum": ["s", "l", "g", "aq", null]}
         },
-        "oneOf": [
+        "anyOf": [
           {"required": ["substance_ref"]},
           {"required": ["external_species_key"]},
           {"required": ["formula_literal"]}
