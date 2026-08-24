@@ -1,0 +1,60 @@
+concepts:
+  - id: org-concept:amino-acid-general-structure
+    name_zh: 氨基酸的组成与结构特点
+    category: biomolecule
+    summary_zh: 高中范围内重点认识氨基酸分子中氨基、羧基等结构特征，并以甘氨酸、丙氨酸等代表物建立结构与性质联系。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: [org-substance:glycine, org-substance:alanine]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:amino-acid-properties
+    name_zh: 氨基酸的主要化学性质
+    category: biomolecule
+    summary_zh: 从氨基和羧基等结构特征理解氨基酸的主要化学性质，不把复杂酸碱平衡或生化过程过度扩展到高中基础数据层。
+    prerequisite_refs: [org-concept:amino-acid-general-structure, org-concept:functional-group]
+    related_substance_refs: [org-substance:glycine, org-substance:alanine]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:peptide-bond-and-polypeptide
+    name_zh: 肽键与多肽形成
+    category: biomolecule
+    summary_zh: 氨基酸分子可通过缩合形成肽键并逐步构成多肽，是理解蛋白质组成与人工合成多肽意义的基础关系。
+    prerequisite_refs: [org-concept:amino-acid-general-structure, org-concept:condensation-polymerization]
+    related_substance_refs: [org-substance:glycine, org-substance:alanine]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:protein-composition-structure-properties
+    name_zh: 蛋白质的组成、结构与性质
+    category: biomolecule
+    summary_zh: 将氨基酸、多肽和蛋白质按层级联系起来，认识蛋白质结构复杂性以及结构变化与性质变化之间的关系。
+    prerequisite_refs: [org-concept:peptide-bond-and-polypeptide]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+
+  - id: org-concept:lipid-hydrolysis-saponification
+    name_zh: 油脂的水解与皂化
+    category: biomolecule
+    summary_zh: 高中范围内从酯类结构联系油脂在不同条件下的水解，并认识碱性水解与皂化的基本关系。
+    prerequisite_refs: [org-concept:ester-hydrolysis]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-concept:nucleic-acid-overview
+    name_zh: 核酸概览
+    category: biomolecule
+    summary_zh: 作为高中有机与生命化学衔接节点记录核酸的组成与结构复杂性，不在 seed 阶段把核酸伪装成单一固定分子式的物质实体。
+    prerequisite_refs: []
+    related_substance_refs: []
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
