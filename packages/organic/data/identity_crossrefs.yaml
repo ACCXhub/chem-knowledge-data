@@ -82,3 +82,24 @@ crossrefs:
     verification_status: source_crosschecked
     provenance_refs: [pubchem, chebi]
     notes: PubChem confirms methanol identity and molecular formula CH4O and exposes ChEBI CHEBI:17790.
+
+  - substance_ref: org-substance:glycerol
+    pubchem_cid: 753
+    chebi_id: CHEBI:17754
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem confirms glycerol identity, formula C3H8O3 and propane-1,2,3-triol naming; its record exposes ChEBI CHEBI:17754.
+
+  - substance_ref: org-substance:glucose
+    pubchem_cid: 5793
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms D-glucose as CID 5793 with molecular formula C6H12O6; ChEBI mapping remains deferred because multiple glucose-related ChEBI identifiers are surfaced.
+
+  - substance_ref: org-substance:sucrose
+    pubchem_cid: 5988
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms sucrose identity and molecular formula C12H22O11.
