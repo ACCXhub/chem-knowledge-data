@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/reaction.schema.json",
+  "title": "Consolidated reaction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "reaction_id",
+    "name_zh",
+    "participants",
+    "equation_status",
+    "source_refs",
+    "provenance_refs",
+    "review_status"
+  ],
+  "properties": {
+    "reaction_id": {"type": "string", "format": "uuid"},
+    "name_zh": {"type": "string", "minLength": 1},
+    "reaction_classes": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true,
+      "default": []
+    },
+    "participants": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "#/$defs/participant"}
+    },
+    "conditions": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true,
+      "default": []
+    },
+    "equation_display": {"type": ["string", "null"]},
+    "equation_status": {
+      "enum": ["balanced", "transformation_only"]
+    },
+    "phenomenon_ids": {
+      "type": "array",
+      "items": {"type": "string", "format": "uuid"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "concept_ids": {
+      "type": "array",
+      "items": {"type": "string", "format": "uuid"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "experiment_ids": {
+      "type": "array",
+      "items": {"type": "string", "format": "uuid"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/sourceRef"},
+      "uniqueItems": true
+    },
+    "provenance_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/provenanceRef"}
+    },
+    "review_status": {"enum": ["reviewed", "published"]}
+  },
+  "$defs": {
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "species_id", "coefficient"],
+      "properties": {
+        "role": {"enum": ["reactant", "product", "catalyst"]},
+        "species_id": {"type": "string", "format": "uuid"},
+        "coefficient": {"$ref": "#/$defs/coefficient"},
+        "phase": {"type": ["string", "null"], "enum": ["s", "l", "g", "aq", null]}
+      }
+    },
+    "coefficient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"enum": ["exact_integer", "symbolic"]},
+        "value": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "exact_integer"}}, "required": ["kind"]},
+          "then": {"properties": {"value": {"pattern": "^[1-9][0-9]*$"}}}
+        }
+      ]
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "local_id"],
+      "properties": {
+        "package": {"enum": ["inorganic", "organic"]},
+        "local_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "provenanceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "ref", "granularity"],
+      "properties": {
+        "package": {"enum": ["inorganic", "organic"]},
+        "ref": {"type": "string", "minLength": 1},
+        "granularity": {"enum": ["field", "record"]}
+      }
+    }
+  }
+}

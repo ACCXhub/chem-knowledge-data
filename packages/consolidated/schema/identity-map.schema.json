@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/identity-map.schema.json",
+  "title": "Cross-package canonical identity mapping",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["canonical_id", "entity_kind", "source_refs", "resolution_status", "evidence"],
+  "properties": {
+    "canonical_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "entity_kind": {
+      "enum": ["species", "reaction", "concept", "phenomenon", "experiment", "functional_group"]
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/sourceRef"}
+    },
+    "resolution_status": {
+      "enum": ["accepted", "pending", "rejected"]
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/evidence"}
+    },
+    "review_note": {
+      "type": ["string", "null"]
+    }
+  },
+  "$defs": {
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "local_id"],
+      "properties": {
+        "package": {"enum": ["inorganic", "organic", "structure"]},
+        "local_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {
+          "enum": ["external_id", "structure_id", "curated_review", "source_assertion"]
+        },
+        "namespace": {"type": ["string", "null"]},
+        "value": {"type": "string", "minLength": 1},
+        "note": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

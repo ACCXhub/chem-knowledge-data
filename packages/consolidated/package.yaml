@@ -1,0 +1,52 @@
+package: consolidated
+version: 0.1.0-dev
+status: contract_active
+scope: senior_high_school_cn
+consumer: chem-wiki
+owner: chatgpt-web-consolidation
+
+inputs:
+  organic:
+    path: packages/organic
+    required_status: complete
+    minimum_version: 0.1.0
+    mode: read_only
+  structure:
+    path: packages/structure
+    required_status: published
+    mode: read_only_published_valid
+  inorganic:
+    path: packages/inorganic
+    required_status: READY_FOR_CONSOLIDATION
+    minimum_version: 0.1.0
+    mode: read_only_when_ready
+
+owns:
+  - unified_identity_map
+  - consolidated_species
+  - consolidated_reactions
+  - cross_package_reference_resolution
+  - merged_provenance_projection
+  - high_school_teaching_projection
+  - consumer_release_manifest
+
+preserves:
+  - source_package_local_ids
+  - structure_id_from_structure_owner
+  - reaction_as_first_class_entity
+  - source_provenance
+
+release_gate:
+  - all_required_inputs_ready
+  - identity_map_reviewed
+  - formula_only_dedup_absent
+  - unresolved_cross_package_refs_reported
+  - species_schema_valid
+  - reaction_schema_valid
+  - published_structure_refs_valid
+  - provenance_preserved
+  - teaching_projection_valid
+  - duplicate_canonical_ids_absent
+  - consumer_manifest_reproducible
+
+next_phase: generate_consumer_release_after_inorganic_ready

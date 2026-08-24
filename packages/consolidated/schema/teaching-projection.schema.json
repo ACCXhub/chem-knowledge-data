@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/teaching-projection.schema.json",
+  "title": "Senior-high-school teaching projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["target", "curriculum_scope", "priority", "families", "tags", "palette_groups", "search_terms"],
+  "properties": {
+    "target": {"$ref": "#/$defs/target"},
+    "curriculum_scope": {"const": "senior_high_school_cn"},
+    "priority": {"enum": ["core", "common", "extended"]},
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "simple_substance",
+          "cation",
+          "anion",
+          "oxide",
+          "acid",
+          "base",
+          "salt",
+          "organic_substance",
+          "other"
+        ]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "palette_groups": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "common",
+          "elements",
+          "cations",
+          "anions",
+          "simple_substances",
+          "acids",
+          "bases",
+          "salts",
+          "oxides",
+          "organic"
+        ]
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "default_rank": {"type": ["integer", "null"], "minimum": 0},
+    "search_terms": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "target": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "id"],
+          "properties": {
+            "kind": {"const": "species"},
+            "id": {"type": "string", "format": "uuid"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "id"],
+          "properties": {
+            "kind": {"const": "element"},
+            "id": {"type": "string", "pattern": "^element:(?:[1-9]|[1-9][0-9]|1[01][0-8])$"}
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/species.schema.json",
+  "title": "Consolidated chemical species",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "species_id",
+    "entity_type",
+    "name_zh",
+    "formula",
+    "charge",
+    "composition",
+    "source_refs",
+    "field_provenance",
+    "review_status"
+  ],
+  "properties": {
+    "species_id": {"type": "string", "format": "uuid"},
+    "entity_type": {"enum": ["ion", "substance"]},
+    "name_zh": {"type": "string", "minLength": 1},
+    "name_en": {"type": ["string", "null"]},
+    "formula": {"type": "string", "minLength": 1},
+    "charge": {"type": "integer"},
+    "composition": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
+    "aliases": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true,
+      "default": []
+    },
+    "structure_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^str_[0-9a-f-]{36}$"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "external_ids": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/externalId"},
+      "default": []
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/sourceRef"},
+      "uniqueItems": true
+    },
+    "field_provenance": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {"$ref": "#/$defs/provenanceRef"}
+      }
+    },
+    "review_status": {"enum": ["reviewed", "published"]}
+  },
+  "$defs": {
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "local_id"],
+      "properties": {
+        "package": {"enum": ["inorganic", "organic"]},
+        "local_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "externalId": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["namespace", "value"],
+      "properties": {
+        "namespace": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "provenanceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "ref", "granularity"],
+      "properties": {
+        "package": {"enum": ["inorganic", "organic", "structure"]},
+        "ref": {"type": "string", "minLength": 1},
+        "granularity": {"enum": ["field", "record", "link"]}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"entity_type": {"const": "ion"}}, "required": ["entity_type"]},
+      "then": {"properties": {"charge": {"not": {"const": 0}}}}
+    },
+    {
+      "if": {"properties": {"entity_type": {"const": "substance"}}, "required": ["entity_type"]},
+      "then": {"properties": {"charge": {"const": 0}}}
+    }
+  ]
+}
