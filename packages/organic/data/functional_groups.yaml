@@ -71,6 +71,14 @@ functional_groups:
     verification_status: seed
     provenance_refs: [manual-seed-2026-08]
 
+  - id: org-fg:nitro
+    name_zh: 硝基
+    notation: -NO2
+    teaching_class: 硝基化合物
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
 structural_features:
   - id: org-feature:carbon-carbon-double-bond
     name_zh: 碳碳双键
