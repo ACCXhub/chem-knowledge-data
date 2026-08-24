@@ -1,0 +1,80 @@
+phenomena:
+  - id: org-phenomenon:bromine-solution-decolorization-by-alkene
+    name_zh: 烯烃使溴的颜色褪去
+    observation_zh: 溴水或适当溴溶液的橙棕色明显变浅直至褪去。
+    interpretation_zh: 可作为碳碳双键发生加成反应的典型证据之一，但该现象并非对所有体系都具有唯一鉴别性。
+    diagnostic_strength: not_unique
+    reaction_refs: [org-reaction:ethene-bromine-addition]
+    experiment_refs: [org-experiment:ethene-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:ethyl-acetate-fruity-odor
+    name_zh: 乙酸乙酯的典型气味
+    observation_zh: 反应产物中可观察到乙酸乙酯具有典型的果香样气味特征。
+    interpretation_zh: 只能作为教学实验中的辅助现象，不能单独作为纯度或身份的严格判据。
+    diagnostic_strength: supporting
+    reaction_refs: [org-reaction:acetic-acid-ethanol-esterification]
+    experiment_refs: [org-experiment:ethyl-acetate-preparation]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:permanganate-decolorization-by-toluene-sidechain
+    name_zh: 甲苯使酸性高锰酸钾褪色
+    observation_zh: 酸性高锰酸钾溶液的紫色在反应过程中逐渐褪去。
+    interpretation_zh: 反映苯环侧链可被强氧化剂氧化；该现象不能简单等同于碳碳双键检验。
+    diagnostic_strength: not_unique
+    reaction_refs: [org-reaction:toluene-sidechain-oxidation]
+    experiment_refs: [org-experiment:benzene-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-phenomenon:phenol-bromine-white-precipitate
+    name_zh: 苯酚与溴水产生白色沉淀
+    observation_zh: 溴水褪色并出现白色沉淀。
+    interpretation_zh: 高中范围内用于展示苯酚与溴水反应生成2,4,6-三溴苯酚的典型现象。
+    diagnostic_strength: typical
+    reaction_refs: [org-reaction:phenol-bromination]
+    experiment_refs: [org-experiment:phenol-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:fermentation-gas-evolution
+    name_zh: 葡萄糖酒精发酵放出气体
+    observation_zh: 发酵过程中持续产生气泡并有二氧化碳生成。
+    interpretation_zh: 与葡萄糖在酶作用下转化为乙醇和二氧化碳相联系。
+    diagnostic_strength: supporting
+    reaction_refs: [org-reaction:glucose-fermentation]
+    experiment_refs: [org-experiment:carbohydrate-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-phenomenon:aldehyde-silver-mirror
+    name_zh: 醛基的银镜现象
+    observation_zh: 在规范实验条件下，洁净容器内壁可形成银白色金属银沉积或银镜。
+    interpretation_zh: 是高中醛基检验的典型现象之一，但应结合试剂状态、加热条件和样品组成判断。
+    diagnostic_strength: typical
+    reaction_refs: []
+    experiment_refs: [org-experiment:aldehyde-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:aldehyde-copper-oxide-precipitate
+    name_zh: 醛基与新制氢氧化铜反应现象
+    observation_zh: 加热条件下可由蓝色体系形成砖红色氧化亚铜沉淀。
+    interpretation_zh: 是高中范围内醛基还原性相关的典型实验现象之一。
+    diagnostic_strength: typical
+    reaction_refs: []
+    experiment_refs: [org-experiment:aldehyde-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:starch-iodine-blue
+    name_zh: 淀粉遇碘显蓝色
+    observation_zh: 淀粉体系加入适量碘试剂后出现特征性蓝色或蓝黑色。
+    interpretation_zh: 是高中糖类实验中识别淀粉及跟踪淀粉水解程度的常用现象。
+    diagnostic_strength: typical
+    reaction_refs: []
+    experiment_refs: [org-experiment:carbohydrate-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
