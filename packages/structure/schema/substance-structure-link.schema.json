@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/structure/schema/substance-structure-link.schema.json",
+  "title": "SubstanceStructureLink",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "link_id",
+    "substance_ref",
+    "structure_id",
+    "relation",
+    "review_status",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "link_id": {
+      "type": "string",
+      "pattern": "^structure-link:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "substance_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable Substance ID owned by inorganic/organic packages; this package does not redefine it."
+    },
+    "structure_id": {
+      "type": "string",
+      "pattern": "^structure:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "relation": {
+      "enum": [
+        "primary_structure",
+        "representative_structure",
+        "component_structure",
+        "solid_state_structure",
+        "aqueous_species_structure",
+        "candidate"
+      ]
+    },
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "review_status": {"enum": ["provisional", "validated", "published", "rejected"]},
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "source_locator", "retrieved_at"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "source_locator": {"type": "string", "minLength": 1},
+          "retrieved_at": {"type": "string", "format": "date-time"},
+          "note": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

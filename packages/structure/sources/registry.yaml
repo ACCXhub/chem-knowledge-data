@@ -1,0 +1,60 @@
+sources:
+  inchi_trust:
+    role: structure_identifier_standard
+    authority: IUPAC / InChI Trust
+    url: https://www.inchi-trust.org/about-the-inchi-standard/
+    preferred_for:
+      - standard_inchi
+      - standard_inchikey
+    notes:
+      - Standard InChI/InChIKey are interoperability identifiers for chemical structures.
+      - Store the generating software version with every locally generated identifier.
+
+  chebi:
+    role: curated_structure_reference
+    authority: EMBL-EBI ChEBI
+    url: https://www.ebi.ac.uk/chebi/
+    license: CC BY 4.0
+    preferred_for:
+      - curated_structure
+      - inchi
+      - smiles
+      - formula
+      - charge
+      - stable_external_id
+    notes:
+      - ChEBI explicitly traces data items to their original sources.
+      - Use curated entries where high-school-relevant entities are covered.
+
+  pubchem:
+    role: aggregated_structure_reference
+    authority: NCBI PubChem
+    url: https://pubchem.ncbi.nlm.nih.gov/
+    preferred_for:
+      - structure_crosscheck
+      - external_cid
+      - inchi
+      - inchikey
+      - smiles
+      - formula
+      - charge
+    notes:
+      - Treat PubChem as an aggregated database source, not as the owner of internal structure identity.
+      - Keep source record/CID and retrieval metadata for every imported assertion.
+
+generators:
+  rdkit:
+    role: derived_structure_generator
+    url: https://www.rdkit.org/
+    outputs:
+      - canonical_smiles
+      - isomeric_smiles
+      - 2d_depiction
+      - computed_3d_conformer
+      - basic_descriptors
+    requirements:
+      - record_generator_version
+      - record_algorithm_parameters_for_3d
+      - separate_computed_from_experimental_structure
+    notes:
+      - Toolkit-canonical SMILES is reproducible only relative to the recorded generator/version and options.
