@@ -39,12 +39,52 @@ concepts:
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
 
+  - id: org-concept:protein-salting-out-and-denaturation
+    name_zh: 蛋白质的盐析与变性
+    category: biomolecule
+    summary_zh: 区分盐析等可逆分离现象与蛋白质变性导致的结构和性质改变，避免将所有蛋白质沉淀现象视为同一过程。
+    prerequisite_refs: [org-concept:protein-composition-structure-properties]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-concept:protein-color-reaction
+    name_zh: 蛋白质的典型颜色反应
+    category: biomolecule
+    summary_zh: 在高中实验语境下用适当的颜色反应作为蛋白质性质观察之一，现象具有条件依赖性，不作为所有蛋白质的唯一鉴别判据。
+    prerequisite_refs: [org-concept:protein-composition-structure-properties]
+    related_substance_refs: []
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-concept:lipid-structure-fatty-acids
+    name_zh: 油脂、甘油与高级脂肪酸的关系
+    category: biomolecule
+    summary_zh: 以代表性甘油三酯联系甘油与高级脂肪酸，区分油脂这一类别与具体的三油酸甘油酯、三硬脂酸甘油酯等化学实体。
+    prerequisite_refs: [org-concept:esterification]
+    related_substance_refs: [org-substance:glycerol, org-substance:oleic-acid, org-substance:stearic-acid, org-substance:triolein, org-substance:tristearin]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+
+  - id: org-concept:fatty-acid-unsaturation
+    name_zh: 高级脂肪酸的饱和与不饱和
+    category: biomolecule
+    summary_zh: 通过硬脂酸与油酸等代表物联系碳链中不饱和结构与物质类别，不以常温状态等单一宏观性质作为严格结构判据。
+    prerequisite_refs: [org-concept:lipid-structure-fatty-acids, org-concept:unsaturation-test]
+    related_substance_refs: [org-substance:oleic-acid, org-substance:stearic-acid]
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
   - id: org-concept:lipid-hydrolysis-saponification
     name_zh: 油脂的水解与皂化
     category: biomolecule
-    summary_zh: 高中范围内从酯类结构联系油脂在不同条件下的水解，并认识碱性水解与皂化的基本关系。
-    prerequisite_refs: [org-concept:ester-hydrolysis]
-    related_substance_refs: []
+    summary_zh: 高中范围内从酯类结构联系油脂在不同条件下的水解，并认识碱性水解生成甘油和高级脂肪酸盐的皂化关系。
+    prerequisite_refs: [org-concept:ester-hydrolysis, org-concept:lipid-structure-fatty-acids]
+    related_substance_refs: [org-substance:triolein, org-substance:tristearin, org-substance:glycerol, org-substance:sodium-oleate, org-substance:sodium-stearate]
     teaching_priority: core
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
