@@ -1,0 +1,22 @@
+reactions:
+  - id: org-reaction:pet-polycondensation
+    name_zh: 对苯二甲酸与乙二醇缩聚生成PET
+    reaction_class: [condensation_polymerization]
+    participants:
+      - {role: reactant, coefficient: n, substance_ref: org-substance:terephthalic-acid}
+      - {role: reactant, coefficient: n, substance_ref: org-substance:ethylene-glycol}
+      - {role: product, coefficient: 1, substance_ref: org-substance:polyethylene-terephthalate}
+      - {role: product, coefficient: n, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: [缩聚条件]
+    equation: null
+    equation_status: transformation_only
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:condensation-polymerization, org-concept:monomer-repeat-unit]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: >-
+      这里固定单体与聚合物关系，不在 seed 阶段写死端基相关的精确失水计量；
+      正式发布前应按选定教材表示法和结构包中的重复单元共同核验。
