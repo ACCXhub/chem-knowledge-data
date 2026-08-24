@@ -1,0 +1,40 @@
+reactions:
+  - id: org-reaction:triolein-saponification
+    name_zh: 三油酸甘油酯的皂化
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:triolein}
+      - {role: reactant, coefficient: 3, external_species_key: inorganic:sodium-hydroxide, formula_literal: NaOH, phase: aq}
+      - {role: product, coefficient: 1, substance_ref: org-substance:glycerol}
+      - {role: product, coefficient: 3, substance_ref: org-substance:sodium-oleate}
+    conditions: [NaOH水溶液, 加热]
+    equation: C57H104O6 + 3 NaOH -> C3H8O3 + 3 C18H33NaO2
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:lipid-saponification-emulsifying-product]
+    experiment_refs: [org-experiment:lipid-properties]
+    concept_refs: [org-concept:lipid-hydrolysis-saponification]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 以代表性甘油三酯展示油脂碱性水解的计量关系；不将所有天然油脂等同为单一物质。
+
+  - id: org-reaction:tristearin-saponification
+    name_zh: 三硬脂酸甘油酯的皂化
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:tristearin}
+      - {role: reactant, coefficient: 3, external_species_key: inorganic:sodium-hydroxide, formula_literal: NaOH, phase: aq}
+      - {role: product, coefficient: 1, substance_ref: org-substance:glycerol}
+      - {role: product, coefficient: 3, substance_ref: org-substance:sodium-stearate}
+    conditions: [NaOH水溶液, 加热]
+    equation: C57H110O6 + 3 NaOH -> C3H8O3 + 3 C18H35NaO2
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:lipid-saponification-emulsifying-product]
+    experiment_refs: [org-experiment:lipid-properties]
+    concept_refs: [org-concept:lipid-hydrolysis-saponification]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 作为饱和高级脂肪酸甘油酯代表，与三油酸甘油酯形成教学对照。
