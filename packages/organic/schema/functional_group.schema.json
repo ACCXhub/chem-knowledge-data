@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/functional_group.schema.json",
+  "title": "Organic Functional Group Seed Record",
+  "type": "object",
+  "required": ["id", "name_zh", "notation", "teaching_class", "structure_pattern_owner", "verification_status", "provenance_refs"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^org-fg:[a-z0-9][a-z0-9-]*$"},
+    "name_zh": {"type": "string", "minLength": 1},
+    "notation": {"type": "string", "minLength": 1},
+    "teaching_class": {"type": "string", "minLength": 1},
+    "structure_pattern_owner": {"type": "string", "const": "packages/structure"},
+    "verification_status": {"type": "string", "enum": ["seed", "source_crosschecked", "reviewed"]},
+    "provenance_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+  },
+  "additionalProperties": false
+}
