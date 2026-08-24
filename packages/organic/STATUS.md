@@ -12,14 +12,15 @@ Build the first high-school organic chemistry data package independently, then c
 
 Current seed coverage:
 
-- 42 representative organic substances across the core and extended substance files;
+- 44 representative organic substances across core, extended and polymer seed files;
 - 9 functional-group records plus 2 structural-feature records;
 - 22 organic chemical-class / teaching taxonomy nodes;
-- 23 reaction records forming an initial hydrocarbon → derivative → biomolecule/polymer conversion network;
+- 24 reaction records forming an initial hydrocarbon → derivative → biomolecule/polymer conversion network;
 - 23 concept / teaching-relation records;
 - 8 experiment phenomena;
 - 13 experiment catalog records;
-- package-local JSON Schemas and a reference/provenance validator.
+- 12 source-crosschecked external identity links;
+- package-local JSON Schemas and a reference/provenance validator, including polymer files and identity crossrefs.
 
 ## Boundaries kept during parallel work
 
@@ -31,9 +32,9 @@ Current seed coverage:
 
 ## Next organic work
 
-1. cross-check representative substance identity fields against ChEBI/PubChem and attach external IDs;
-2. expand lipids, amino acids/proteins and condensation-polymerization coverage without collapsing classes into fake single compounds;
-3. complete remaining reaction/phenomenon links used by the curriculum coverage map;
+1. continue ChEBI/PubChem identity cross-checks for representative substances;
+2. expand lipids, amino acids/proteins and remaining biomolecule relations without collapsing classes into fake single compounds;
+3. complete remaining curriculum reaction/phenomenon links and representative condensation-polymerization relations;
 4. run the package validator after checkout and repair any schema/reference findings;
 5. promote records from `seed` only after named-source cross-checks.
 
