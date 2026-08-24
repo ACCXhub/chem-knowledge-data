@@ -1,0 +1,16 @@
+package: consolidated
+status: active
+owner: chatgpt-web-consolidation
+started_at: 2026-08-24T20:50:00+08:00
+paths:
+  - packages/consolidated/**
+  - coordination/claims/consolidation.yaml
+write_policy: owner_only
+inputs:
+  inorganic: read_only_until_ready_for_consolidation
+  organic: read_only_complete_v0_1
+  structure: read_only_published
+note: >-
+  Consolidation owns only the new consumer-ready package and its claim. Source
+  packages remain read-only inputs under their existing owners. Cross-package ID,
+  schema, provenance, teaching projection, and release mapping converge here.
