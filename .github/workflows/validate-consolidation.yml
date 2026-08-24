@@ -1,0 +1,39 @@
+name: Validate consolidation
+
+on:
+  push:
+    branches:
+      - consolidation
+    paths:
+      - "packages/consolidated/**"
+      - "packages/organic/**"
+      - "packages/structure/**"
+      - "packages/inorganic/**"
+      - ".github/workflows/validate-consolidation.yml"
+  pull_request:
+    paths:
+      - "packages/consolidated/**"
+      - "packages/organic/**"
+      - "packages/structure/**"
+      - "packages/inorganic/**"
+      - ".github/workflows/validate-consolidation.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check pyyaml jsonschema
+      - name: Generate consolidation preview
+        run: python packages/consolidated/pipelines/build_preview.py
+      - name: Validate consolidation preview
+        run: python packages/consolidated/validation/validate_package.py
+      - name: Upload generated preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: consolidation-preview
+          path: packages/consolidated/data/generated/
