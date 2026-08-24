@@ -1,0 +1,96 @@
+coverage:
+  package: organic
+  level: senior_high_school_cn
+  scope_status: active_seed
+  source_refs:
+    - moe-hs-chem-2020
+    - moe-lab-guidance-2025
+
+  knowledge_blocks:
+    - id: org-scope:composition-and-structure
+      name_zh: 有机化合物的组成与结构
+      required_topics:
+        - carbon_bonding_and_skeleton
+        - molecular_formula_and_structural_formula
+        - homologous_series
+        - isomerism
+        - simple_organic_nomenclature
+        - functional_groups
+        - structure_determination_intro
+      priority: core
+
+    - id: org-scope:hydrocarbons
+      name_zh: 烃
+      required_families:
+        - alkane
+        - alkene
+        - alkyne
+        - aromatic_hydrocarbon
+      representative_substance_refs:
+        - org-substance:methane
+        - org-substance:ethene
+        - org-substance:ethyne
+        - org-substance:benzene
+        - org-substance:toluene
+      required_reaction_classes:
+        - substitution
+        - addition
+        - oxidation
+        - polymerization
+      priority: core
+
+    - id: org-scope:hydrocarbon-derivatives
+      name_zh: 烃的衍生物
+      required_families:
+        - haloalkane
+        - alcohol
+        - phenol
+        - aldehyde
+        - ketone
+        - carboxylic_acid
+        - ester
+      required_reaction_classes:
+        - substitution
+        - elimination
+        - oxidation
+        - esterification
+        - hydrolysis
+      priority: core
+
+    - id: org-scope:biomolecules
+      name_zh: 生物大分子与重要有机物
+      required_families:
+        - carbohydrate
+        - amino_acid
+        - protein
+        - lipid
+        - nucleic_acid
+      priority: core
+
+    - id: org-scope:synthetic-polymers
+      name_zh: 合成高分子
+      required_topics:
+        - addition_polymerization
+        - condensation_polymerization
+        - monomer_repeat_unit_relation
+      priority: core
+
+  experiment_coverage:
+    - methane_properties
+    - ethene_properties
+    - ethyne_properties
+    - benzene_and_homologue_properties
+    - haloalkane_properties
+    - ethanol_and_acetic_acid_properties
+    - phenol_properties
+    - aldehyde_properties
+    - ethyl_acetate_preparation_and_properties
+    - functional_group_tests
+    - carbohydrate_properties
+    - lipid_properties
+    - protein_properties
+    - phenol_formaldehyde_resin
+
+notes:
+  - This file defines collection coverage only; it is not a source of chemical identity facts.
+  - A listed family or experiment may remain incomplete while the package is in seed status.
