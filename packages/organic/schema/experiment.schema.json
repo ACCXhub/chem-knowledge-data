@@ -18,6 +18,11 @@
       "items": {"type": "string", "pattern": "^org-phenomenon:[a-z0-9][a-z0-9-]*$"},
       "uniqueItems": true
     },
+    "concept_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-concept:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
     "procedure_scope": {
       "type": "string",
       "enum": ["observation_only", "teacher_demo", "student_experiment", "conceptual"]
