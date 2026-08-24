@@ -1,0 +1,360 @@
+records:
+  - id: org-substance:methane
+    name_zh: 甲烷
+    name_en: methane
+    formula: CH4
+    category: alkane
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:ethane
+    name_zh: 乙烷
+    name_en: ethane
+    formula: C2H6
+    category: alkane
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:propane
+    name_zh: 丙烷
+    name_en: propane
+    formula: C3H8
+    category: alkane
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:n-butane
+    name_zh: 正丁烷
+    name_en: butane
+    formula: C4H10
+    category: alkane
+    aliases: [丁烷]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:isobutane
+    name_zh: 异丁烷
+    name_en: 2-methylpropane
+    formula: C4H10
+    category: alkane
+    aliases: [2-甲基丙烷]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:ethene
+    name_zh: 乙烯
+    name_en: ethene
+    formula: C2H4
+    category: alkene
+    aliases: [ethylene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:propene
+    name_zh: 丙烯
+    name_en: propene
+    formula: C3H6
+    category: alkene
+    aliases: [propylene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:ethyne
+    name_zh: 乙炔
+    name_en: ethyne
+    formula: C2H2
+    category: alkyne
+    aliases: [acetylene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:benzene
+    name_zh: 苯
+    name_en: benzene
+    formula: C6H6
+    category: aromatic_hydrocarbon
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:toluene
+    name_zh: 甲苯
+    name_en: toluene
+    formula: C7H8
+    category: aromatic_hydrocarbon
+    aliases: [methylbenzene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:bromoethane
+    name_zh: 溴乙烷
+    name_en: bromoethane
+    formula: C2H5Br
+    category: haloalkane
+    aliases: [ethyl bromide]
+    functional_group_refs: [org-fg:halo]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:methanol
+    name_zh: 甲醇
+    name_en: methanol
+    formula: CH4O
+    category: alcohol
+    aliases: [methyl alcohol]
+    functional_group_refs: [org-fg:hydroxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:ethanol
+    name_zh: 乙醇
+    name_en: ethanol
+    formula: C2H6O
+    category: alcohol
+    aliases: [酒精, ethyl alcohol]
+    functional_group_refs: [org-fg:hydroxyl]
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:ethylene-glycol
+    name_zh: 乙二醇
+    name_en: ethylene glycol
+    formula: C2H6O2
+    category: polyol
+    aliases: [1,2-乙二醇]
+    functional_group_refs: [org-fg:hydroxyl]
+    structure_ref: null
+    teaching_priority: extended
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:glycerol
+    name_zh: 丙三醇
+    name_en: glycerol
+    formula: C3H8O3
+    category: polyol
+    aliases: [甘油, propane-1,2,3-triol]
+    functional_group_refs: [org-fg:hydroxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:phenol
+    name_zh: 苯酚
+    name_en: phenol
+    formula: C6H6O
+    category: phenol
+    aliases: []
+    functional_group_refs: [org-fg:phenolic-hydroxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:formaldehyde
+    name_zh: 甲醛
+    name_en: formaldehyde
+    formula: CH2O
+    category: aldehyde
+    aliases: [methanal]
+    functional_group_refs: [org-fg:aldehyde]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:acetaldehyde
+    name_zh: 乙醛
+    name_en: acetaldehyde
+    formula: C2H4O
+    category: aldehyde
+    aliases: [ethanal]
+    functional_group_refs: [org-fg:aldehyde]
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:acetone
+    name_zh: 丙酮
+    name_en: acetone
+    formula: C3H6O
+    category: ketone
+    aliases: [propanone]
+    functional_group_refs: [org-fg:ketone-carbonyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:formic-acid
+    name_zh: 甲酸
+    name_en: formic acid
+    formula: CH2O2
+    category: carboxylic_acid
+    aliases: [methanoic acid]
+    functional_group_refs: [org-fg:carboxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:acetic-acid
+    name_zh: 乙酸
+    name_en: acetic acid
+    formula: C2H4O2
+    category: carboxylic_acid
+    aliases: [醋酸, ethanoic acid]
+    functional_group_refs: [org-fg:carboxyl]
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:ethyl-acetate
+    name_zh: 乙酸乙酯
+    name_en: ethyl acetate
+    formula: C4H8O2
+    category: ester
+    aliases: [ethyl ethanoate]
+    functional_group_refs: [org-fg:ester]
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:glucose
+    name_zh: 葡萄糖
+    name_en: glucose
+    formula: C6H12O6
+    category: carbohydrate
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:fructose
+    name_zh: 果糖
+    name_en: fructose
+    formula: C6H12O6
+    category: carbohydrate
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:sucrose
+    name_zh: 蔗糖
+    name_en: sucrose
+    formula: C12H22O11
+    category: carbohydrate
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:starch
+    name_zh: 淀粉
+    name_en: starch
+    formula: (C6H10O5)n
+    category: carbohydrate
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:cellulose
+    name_zh: 纤维素
+    name_en: cellulose
+    formula: (C6H10O5)n
+    category: carbohydrate
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:glycine
+    name_zh: 甘氨酸
+    name_en: glycine
+    formula: C2H5NO2
+    category: amino_acid
+    aliases: [氨基乙酸]
+    functional_group_refs: [org-fg:amino, org-fg:carboxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:alanine
+    name_zh: 丙氨酸
+    name_en: alanine
+    formula: C3H7NO2
+    category: amino_acid
+    aliases: [2-氨基丙酸]
+    functional_group_refs: [org-fg:amino, org-fg:carboxyl]
+    structure_ref: null
+    teaching_priority: extended
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:urea
+    name_zh: 尿素
+    name_en: urea
+    formula: CH4N2O
+    category: amide
+    aliases: [carbamide]
+    functional_group_refs: [org-fg:amide]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
