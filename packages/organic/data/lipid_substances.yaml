@@ -1,0 +1,90 @@
+records:
+  - id: org-substance:oleic-acid
+    name_zh: 油酸
+    name_en: oleic acid
+    formula: C18H34O2
+    category: carboxylic_acid
+    aliases: [cis-9-octadecenoic acid]
+    functional_group_refs: [org-fg:carboxyl]
+    structure_ref: null
+    external_ids:
+      pubchem_cid: 445639
+      chebi: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-substance:stearic-acid
+    name_zh: 硬脂酸
+    name_en: stearic acid
+    formula: C18H36O2
+    category: carboxylic_acid
+    aliases: [octadecanoic acid]
+    functional_group_refs: [org-fg:carboxyl]
+    structure_ref: null
+    external_ids:
+      pubchem_cid: 5281
+      chebi: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-substance:triolein
+    name_zh: 三油酸甘油酯
+    name_en: triolein
+    formula: C57H104O6
+    category: lipid
+    aliases: [glyceryl trioleate]
+    functional_group_refs: [org-fg:ester]
+    structure_ref: null
+    external_ids:
+      pubchem_cid: 5497163
+      chebi: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-substance:tristearin
+    name_zh: 三硬脂酸甘油酯
+    name_en: tristearin
+    formula: C57H110O6
+    category: lipid
+    aliases: [glyceryl tristearate]
+    functional_group_refs: [org-fg:ester]
+    structure_ref: null
+    external_ids:
+      pubchem_cid: 11146
+      chebi: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-substance:sodium-oleate
+    name_zh: 油酸钠
+    name_en: sodium oleate
+    formula: C18H33NaO2
+    category: carboxylate_salt
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    external_ids:
+      pubchem_cid: 23665730
+      chebi: CHEBI:81860
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi, manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-substance:sodium-stearate
+    name_zh: 硬脂酸钠
+    name_en: sodium stearate
+    formula: C18H35NaO2
+    category: carboxylate_salt
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    external_ids:
+      pubchem_cid: 2724691
+      chebi: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
