@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/substance.schema.json",
+  "title": "Organic Substance Seed Record",
+  "type": "object",
+  "required": [
+    "id",
+    "name_zh",
+    "formula",
+    "category",
+    "teaching_priority",
+    "verification_status",
+    "provenance_refs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"
+    },
+    "name_zh": {"type": "string", "minLength": 1},
+    "name_en": {"type": ["string", "null"]},
+    "formula": {"type": "string", "minLength": 1},
+    "category": {
+      "type": "string",
+      "enum": [
+        "alkane",
+        "alkene",
+        "alkyne",
+        "aromatic_hydrocarbon",
+        "haloalkane",
+        "alcohol",
+        "polyol",
+        "phenol",
+        "aldehyde",
+        "ketone",
+        "carboxylic_acid",
+        "ester",
+        "carbohydrate",
+        "amino_acid",
+        "amide",
+        "other_organic"
+      ]
+    },
+    "aliases": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "functional_group_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-fg:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "structure_ref": {
+      "type": ["string", "null"],
+      "description": "Cross-package structure link placeholder; canonical structure data belongs to packages/structure."
+    },
+    "external_ids": {
+      "type": "object",
+      "properties": {
+        "chebi": {"type": ["string", "null"]},
+        "pubchem_cid": {"type": ["integer", "null"], "minimum": 1}
+      },
+      "additionalProperties": true
+    },
+    "teaching_priority": {
+      "type": "string",
+      "enum": ["core", "common", "extended"]
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["seed", "source_crosschecked", "reviewed"]
+    },
+    "provenance_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}
