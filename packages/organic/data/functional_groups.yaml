@@ -1,0 +1,85 @@
+functional_groups:
+  - id: org-fg:halo
+    name_zh: 卤素原子
+    notation: -X
+    teaching_class: 卤代烃
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:hydroxyl
+    name_zh: 羟基
+    notation: -OH
+    teaching_class: 醇
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:phenolic-hydroxyl
+    name_zh: 酚羟基
+    notation: Ar-OH
+    teaching_class: 酚
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:aldehyde
+    name_zh: 醛基
+    notation: -CHO
+    teaching_class: 醛
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:ketone-carbonyl
+    name_zh: 羰基（酮）
+    notation: ">C=O"
+    teaching_class: 酮
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:carboxyl
+    name_zh: 羧基
+    notation: -COOH
+    teaching_class: 羧酸
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:ester
+    name_zh: 酯基
+    notation: -COO-
+    teaching_class: 酯
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:amino
+    name_zh: 氨基
+    notation: -NH2
+    teaching_class: 含氮有机物
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-fg:amide
+    name_zh: 酰胺基
+    notation: -CONH2
+    teaching_class: 酰胺
+    structure_pattern_owner: packages/structure
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+structural_features:
+  - id: org-feature:carbon-carbon-double-bond
+    name_zh: 碳碳双键
+    notation: C=C
+    teaching_class: 烯烃
+    note: 作为不饱和结构特征记录，不与官能团概念强行等同。
+
+  - id: org-feature:carbon-carbon-triple-bond
+    name_zh: 碳碳三键
+    notation: C≡C
+    teaching_class: 炔烃
+    note: 作为不饱和结构特征记录，不与官能团概念强行等同。
