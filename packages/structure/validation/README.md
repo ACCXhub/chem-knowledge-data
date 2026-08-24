@@ -1,36 +1,35 @@
 # Structure validation standard
 
-A canonical structure record is publishable only when the checks applicable to its `structure_scope` pass.
+A canonical structure record is publishable only when checks applicable to its `structure_scope` pass.
 
 ## Required checks
 
-1. Schema validation against `structure-record.schema.json`.
-2. Source-neutral identity: no external source ID is used as `structure_id`.
-3. Formula/charge consistency where a discrete structure representation exists.
-4. SMILES parse/sanitization check when SMILES is present.
-5. Standard InChI/InChIKey consistency when both are present.
-6. Cross-source comparison when both PubChem and ChEBI evidence exist; material disagreement becomes `needs_review` rather than silent overwrite.
-7. Derivation metadata records toolkit and version for RDKit-produced fields.
-8. A formula-only inorganic solid is not promoted to a discrete molecular structure merely because a SMILES-like representation can be constructed.
+1. JSON Schema validation against `schema/structure-record.schema.json`.
+2. Source-neutral deterministic `structure_id`.
+3. Formula/charge consistency where a machine structure representation exists.
+4. SMILES parse/sanitization when SMILES is present.
+5. Standard InChI must use `InChI=1S/`; stored InChIKey must be derivable from it.
+6. SMILES and Standard InChI must describe the same normalized discrete entity when both are present.
+7. Cross-source disagreements become `needs_review`; they never silently overwrite.
+8. RDKit-derived fields retain toolkit/version when persisted.
+9. Duplicate canonical IDs, duplicate InChI identities and conflicting external IDs fail validation.
+10. A formula-unit salt is not published as a molecule merely because a disconnected salt SMILES exists.
+11. Manifest record counts and canonical file SHA-256 values must match the checked-in release.
 
-## Scope-specific policy
+## Scope rules
 
-### molecule / ion
+- **molecule / ion**: at least one machine-usable discrete representation is required.
+- **formula_unit**: formula + charge are canonical; Standard InChI may identify a disconnected stoichiometric representation, but canonical molecular SMILES remains absent in the seed release.
+- **coordination_entity**: connectivity/charge need explicit supporting evidence.
+- **crystal**: requires crystallographic evidence; molecular SMILES is not a crystal representation.
+- **other**: requires review notes.
 
-At least one machine-usable structural representation is required: canonical SMILES or Standard InChI. Formula and formal charge must agree with the normalized structure.
+## Command
 
-### formula_unit
+```bash
+python packages/structure/validation/validate_dataset.py --strict
+```
 
-Formula and formal charge may be canonical even when SMILES/InChI are absent. This is the expected path for many ionic solids where a discrete molecular representation would be misleading.
+Install `validation/requirements.txt` first if the environment does not already contain RDKit/jsonschema.
 
-### coordination_entity
-
-Connectivity and charge require explicit evidence. Ambiguous ligand/metal connectivity remains `needs_review`.
-
-### crystal
-
-Crystal records require an appropriate crystallographic source/representation; molecular SMILES is not a substitute.
-
-## Cross-track publication guarantee
-
-Other workstreams may safely reference a `structure_id` only after `validation.review_status == "published"`.
+Only `published + valid` records are stable for other workstreams.
