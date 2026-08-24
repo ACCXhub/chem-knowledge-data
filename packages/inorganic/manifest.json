@@ -1,0 +1,30 @@
+{
+  "package": "inorganic",
+  "version": "0.1.0",
+  "status": "curated_seed",
+  "released_at": "2026-08-24",
+  "record_counts": {
+    "element_scope": 30,
+    "ions": 40,
+    "substances": 96,
+    "reactions": 61,
+    "phenomena": 28,
+    "experiments": 12,
+    "concepts": 23
+  },
+  "total_records": 290,
+  "canonical_files": {
+    "element_scope": "data/element_scope.jsonl",
+    "ions": "data/ions.jsonl",
+    "substances": "data/substances.jsonl",
+    "reactions": "data/reactions.jsonl",
+    "phenomena": "data/phenomena.jsonl",
+    "experiments": "data/experiments.jsonl",
+    "concepts": "data/concepts.jsonl"
+  },
+  "notes": [
+    "Stable dataset IDs are import keys, not application UUIDs.",
+    "Reaction is first-class and participants are stored explicitly.",
+    "Full element facts remain owned by the main project's element-data pipeline; this package stores only high-school teaching projection."
+  ]
+}

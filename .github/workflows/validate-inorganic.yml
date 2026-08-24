@@ -1,0 +1,21 @@
+name: validate-inorganic
+
+on:
+  push:
+    paths:
+      - 'packages/inorganic/**'
+      - '.github/workflows/validate-inorganic.yml'
+  pull_request:
+    paths:
+      - 'packages/inorganic/**'
+      - '.github/workflows/validate-inorganic.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python packages/inorganic/validation/validate.py
