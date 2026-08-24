@@ -35,6 +35,7 @@
         "aldehyde",
         "ketone",
         "carboxylic_acid",
+        "carboxylate_salt",
         "ester",
         "carbohydrate",
         "amino_acid",
