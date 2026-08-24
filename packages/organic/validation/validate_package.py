@@ -114,6 +114,28 @@ def main() -> int:
                         errors.append(f"{kind}:{record_id}: unresolved local reference {value}")
                         break
 
+    crossref_doc = load_yaml(DATA_DIR / "identity_crossrefs.yaml")
+    crossrefs = crossref_doc.get("crossrefs", [])
+    crossref_validator = Draft202012Validator(load_json(SCHEMA_DIR / "identity_crossref.schema.json"))
+    seen_crossref_substances: set[str] = set()
+    for index, crossref in enumerate(crossrefs):
+        label = crossref.get("substance_ref", f"<index:{index}>") if isinstance(crossref, dict) else f"<index:{index}>"
+        if not isinstance(crossref, dict):
+            errors.append(f"identity_crossrefs:{label}: record must be a mapping")
+            continue
+        for validation_error in sorted(crossref_validator.iter_errors(crossref), key=lambda item: list(item.path)):
+            location = ".".join(str(part) for part in validation_error.path)
+            errors.append(f"identity_crossrefs:{label}:{location}: {validation_error.message}")
+        substance_ref = crossref.get("substance_ref")
+        if substance_ref not in id_sets["org-substance:"]:
+            errors.append(f"identity_crossrefs:{label}: unresolved local reference {substance_ref}")
+        if substance_ref in seen_crossref_substances:
+            errors.append(f"identity_crossrefs:{label}: duplicate crossref for substance")
+        seen_crossref_substances.add(substance_ref)
+        for provenance_ref in crossref.get("provenance_refs", []):
+            if provenance_ref not in source_ids:
+                errors.append(f"identity_crossrefs:{label}: unknown provenance ref {provenance_ref}")
+
     substance_records = records_by_kind.get("substance", [])
     formula_index: dict[str, list[str]] = {}
     for record in substance_records:
@@ -128,14 +150,14 @@ def main() -> int:
         print("Organic package validation FAILED")
         for error in errors:
             print(f"ERROR: {error}")
-        if warnings:
-            for warning in warnings:
-                print(f"WARN: {warning}")
+        for warning in warnings:
+            print(f"WARN: {warning}")
         return 1
 
     print("Organic package validation PASSED")
     for kind, records in sorted(records_by_kind.items()):
         print(f"{kind}: {len(records)}")
+    print(f"identity_crossref: {len(crossrefs)}")
     print(f"structural_feature: {len(feature_ids)}")
     print(f"sources: {len(source_ids)}")
     for warning in warnings:
