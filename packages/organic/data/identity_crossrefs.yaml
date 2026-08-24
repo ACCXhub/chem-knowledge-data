@@ -6,12 +6,47 @@ crossrefs:
     provenance_refs: [pubchem]
     notes: PubChem confirms methane identity and formula CH4.
 
+  - substance_ref: org-substance:ethane
+    pubchem_cid: 6324
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms ethane identity and formula C2H6.
+
+  - substance_ref: org-substance:propane
+    pubchem_cid: 6334
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms propane identity and formula C3H8.
+
+  - substance_ref: org-substance:n-butane
+    pubchem_cid: 7843
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms butane identity and formula C4H10.
+
+  - substance_ref: org-substance:isobutane
+    pubchem_cid: 6360
+    chebi_id: CHEBI:30363
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem confirms 2-methylpropane/isobutane identity and formula C4H10; ChEBI cross-reference is retained.
+
   - substance_ref: org-substance:ethene
     pubchem_cid: 6325
     chebi_id: CHEBI:18153
     verification_status: source_crosschecked
     provenance_refs: [pubchem, chebi]
     notes: PubChem lists ethene/ethylene as CID 6325 and links ChEBI CHEBI:18153.
+
+  - substance_ref: org-substance:propene
+    pubchem_cid: 8252
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms propene/propylene identity and formula C3H6.
 
   - substance_ref: org-substance:ethyne
     pubchem_cid: 6326
@@ -27,26 +62,54 @@ crossrefs:
     provenance_refs: [pubchem, chebi]
     notes: PubChem lists benzene as CID 241 and links ChEBI CHEBI:16716.
 
-  - substance_ref: org-substance:acetic-acid
-    pubchem_cid: 176
+  - substance_ref: org-substance:toluene
+    pubchem_cid: 1140
     chebi_id: null
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
-    notes: PubChem confirms acetic acid identity and molecular formula C2H4O2.
+    notes: PubChem confirms toluene/methylbenzene identity and molecular formula C7H8.
 
-  - substance_ref: org-substance:phenol
-    pubchem_cid: 996
+  - substance_ref: org-substance:chloromethane
+    pubchem_cid: 6327
     chebi_id: null
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
-    notes: PubChem confirms phenol identity and molecular formula C6H6O.
+    notes: PubChem confirms chloromethane/methyl chloride identity and formula CH3Cl.
 
-  - substance_ref: org-substance:ethyl-acetate
-    pubchem_cid: 8857
+  - substance_ref: org-substance:bromoethane
+    pubchem_cid: 6332
     chebi_id: null
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
-    notes: PubChem confirms ethyl acetate identity, formula C4H8O2 and ethyl ethanoate synonym.
+    notes: PubChem confirms bromoethane identity and formula C2H5Br.
+
+  - substance_ref: org-substance:1-2-dibromoethane
+    pubchem_cid: 7839
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms 1,2-dibromoethane identity and formula C2H4Br2.
+
+  - substance_ref: org-substance:bromobenzene
+    pubchem_cid: 7961
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms bromobenzene identity and formula C6H5Br.
+
+  - substance_ref: org-substance:nitrobenzene
+    pubchem_cid: 7416
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms nitrobenzene identity and formula C6H5NO2.
+
+  - substance_ref: org-substance:methanol
+    pubchem_cid: 887
+    chebi_id: CHEBI:17790
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem confirms methanol identity and formula CH4O and exposes ChEBI CHEBI:17790.
 
   - substance_ref: org-substance:ethanol
     pubchem_cid: 702
@@ -55,33 +118,12 @@ crossrefs:
     provenance_refs: [pubchem]
     notes: PubChem confirms ethanol identity, formula C2H6O and ethyl alcohol synonym.
 
-  - substance_ref: org-substance:acetaldehyde
-    pubchem_cid: 177
+  - substance_ref: org-substance:ethylene-glycol
+    pubchem_cid: 174
     chebi_id: null
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
-    notes: PubChem confirms acetaldehyde/ethanal identity and molecular formula C2H4O.
-
-  - substance_ref: org-substance:toluene
-    pubchem_cid: 1140
-    chebi_id: null
-    verification_status: source_crosschecked
-    provenance_refs: [pubchem]
-    notes: PubChem confirms toluene/methylbenzene identity and molecular formula C7H8.
-
-  - substance_ref: org-substance:formaldehyde
-    pubchem_cid: 712
-    chebi_id: null
-    verification_status: source_crosschecked
-    provenance_refs: [pubchem]
-    notes: PubChem confirms formaldehyde/methanal identity and molecular formula CH2O.
-
-  - substance_ref: org-substance:methanol
-    pubchem_cid: 887
-    chebi_id: CHEBI:17790
-    verification_status: source_crosschecked
-    provenance_refs: [pubchem, chebi]
-    notes: PubChem confirms methanol identity and molecular formula CH4O and exposes ChEBI CHEBI:17790.
+    notes: PubChem confirms ethylene glycol identity and formula C2H6O2.
 
   - substance_ref: org-substance:glycerol
     pubchem_cid: 753
@@ -90,12 +132,75 @@ crossrefs:
     provenance_refs: [pubchem, chebi]
     notes: PubChem confirms glycerol identity, formula C3H8O3 and propane-1,2,3-triol naming; its record exposes ChEBI CHEBI:17754.
 
+  - substance_ref: org-substance:phenol
+    pubchem_cid: 996
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms phenol identity and molecular formula C6H6O.
+
+  - substance_ref: org-substance:2-4-6-tribromophenol
+    pubchem_cid: 1483
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms 2,4,6-tribromophenol identity and formula C6H3Br3O.
+
+  - substance_ref: org-substance:formaldehyde
+    pubchem_cid: 712
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms formaldehyde/methanal identity and molecular formula CH2O.
+
+  - substance_ref: org-substance:acetaldehyde
+    pubchem_cid: 177
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms acetaldehyde/ethanal identity and molecular formula C2H4O.
+
+  - substance_ref: org-substance:acetone
+    pubchem_cid: 180
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms acetone/propanone identity and formula C3H6O.
+
+  - substance_ref: org-substance:formic-acid
+    pubchem_cid: 284
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms formic acid identity and formula CH2O2.
+
+  - substance_ref: org-substance:acetic-acid
+    pubchem_cid: 176
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms acetic acid identity and molecular formula C2H4O2.
+
+  - substance_ref: org-substance:benzoic-acid
+    pubchem_cid: 243
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms benzoic acid identity and formula C7H6O2.
+
+  - substance_ref: org-substance:ethyl-acetate
+    pubchem_cid: 8857
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms ethyl acetate identity, formula C4H8O2 and ethyl ethanoate synonym.
+
   - substance_ref: org-substance:glucose
     pubchem_cid: 5793
     chebi_id: null
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
-    notes: PubChem confirms D-glucose as CID 5793 with molecular formula C6H12O6; ChEBI mapping remains deferred because multiple glucose-related ChEBI identifiers are surfaced.
+    notes: PubChem confirms D-glucose as CID 5793 with formula C6H12O6; stereochemical normalization remains for later structure-package consolidation.
 
   - substance_ref: org-substance:sucrose
     pubchem_cid: 5988
@@ -103,3 +208,80 @@ crossrefs:
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
     notes: PubChem confirms sucrose identity and molecular formula C12H22O11.
+
+  - substance_ref: org-substance:glycine
+    pubchem_cid: 750
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms glycine identity and molecular formula C2H5NO2.
+
+  - substance_ref: org-substance:urea
+    pubchem_cid: 1176
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms urea identity and molecular formula CH4N2O.
+
+  - substance_ref: org-substance:chloroethene
+    pubchem_cid: 6338
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms chloroethene/vinyl chloride identity and formula C2H3Cl.
+
+  - substance_ref: org-substance:styrene
+    pubchem_cid: 7501
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms styrene/ethenylbenzene identity and formula C8H8.
+
+  - substance_ref: org-substance:terephthalic-acid
+    pubchem_cid: 7489
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms terephthalic acid identity and formula C8H6O4.
+
+  - substance_ref: org-substance:oleic-acid
+    pubchem_cid: 445639
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms oleic acid identity and formula C18H34O2.
+
+  - substance_ref: org-substance:stearic-acid
+    pubchem_cid: 5281
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms stearic acid identity and formula C18H36O2.
+
+  - substance_ref: org-substance:triolein
+    pubchem_cid: 5497163
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms triolein identity and formula C57H104O6.
+
+  - substance_ref: org-substance:tristearin
+    pubchem_cid: 11146
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms tristearin identity and formula C57H110O6.
+
+  - substance_ref: org-substance:sodium-oleate
+    pubchem_cid: 23665730
+    chebi_id: CHEBI:81860
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem confirms sodium oleate identity and formula C18H33NaO2; ChEBI CHEBI:81860 is retained.
+
+  - substance_ref: org-substance:sodium-stearate
+    pubchem_cid: 2724691
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms sodium stearate identity and formula C18H35NaO2.
