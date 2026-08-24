@@ -1,0 +1,24 @@
+records:
+  - id: org-substance:terephthalic-acid
+    name_zh: 对苯二甲酸
+    name_en: terephthalic acid
+    formula: C8H6O4
+    category: carboxylic_acid
+    aliases: [benzene-1,4-dicarboxylic acid]
+    functional_group_refs: [org-fg:carboxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:polyethylene-terephthalate
+    name_zh: 聚对苯二甲酸乙二酯
+    name_en: polyethylene terephthalate
+    formula: (C10H8O4)n
+    category: polymer
+    aliases: [PET]
+    functional_group_refs: [org-fg:ester]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
