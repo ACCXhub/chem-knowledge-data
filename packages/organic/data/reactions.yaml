@@ -1,0 +1,443 @@
+reactions:
+  - id: org-reaction:methane-monochlorination
+    name_zh: 甲烷与氯气的取代反应（单取代表示）
+    reaction_class: [substitution]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:methane}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:chlorine, formula_literal: Cl2}
+      - {role: product, coefficient: 1, substance_ref: org-substance:chloromethane}
+      - {role: product, coefficient: 1, external_species_key: inorganic:hydrogen-chloride, formula_literal: HCl}
+    conditions: [光照]
+    equation: CH4 + Cl2 -> CH3Cl + HCl
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:methane-properties]
+    concept_refs: [org-concept:substitution-reaction]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 仅记录高中教学常用的单氯代总体方程；继续取代及自由基机理不在本包推断。
+
+  - id: org-reaction:ethene-bromine-addition
+    name_zh: 乙烯与溴的加成反应
+    reaction_class: [addition]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethene}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:bromine, formula_literal: Br2}
+      - {role: product, coefficient: 1, substance_ref: org-substance:1-2-dibromoethane}
+    conditions: []
+    equation: C2H4 + Br2 -> C2H4Br2
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene]
+    experiment_refs: [org-experiment:ethene-properties]
+    concept_refs: [org-concept:addition-reaction, org-concept:unsaturation-test]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-reaction:ethene-hydrogenation
+    name_zh: 乙烯催化加氢
+    reaction_class: [addition, reduction]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethene}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:hydrogen, formula_literal: H2}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethane}
+    conditions: [Ni催化, 加热]
+    equation: C2H4 + H2 -> C2H6
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:addition-reaction]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: null
+
+  - id: org-reaction:ethene-hydration
+    name_zh: 乙烯水合制乙醇
+    reaction_class: [addition]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethene}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethanol}
+    conditions: [酸催化]
+    equation: C2H4 + H2O -> C2H6O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:addition-reaction, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: 工业条件在后续来源核验阶段补充，不在 seed 阶段写死具体温压。
+
+  - id: org-reaction:bromoethane-aqueous-hydrolysis
+    name_zh: 溴乙烷水解生成乙醇
+    reaction_class: [substitution, hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:bromoethane}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:sodium-hydroxide, formula_literal: NaOH, phase: aq}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethanol}
+      - {role: product, coefficient: 1, external_species_key: inorganic:sodium-bromide, formula_literal: NaBr}
+    conditions: [NaOH水溶液, 加热]
+    equation: C2H5Br + NaOH -> C2H5OH + NaBr
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:haloalkane-properties]
+    concept_refs: [org-concept:substitution-reaction, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-reaction:bromoethane-elimination
+    name_zh: 溴乙烷消去生成乙烯
+    reaction_class: [elimination]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:bromoethane}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:sodium-hydroxide, formula_literal: NaOH}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethene}
+      - {role: product, coefficient: 1, external_species_key: inorganic:sodium-bromide, formula_literal: NaBr}
+      - {role: product, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: [NaOH乙醇溶液, 加热]
+    equation: C2H5Br + NaOH -> C2H4 + NaBr + H2O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:haloalkane-properties]
+    concept_refs: [org-concept:elimination-reaction, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 反应条件必须与水解条件区分。
+
+  - id: org-reaction:ethanol-dehydration-to-ethene
+    name_zh: 乙醇消去生成乙烯
+    reaction_class: [elimination]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethanol}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethene}
+      - {role: product, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: [浓硫酸, 约170摄氏度]
+    equation: C2H6O -> C2H4 + H2O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:elimination-reaction, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: 温度细节在正式 review 时再按教材版本核对。
+
+  - id: org-reaction:ethanol-catalytic-oxidation
+    name_zh: 乙醇催化氧化生成乙醛
+    reaction_class: [oxidation]
+    participants:
+      - {role: reactant, coefficient: 2, substance_ref: org-substance:ethanol}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:oxygen, formula_literal: O2}
+      - {role: product, coefficient: 2, substance_ref: org-substance:acetaldehyde}
+      - {role: product, coefficient: 2, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: [Cu或Ag催化, 加热]
+    equation: 2 C2H6O + O2 -> 2 C2H4O + 2 H2O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:ethanol-properties]
+    concept_refs: [org-concept:oxidation-of-organic-compounds, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: null
+
+  - id: org-reaction:acetaldehyde-oxidation-to-acetic-acid
+    name_zh: 乙醛氧化生成乙酸
+    reaction_class: [oxidation]
+    participants:
+      - {role: reactant, coefficient: 2, substance_ref: org-substance:acetaldehyde}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:oxygen, formula_literal: O2}
+      - {role: product, coefficient: 2, substance_ref: org-substance:acetic-acid}
+    conditions: []
+    equation: 2 C2H4O + O2 -> 2 C2H4O2
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:aldehyde-properties]
+    concept_refs: [org-concept:oxidation-of-organic-compounds, org-concept:aldehyde-group-test, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 银镜和新制Cu(OH)2等检验反应作为实验/现象关系单独记录，不从本总体氧化式推断机理。
+
+  - id: org-reaction:acetic-acid-ethanol-esterification
+    name_zh: 乙酸与乙醇的酯化反应
+    reaction_class: [esterification]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:acetic-acid}
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethanol}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethyl-acetate}
+      - {role: product, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: [浓硫酸, 加热]
+    equation: C2H4O2 + C2H6O <=> C4H8O2 + H2O
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:ethyl-acetate-fruity-odor]
+    experiment_refs: [org-experiment:ethyl-acetate-preparation]
+    concept_refs: [org-concept:esterification, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+    notes: null
+
+  - id: org-reaction:ethyl-acetate-acid-hydrolysis
+    name_zh: 乙酸乙酯酸性水解
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethyl-acetate}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+      - {role: product, coefficient: 1, substance_ref: org-substance:acetic-acid}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethanol}
+    conditions: [酸催化, 加热]
+    equation: C4H8O2 + H2O <=> C2H4O2 + C2H6O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:ethyl-acetate-preparation]
+    concept_refs: [org-concept:ester-hydrolysis, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 碱性水解另行建记录后再与油脂皂化统一。
+
+  - id: org-reaction:benzene-bromination
+    name_zh: 苯的溴代反应
+    reaction_class: [substitution]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:benzene}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:bromine, formula_literal: Br2}
+      - {role: product, coefficient: 1, substance_ref: org-substance:bromobenzene}
+      - {role: product, coefficient: 1, external_species_key: inorganic:hydrogen-bromide, formula_literal: HBr}
+    conditions: [FeBr3或铁粉催化]
+    equation: C6H6 + Br2 -> C6H5Br + HBr
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:benzene-properties]
+    concept_refs: [org-concept:substitution-reaction, org-concept:aromatic-hydrocarbon-properties]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 不在本数据包中自动推导亲电芳香取代机理。
+
+  - id: org-reaction:benzene-nitration
+    name_zh: 苯的硝化反应
+    reaction_class: [substitution]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:benzene}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:nitric-acid, formula_literal: HNO3}
+      - {role: product, coefficient: 1, substance_ref: org-substance:nitrobenzene}
+      - {role: product, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: [浓硫酸, 加热]
+    equation: C6H6 + HNO3 -> C6H5NO2 + H2O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:benzene-properties]
+    concept_refs: [org-concept:substitution-reaction, org-concept:aromatic-hydrocarbon-properties]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-reaction:toluene-sidechain-oxidation
+    name_zh: 甲苯侧链氧化生成苯甲酸
+    reaction_class: [oxidation]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:toluene}
+      - {role: product, coefficient: 1, substance_ref: org-substance:benzoic-acid}
+    conditions: [酸性高锰酸钾, 加热]
+    equation: null
+    equation_status: transformation_only
+    phenomenon_refs: [org-phenomenon:permanganate-decolorization-by-toluene-sidechain]
+    experiment_refs: [org-experiment:benzene-properties]
+    concept_refs: [org-concept:oxidation-of-organic-compounds, org-concept:aromatic-hydrocarbon-properties]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: seed 阶段只记录有机物转化关系；完整离子/分子计量式留待无机物种 ID 对齐后核验。
+
+  - id: org-reaction:phenol-bromination
+    name_zh: 苯酚与溴水反应
+    reaction_class: [substitution]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:phenol}
+      - {role: reactant, coefficient: 3, external_species_key: inorganic:bromine, formula_literal: Br2}
+      - {role: product, coefficient: 1, substance_ref: org-substance:2-4-6-tribromophenol}
+      - {role: product, coefficient: 3, external_species_key: inorganic:hydrogen-bromide, formula_literal: HBr}
+    conditions: [溴水]
+    equation: C6H6O + 3 Br2 -> C6H3Br3O + 3 HBr
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:phenol-bromine-white-precipitate]
+    experiment_refs: [org-experiment:phenol-properties]
+    concept_refs: [org-concept:functional-group-influence, org-concept:phenol-test]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+    notes: null
+
+  - id: org-reaction:ethene-polymerization
+    name_zh: 乙烯加聚生成聚乙烯
+    reaction_class: [addition_polymerization]
+    participants:
+      - {role: reactant, coefficient: n, substance_ref: org-substance:ethene}
+      - {role: product, coefficient: 1, substance_ref: org-substance:polyethylene}
+    conditions: [引发或催化条件]
+    equation: n C2H4 -> (C2H4)n
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:addition-polymerization, org-concept:monomer-repeat-unit]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 具体工业催化体系不在高中 seed 数据中写死。
+
+  - id: org-reaction:propene-polymerization
+    name_zh: 丙烯加聚生成聚丙烯
+    reaction_class: [addition_polymerization]
+    participants:
+      - {role: reactant, coefficient: n, substance_ref: org-substance:propene}
+      - {role: product, coefficient: 1, substance_ref: org-substance:polypropylene}
+    conditions: [引发或催化条件]
+    equation: n C3H6 -> (C3H6)n
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:addition-polymerization, org-concept:monomer-repeat-unit]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: null
+
+  - id: org-reaction:chloroethene-polymerization
+    name_zh: 氯乙烯加聚生成聚氯乙烯
+    reaction_class: [addition_polymerization]
+    participants:
+      - {role: reactant, coefficient: n, substance_ref: org-substance:chloroethene}
+      - {role: product, coefficient: 1, substance_ref: org-substance:polyvinyl-chloride}
+    conditions: [引发条件]
+    equation: n C2H3Cl -> (C2H3Cl)n
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:addition-polymerization, org-concept:monomer-repeat-unit]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-reaction:styrene-polymerization
+    name_zh: 苯乙烯加聚生成聚苯乙烯
+    reaction_class: [addition_polymerization]
+    participants:
+      - {role: reactant, coefficient: n, substance_ref: org-substance:styrene}
+      - {role: product, coefficient: 1, substance_ref: org-substance:polystyrene}
+    conditions: [引发条件]
+    equation: n C8H8 -> (C8H8)n
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: []
+    concept_refs: [org-concept:addition-polymerization, org-concept:monomer-repeat-unit]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: null
+
+  - id: org-reaction:sucrose-hydrolysis
+    name_zh: 蔗糖水解
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:sucrose}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+      - {role: product, coefficient: 1, substance_ref: org-substance:glucose}
+      - {role: product, coefficient: 1, substance_ref: org-substance:fructose}
+    conditions: [酸或酶催化]
+    equation: C12H22O11 + H2O -> C6H12O6 + C6H12O6
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:carbohydrate-properties]
+    concept_refs: [org-concept:carbohydrate-hydrolysis]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 两个产物同分子式不同结构，必须由 substance_ref 区分，不能仅以 formula 作为身份。
+
+  - id: org-reaction:starch-hydrolysis
+    name_zh: 淀粉水解生成葡萄糖
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:starch}
+      - {role: reactant, coefficient: n, external_species_key: inorganic:water, formula_literal: H2O}
+      - {role: product, coefficient: n, substance_ref: org-substance:glucose}
+    conditions: [酸或酶催化]
+    equation: (C6H10O5)n + n H2O -> n C6H12O6
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:carbohydrate-properties]
+    concept_refs: [org-concept:carbohydrate-hydrolysis, org-concept:polymer-and-macromolecule]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-reaction:cellulose-hydrolysis
+    name_zh: 纤维素水解生成葡萄糖
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:cellulose}
+      - {role: reactant, coefficient: n, external_species_key: inorganic:water, formula_literal: H2O}
+      - {role: product, coefficient: n, substance_ref: org-substance:glucose}
+    conditions: [酸催化]
+    equation: (C6H10O5)n + n H2O -> n C6H12O6
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:carbohydrate-properties]
+    concept_refs: [org-concept:carbohydrate-hydrolysis, org-concept:polymer-and-macromolecule]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 与淀粉具有相同经验链节式，但结构与性质不同，不能按 formula 合并实体。
+
+  - id: org-reaction:glucose-fermentation
+    name_zh: 葡萄糖发酵生成乙醇
+    reaction_class: [fermentation]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:glucose}
+      - {role: product, coefficient: 2, substance_ref: org-substance:ethanol}
+      - {role: product, coefficient: 2, external_species_key: inorganic:carbon-dioxide, formula_literal: CO2}
+    conditions: [酶, 适宜温度, 无氧或低氧环境]
+    equation: C6H12O6 -> 2 C2H6O + 2 CO2
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:fermentation-gas-evolution]
+    experiment_refs: [org-experiment:carbohydrate-properties]
+    concept_refs: [org-concept:carbohydrate-reactions]
+    mechanism_status: not_modeled
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: null
