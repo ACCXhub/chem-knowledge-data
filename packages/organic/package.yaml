@@ -1,7 +1,8 @@
 package: organic
 version: 0.1.0
 scope: senior_high_school_cn
-status: candidate
+status: complete
+completed_at: 2026-08-24
 owners:
   data: packages/organic/**
   canonical_structure: packages/structure/**
@@ -11,13 +12,37 @@ entrypoints:
   coverage_evidence: data/coverage_evidence.yaml
   sources: sources/registry.yaml
   validator: validation/validate_package.py
+  identity_validator: validation/validate_identity_coverage.py
 quality:
   provenance_required: true
   formula_is_not_identity: true
   mechanism_inference: false
   canonical_structure_deferred: true
+  identity_policy: source_crossref_or_explicit_deferral
+validation:
+  workflow: .github/workflows/validate-organic.yml
+  run_id: 32715190827
+  conclusion: success
+  python: "3.13"
+  counts:
+    substances: 50
+    functional_groups: 10
+    structural_features: 2
+    chemical_classes: 25
+    reactions: 27
+    concepts: 35
+    phenomena: 14
+    experiments: 14
+    identity_crossrefs: 41
+    identity_deferrals: 9
+    curriculum_topics: 10
+    curriculum_families: 16
+    curriculum_reaction_classes: 7
+    curriculum_experiment_groups: 14
 completion_gate:
-  - all curriculum coverage keys have package-local evidence
-  - local references and provenance validate
-  - representative discrete identities are source-crosschecked where practical
-  - GitHub Actions organic validation is green
+  curriculum_coverage: passed
+  local_reference_integrity: passed
+  provenance_integrity: passed
+  identity_coverage: passed
+  github_actions: passed
+next_phase: consolidation
