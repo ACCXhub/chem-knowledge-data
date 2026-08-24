@@ -4,6 +4,7 @@ experiments:
     purpose_zh: 认识甲烷作为烷烃代表物的典型性质。
     reaction_refs: [org-reaction:methane-monochlorination]
     phenomenon_refs: []
+    concept_refs: [org-concept:substitution-reaction]
     procedure_scope: teacher_demo
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -15,6 +16,7 @@ experiments:
     purpose_zh: 认识乙烯的不饱和性及典型加成反应现象。
     reaction_refs: [org-reaction:ethene-bromine-addition]
     phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene]
+    concept_refs: [org-concept:addition-reaction, org-concept:unsaturation-test]
     procedure_scope: observation_only
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -25,7 +27,8 @@ experiments:
     name_zh: 乙炔性质实验
     purpose_zh: 比较炔烃代表物与烷烃、烯烃的结构和性质差异。
     reaction_refs: []
-    phenomenon_refs: []
+    phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkyne]
+    concept_refs: [org-concept:addition-reaction, org-concept:unsaturation-test]
     procedure_scope: observation_only
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -37,6 +40,7 @@ experiments:
     purpose_zh: 认识苯的典型取代反应和甲苯侧链氧化等性质。
     reaction_refs: [org-reaction:benzene-bromination, org-reaction:benzene-nitration, org-reaction:toluene-sidechain-oxidation]
     phenomenon_refs: [org-phenomenon:permanganate-decolorization-by-toluene-sidechain]
+    concept_refs: [org-concept:aromatic-hydrocarbon-properties, org-concept:substitution-reaction]
     procedure_scope: observation_only
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -48,6 +52,7 @@ experiments:
     purpose_zh: 比较卤代烃水解与消去转化，突出反应条件对产物的影响。
     reaction_refs: [org-reaction:bromoethane-aqueous-hydrolysis, org-reaction:bromoethane-elimination]
     phenomenon_refs: []
+    concept_refs: [org-concept:substitution-reaction, org-concept:elimination-reaction]
     procedure_scope: observation_only
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -55,10 +60,11 @@ experiments:
     provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
 
   - id: org-experiment:ethanol-properties
-    name_zh: 乙醇主要性质实验
-    purpose_zh: 认识乙醇氧化、消去等典型转化及醇羟基相关性质。
-    reaction_refs: [org-reaction:ethanol-catalytic-oxidation, org-reaction:ethanol-dehydration-to-ethene]
+    name_zh: 乙醇和乙酸的主要性质
+    purpose_zh: 认识乙醇氧化、消去和乙酸相关典型转化，并联系羟基、羧基的性质。
+    reaction_refs: [org-reaction:ethanol-catalytic-oxidation, org-reaction:ethanol-dehydration-to-ethene, org-reaction:acetic-acid-ethanol-esterification]
     phenomenon_refs: []
+    concept_refs: [org-concept:oxidation-of-organic-compounds, org-concept:esterification]
     procedure_scope: observation_only
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -70,6 +76,7 @@ experiments:
     purpose_zh: 认识苯酚的典型反应以及基团之间的相互影响。
     reaction_refs: [org-reaction:phenol-bromination]
     phenomenon_refs: [org-phenomenon:phenol-bromine-white-precipitate]
+    concept_refs: [org-concept:phenol-test, org-concept:functional-group-influence]
     procedure_scope: observation_only
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -81,6 +88,7 @@ experiments:
     purpose_zh: 认识醛基的还原性及典型检验现象。
     reaction_refs: [org-reaction:acetaldehyde-oxidation-to-acetic-acid]
     phenomenon_refs: [org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-copper-oxide-precipitate]
+    concept_refs: [org-concept:aldehyde-group-test, org-concept:oxidation-of-organic-compounds]
     procedure_scope: observation_only
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -92,17 +100,31 @@ experiments:
     purpose_zh: 联系酯化、水解、酯的性质及有机物转化关系。
     reaction_refs: [org-reaction:acetic-acid-ethanol-esterification, org-reaction:ethyl-acetate-acid-hydrolysis]
     phenomenon_refs: [org-phenomenon:ethyl-acetate-fruity-odor]
+    concept_refs: [org-concept:esterification, org-concept:ester-hydrolysis]
     procedure_scope: observation_only
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
     verification_status: seed
     provenance_refs: [moe-hs-chem-2020, moe-lab-guidance-2025, manual-seed-2026-08]
 
+  - id: org-experiment:functional-group-tests
+    name_zh: 常见有机官能团与结构特征的定性观察
+    purpose_zh: 汇总不饱和结构、酚羟基、醛基等高中常见结构特征的代表性实验现象，并强调现象的非唯一性和条件依赖性。
+    reaction_refs: [org-reaction:ethene-bromine-addition, org-reaction:phenol-bromination]
+    phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene, org-phenomenon:bromine-solution-decolorization-by-alkyne, org-phenomenon:phenol-bromine-white-precipitate, org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-copper-oxide-precipitate, org-phenomenon:protein-color-reaction]
+    concept_refs: [org-concept:functional-group, org-concept:unsaturation-test, org-concept:phenol-test, org-concept:aldehyde-group-test]
+    procedure_scope: conceptual
+    safety_level: controlled
+    safety_notes_zh: [本记录是知识索引，不提供试剂配制、用量或操作步骤；实验应按学校规范进行。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
   - id: org-experiment:carbohydrate-properties
     name_zh: 糖类性质实验
     purpose_zh: 认识糖类水解、淀粉显色及葡萄糖相关性质。
     reaction_refs: [org-reaction:sucrose-hydrolysis, org-reaction:starch-hydrolysis, org-reaction:cellulose-hydrolysis, org-reaction:glucose-fermentation]
     phenomenon_refs: [org-phenomenon:starch-iodine-blue, org-phenomenon:fermentation-gas-evolution]
+    concept_refs: [org-concept:carbohydrate-hydrolysis, org-concept:carbohydrate-reactions]
     procedure_scope: observation_only
     safety_level: routine
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -112,8 +134,9 @@ experiments:
   - id: org-experiment:lipid-properties
     name_zh: 油脂性质实验
     purpose_zh: 认识油脂水解、皂化及其与生活材料的联系。
-    reaction_refs: []
-    phenomenon_refs: []
+    reaction_refs: [org-reaction:triolein-saponification, org-reaction:tristearin-saponification]
+    phenomenon_refs: [org-phenomenon:lipid-water-phase-separation, org-phenomenon:lipid-saponification-emulsifying-product]
+    concept_refs: [org-concept:lipid-structure-fatty-acids, org-concept:lipid-hydrolysis-saponification]
     procedure_scope: conceptual
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -122,9 +145,10 @@ experiments:
 
   - id: org-experiment:protein-properties
     name_zh: 蛋白质性质实验
-    purpose_zh: 认识蛋白质的典型性质并联系氨基酸和生物大分子知识。
+    purpose_zh: 认识蛋白质的盐析、变性和典型颜色反应，并联系氨基酸、多肽与生物大分子知识。
     reaction_refs: []
-    phenomenon_refs: []
+    phenomenon_refs: [org-phenomenon:protein-salting-out, org-phenomenon:protein-denaturation, org-phenomenon:protein-color-reaction]
+    concept_refs: [org-concept:protein-composition-structure-properties, org-concept:protein-salting-out-and-denaturation, org-concept:protein-color-reaction]
     procedure_scope: conceptual
     safety_level: routine
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -134,8 +158,9 @@ experiments:
   - id: org-experiment:phenol-formaldehyde-resin
     name_zh: 酚醛树脂相关性质观察
     purpose_zh: 联系缩聚反应与合成高分子材料。
-    reaction_refs: []
+    reaction_refs: [org-reaction:phenol-formaldehyde-condensation]
     phenomenon_refs: []
+    concept_refs: [org-concept:condensation-polymerization]
     procedure_scope: conceptual
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；本数据包不提供具体制备操作。]
