@@ -4,7 +4,7 @@ records:
     name_en: terephthalic acid
     formula: C8H6O4
     category: carboxylic_acid
-    aliases: [benzene-1,4-dicarboxylic acid]
+    aliases: ["benzene-1,4-dicarboxylic acid"]
     functional_group_refs: [org-fg:carboxyl]
     structure_ref: null
     teaching_priority: common
