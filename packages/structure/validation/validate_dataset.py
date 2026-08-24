@@ -7,6 +7,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from collections import defaultdict
@@ -63,7 +64,9 @@ def validate_record_chemistry(record: dict) -> list[str]:
             errors.append(f"structure_id is not deterministic for Standard InChI: {sid}")
         derived_key = inchi.InchiToInchiKey(standard_inchi)
         if derived_key != standard_inchikey:
-            errors.append(f"InChIKey mismatch: stored {standard_inchikey!r}, derived {derived_key!r}")
+            errors.append(
+                f"InChIKey mismatch: stored {standard_inchikey!r}, derived {derived_key!r}"
+            )
 
     smiles = record.get("isomeric_smiles") or record.get("canonical_smiles")
     mol = None
@@ -75,13 +78,22 @@ def validate_record_chemistry(record: dict) -> list[str]:
             formula = hill_formula_no_charge(mol)
             charge = sum(atom.GetFormalCharge() for atom in mol.GetAtoms())
             if formula != record.get("molecular_formula"):
-                errors.append(f"formula mismatch: stored {record.get('molecular_formula')!r}, derived {formula!r}")
+                errors.append(
+                    f"formula mismatch: stored {record.get('molecular_formula')!r}, "
+                    f"derived {formula!r}"
+                )
             if charge != record.get("formal_charge"):
-                errors.append(f"charge mismatch: stored {record.get('formal_charge')!r}, derived {charge!r}")
+                errors.append(
+                    f"charge mismatch: stored {record.get('formal_charge')!r}, "
+                    f"derived {charge!r}"
+                )
             if standard_inchi:
                 derived_inchi = inchi.MolToInchi(mol)
                 if derived_inchi != standard_inchi:
-                    errors.append(f"SMILES/InChI mismatch: derived {derived_inchi!r}, stored {standard_inchi!r}")
+                    errors.append(
+                        f"SMILES/InChI mismatch: derived {derived_inchi!r}, "
+                        f"stored {standard_inchi!r}"
+                    )
 
     if mol is None and standard_inchi:
         mol = inchi.MolFromInchi(standard_inchi, sanitize=True, removeHs=False)
@@ -89,12 +101,23 @@ def validate_record_chemistry(record: dict) -> list[str]:
             formula = hill_formula_no_charge(mol)
             charge = sum(atom.GetFormalCharge() for atom in mol.GetAtoms())
             if formula != record.get("molecular_formula"):
-                errors.append(f"InChI formula mismatch: stored {record.get('molecular_formula')!r}, derived {formula!r}")
+                errors.append(
+                    f"InChI formula mismatch: stored {record.get('molecular_formula')!r}, "
+                    f"derived {formula!r}"
+                )
             if charge != record.get("formal_charge"):
-                errors.append(f"InChI charge mismatch: stored {record.get('formal_charge')!r}, derived {charge!r}")
+                errors.append(
+                    f"InChI charge mismatch: stored {record.get('formal_charge')!r}, "
+                    f"derived {charge!r}"
+                )
 
-    if record["structure_scope"] == "formula_unit" and (record.get("canonical_smiles") is not None or record.get("isomeric_smiles") is not None):
-        errors.append("formula_unit seed must not publish salt SMILES as a molecular representation")
+    if record["structure_scope"] == "formula_unit" and (
+        record.get("canonical_smiles") is not None
+        or record.get("isomeric_smiles") is not None
+    ):
+        errors.append(
+            "formula_unit seed must not publish salt SMILES as a molecular representation"
+        )
     return errors
 
 
@@ -122,13 +145,18 @@ def main() -> int:
             continue
         for line_no, record in read_jsonl(path):
             loc = f"{path}:{line_no}"
-            schema_errors = sorted(schema_validator.iter_errors(record), key=lambda err: list(err.path))
+            schema_errors = sorted(
+                schema_validator.iter_errors(record), key=lambda err: list(err.path)
+            )
             for err in schema_errors:
                 errors.append(f"{loc}: schema: {err.message}")
             if schema_errors:
                 continue
             if record["structure_scope"] != expected_scope:
-                errors.append(f"{loc}: scope {record['structure_scope']!r} does not match file {expected_scope!r}")
+                errors.append(
+                    f"{loc}: scope {record['structure_scope']!r} does not match file "
+                    f"{expected_scope!r}"
+                )
             counts[expected_scope] += 1
 
             sid = record["structure_id"]
@@ -166,7 +194,32 @@ def main() -> int:
         manifest_counts = manifest.get("counts", {})
         for scope, count in counts.items():
             if manifest_counts.get(scope) != count:
-                errors.append(f"manifest count mismatch for {scope}: {manifest_counts.get(scope)!r} != {count}")
+                errors.append(
+                    f"manifest count mismatch for {scope}: "
+                    f"{manifest_counts.get(scope)!r} != {count}"
+                )
+        if manifest_counts.get("total") != sum(counts.values()):
+            errors.append(
+                f"manifest total mismatch: {manifest_counts.get('total')!r} "
+                f"!= {sum(counts.values())}"
+            )
+        for relative, expected in manifest.get("files", {}).items():
+            path = PACKAGE_ROOT / "data" / relative
+            if not path.exists():
+                errors.append(f"manifest file is missing: {relative}")
+                continue
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            if expected.get("sha256") != digest:
+                errors.append(
+                    f"manifest sha256 mismatch for {relative}: "
+                    f"{expected.get('sha256')!r} != {digest}"
+                )
+            record_count = len(read_jsonl(path))
+            if expected.get("records") != record_count:
+                errors.append(
+                    f"manifest file record mismatch for {relative}: "
+                    f"{expected.get('records')!r} != {record_count}"
+                )
     else:
         warnings.append("data/manifest.json is missing")
 
@@ -181,7 +234,11 @@ def main() -> int:
         print(f"FAILED: strict mode with {len(warnings)} warning(s)")
         return 1
 
-    print("OK: " + ", ".join(f"{scope}={counts[scope]}" for scope in sorted(counts)) + f"; total={sum(counts.values())}; unique_ids={len(ids)}")
+    print(
+        "OK: "
+        + ", ".join(f"{scope}={counts[scope]}" for scope in sorted(counts))
+        + f"; total={sum(counts.values())}; unique_ids={len(ids)}"
+    )
     return 0
 
 
