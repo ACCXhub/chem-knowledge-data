@@ -1,0 +1,20 @@
+concepts:
+  - id: org-concept:carbon-skeleton-and-bonding
+    name_zh: 碳原子的成键特点与碳骨架
+    category: structure
+    summary_zh: 在高中范围内认识碳原子形成多种共价键并构成链状、支链和环状等碳骨架，是理解有机物结构多样性的基础。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:methane, org-substance:ethene, org-substance:ethyne, org-substance:benzene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:molecular-and-structural-formulas
+    name_zh: 分子式、结构式与结构简式
+    category: structure
+    summary_zh: 分子式描述元素组成而不能唯一确定结构；结构式或结构简式用于表达原子连接关系，同分异构体必须依靠结构信息区分。
+    prerequisite_refs: [org-concept:carbon-skeleton-and-bonding]
+    related_substance_refs: [org-substance:n-butane, org-substance:isobutane, org-substance:glucose, org-substance:fructose]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
