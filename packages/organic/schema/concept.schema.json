@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/concept.schema.json",
+  "title": "Organic Concept Seed Record",
+  "type": "object",
+  "required": ["id", "name_zh", "category", "teaching_priority", "verification_status", "provenance_refs"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^org-concept:[a-z0-9][a-z0-9-]*$"},
+    "name_zh": {"type": "string", "minLength": 1},
+    "category": {
+      "type": "string",
+      "enum": ["structure", "classification", "reaction_type", "identification", "conversion", "polymer", "biomolecule", "method"]
+    },
+    "summary_zh": {"type": ["string", "null"]},
+    "prerequisite_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-concept:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "related_substance_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "teaching_priority": {"type": "string", "enum": ["core", "common", "extended"]},
+    "verification_status": {"type": "string", "enum": ["seed", "source_crosschecked", "reviewed"]},
+    "provenance_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}
