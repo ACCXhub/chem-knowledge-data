@@ -71,7 +71,7 @@
         "items": {"$ref": "#/$defs/provenanceRef"}
       }
     },
-    "review_status": {"enum": ["reviewed", "published"]}
+    "review_status": {"enum": ["candidate", "reviewed", "published"]}
   },
   "$defs": {
     "sourceRef": {

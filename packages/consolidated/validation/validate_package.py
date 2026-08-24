@@ -118,6 +118,8 @@ def main() -> int:
     identities_by_source: dict[str, dict[str, Any]] = {}
     canonical_ids: set[str] = set()
     for record in identity_records:
+        if record.get("entity_kind") != "species":
+            continue
         canonical_id = record.get("canonical_id")
         if canonical_id in canonical_ids:
             errors.append(f"identity-map: duplicate canonical_id {canonical_id}")
@@ -237,6 +239,8 @@ def main() -> int:
                 errors.append(f"{local_id}: polymer formula must use repeat_unit basis")
         elif species["composition_basis"] == "not_applicable":
             errors.append(f"{local_id}: ordinary formula unexpectedly not parsed")
+        if species["review_status"] != "candidate":
+            errors.append(f"{local_id}: preview species must remain candidate")
 
     summary = load_json(generated_dir / "summary.json")
     if summary.get("species") != 50 or summary.get("teaching_projections") != 50:

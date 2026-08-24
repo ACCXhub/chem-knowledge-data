@@ -227,7 +227,7 @@ def build_species() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
                     }
                 ],
                 "field_provenance": fields,
-                "review_status": "reviewed",
+                "review_status": "candidate",
             }
         )
 
