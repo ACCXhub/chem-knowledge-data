@@ -5,7 +5,17 @@ phenomena:
     interpretation_zh: 可作为碳碳双键发生加成反应的典型证据之一，但该现象并非对所有体系都具有唯一鉴别性。
     diagnostic_strength: not_unique
     reaction_refs: [org-reaction:ethene-bromine-addition]
-    experiment_refs: [org-experiment:ethene-properties]
+    experiment_refs: [org-experiment:ethene-properties, org-experiment:functional-group-tests]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:bromine-solution-decolorization-by-alkyne
+    name_zh: 炔烃使溴的颜色褪去
+    observation_zh: 乙炔等炔烃与溴的适当溶液接触时，溴的颜色逐渐变浅直至褪去。
+    interpretation_zh: 用于联系碳碳三键的不饱和性与加成反应；褪色现象本身不是炔烃的唯一鉴别证据。
+    diagnostic_strength: not_unique
+    reaction_refs: []
+    experiment_refs: [org-experiment:ethyne-properties, org-experiment:functional-group-tests]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
 
@@ -35,7 +45,7 @@ phenomena:
     interpretation_zh: 高中范围内用于展示苯酚与溴水反应生成2,4,6-三溴苯酚的典型现象。
     diagnostic_strength: typical
     reaction_refs: [org-reaction:phenol-bromination]
-    experiment_refs: [org-experiment:phenol-properties]
+    experiment_refs: [org-experiment:phenol-properties, org-experiment:functional-group-tests]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
 
@@ -55,7 +65,7 @@ phenomena:
     interpretation_zh: 是高中醛基检验的典型现象之一，但应结合试剂状态、加热条件和样品组成判断。
     diagnostic_strength: typical
     reaction_refs: []
-    experiment_refs: [org-experiment:aldehyde-properties]
+    experiment_refs: [org-experiment:aldehyde-properties, org-experiment:functional-group-tests]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
 
@@ -65,7 +75,7 @@ phenomena:
     interpretation_zh: 是高中范围内醛基还原性相关的典型实验现象之一。
     diagnostic_strength: typical
     reaction_refs: []
-    experiment_refs: [org-experiment:aldehyde-properties]
+    experiment_refs: [org-experiment:aldehyde-properties, org-experiment:functional-group-tests]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
 
@@ -76,5 +86,55 @@ phenomena:
     diagnostic_strength: typical
     reaction_refs: []
     experiment_refs: [org-experiment:carbohydrate-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:lipid-water-phase-separation
+    name_zh: 油脂与水的分层现象
+    observation_zh: 代表性油脂与水混合后通常形成彼此分离的液相或明显的非均相体系。
+    interpretation_zh: 用于联系油脂的疏水性宏观表现，但不能据此区分所有具体脂质结构。
+    diagnostic_strength: supporting
+    reaction_refs: []
+    experiment_refs: [org-experiment:lipid-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:lipid-saponification-emulsifying-product
+    name_zh: 油脂皂化后的表面活性表现
+    observation_zh: 代表性油脂发生碱性水解后，体系中形成高级脂肪酸盐等产物，可表现出与原油脂不同的乳化或分散性质。
+    interpretation_zh: 用于连接皂化反应与肥皂主要成分的结构特点，不把宏观乳化现象作为单一化合物的严格鉴定方法。
+    diagnostic_strength: supporting
+    reaction_refs: [org-reaction:triolein-saponification, org-reaction:tristearin-saponification]
+    experiment_refs: [org-experiment:lipid-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:protein-salting-out
+    name_zh: 蛋白质盐析现象
+    observation_zh: 在适当高浓度盐体系中，部分蛋白质的溶解度降低并从溶液中析出。
+    interpretation_zh: 盐析可作为蛋白质分离性质的教学例子，应与导致蛋白质结构不可逆改变的变性现象区分。
+    diagnostic_strength: typical
+    reaction_refs: []
+    experiment_refs: [org-experiment:protein-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:protein-denaturation
+    name_zh: 蛋白质变性的宏观表现
+    observation_zh: 蛋白质在某些物理或化学因素作用下可能出现凝聚、沉淀或性质明显改变等现象。
+    interpretation_zh: 变性涉及蛋白质高级结构和性质改变，具体表现取决于蛋白质种类及条件，不能将所有沉淀都等同为变性。
+    diagnostic_strength: supporting
+    reaction_refs: []
+    experiment_refs: [org-experiment:protein-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:protein-color-reaction
+    name_zh: 蛋白质的典型颜色反应现象
+    observation_zh: 在课程规定的适当定性实验条件下，某些蛋白质可出现特征性颜色变化。
+    interpretation_zh: 该现象用于联系蛋白质中特定结构单元与定性实验，不作为所有蛋白质的唯一通用鉴别方法。
+    diagnostic_strength: supporting
+    reaction_refs: []
+    experiment_refs: [org-experiment:protein-properties, org-experiment:functional-group-tests]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
