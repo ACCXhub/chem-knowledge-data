@@ -1,0 +1,41 @@
+deferrals:
+  - substance_ref: org-substance:fructose
+    reason: stereochemical_representation_pending
+    note: PubChem exposes multiple fructose representations; canonical stereochemistry will be aligned with packages/structure before fixing one external structure identity.
+
+  - substance_ref: org-substance:alanine
+    reason: stereochemical_representation_pending
+    note: The package seed currently says alanine without fixing D/L stereochemistry; a stereospecific external identity is deferred to structure consolidation.
+
+  - substance_ref: org-substance:starch
+    reason: non_discrete_macromolecular_identity
+    note: Starch is a heterogeneous polysaccharide class/material rather than one small molecule with a single canonical external compound identity.
+
+  - substance_ref: org-substance:cellulose
+    reason: polymeric_identity_requires_structure_policy
+    note: The repeat-unit formula is useful for teaching, while canonical polymer structure/degree of polymerization belongs to the later structure policy.
+
+  - substance_ref: org-substance:polyethylene
+    reason: polymeric_identity_requires_structure_policy
+    note: Polymer identity is represented at teaching repeat-unit level until package consolidation.
+
+  - substance_ref: org-substance:polypropylene
+    reason: polymeric_identity_requires_structure_policy
+    note: Tacticity and polymer structure normalization are outside the organic package's independent scope.
+
+  - substance_ref: org-substance:polyvinyl-chloride
+    reason: polymeric_identity_requires_structure_policy
+    note: Canonical polymer structure is deferred while the teaching identity and monomer relation remain usable.
+
+  - substance_ref: org-substance:polystyrene
+    reason: polymeric_identity_requires_structure_policy
+    note: Canonical polymer structure is deferred while the teaching identity and monomer relation remain usable.
+
+  - substance_ref: org-substance:polyethylene-terephthalate
+    reason: polymeric_identity_requires_structure_policy
+    note: PET is represented by its teaching repeat-unit formula and monomer relation; terminal groups and canonical polymer structure are deferred.
+
+policy:
+  every_substance_requires: crossref_or_explicit_deferral
+  deferrals_are_not_errors: true
+  resolution_phase: consolidation_with_structure_package
