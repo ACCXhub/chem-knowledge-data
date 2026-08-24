@@ -47,3 +47,38 @@ crossrefs:
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
     notes: PubChem confirms ethyl acetate identity, formula C4H8O2 and ethyl ethanoate synonym.
+
+  - substance_ref: org-substance:ethanol
+    pubchem_cid: 702
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms ethanol identity, formula C2H6O and ethyl alcohol synonym.
+
+  - substance_ref: org-substance:acetaldehyde
+    pubchem_cid: 177
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms acetaldehyde/ethanal identity and molecular formula C2H4O.
+
+  - substance_ref: org-substance:toluene
+    pubchem_cid: 1140
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms toluene/methylbenzene identity and molecular formula C7H8.
+
+  - substance_ref: org-substance:formaldehyde
+    pubchem_cid: 712
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms formaldehyde/methanal identity and molecular formula CH2O.
+
+  - substance_ref: org-substance:methanol
+    pubchem_cid: 887
+    chebi_id: CHEBI:17790
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem confirms methanol identity and molecular formula CH4O and exposes ChEBI CHEBI:17790.
