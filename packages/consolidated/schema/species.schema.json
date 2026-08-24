@@ -10,8 +10,10 @@
     "name_zh",
     "formula",
     "charge",
+    "composition_basis",
     "composition",
     "source_refs",
+    "source_states",
     "field_provenance",
     "review_status"
   ],
@@ -22,10 +24,16 @@
     "name_en": {"type": ["string", "null"]},
     "formula": {"type": "string", "minLength": 1},
     "charge": {"type": "integer"},
+    "composition_basis": {"enum": ["whole_species", "repeat_unit", "not_applicable"]},
     "composition": {
-      "type": "object",
-      "minProperties": 1,
-      "additionalProperties": {"type": "integer", "minimum": 1}
+      "oneOf": [
+        {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "integer", "minimum": 1}
+        },
+        {"type": "null"}
+      ]
     },
     "aliases": {
       "type": "array",
@@ -33,10 +41,9 @@
       "uniqueItems": true,
       "default": []
     },
-    "structure_refs": {
+    "structure_links": {
       "type": "array",
-      "items": {"type": "string", "pattern": "^str_[0-9a-f-]{36}$"},
-      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/structureLink"},
       "default": []
     },
     "external_ids": {
@@ -49,6 +56,11 @@
       "minItems": 1,
       "items": {"$ref": "#/$defs/sourceRef"},
       "uniqueItems": true
+    },
+    "source_states": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/sourceState"}
     },
     "field_provenance": {
       "type": "object",
@@ -71,6 +83,16 @@
         "local_id": {"type": "string", "minLength": 1}
       }
     },
+    "sourceState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "local_id", "status"],
+      "properties": {
+        "package": {"enum": ["inorganic", "organic"]},
+        "local_id": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "minLength": 1}
+      }
+    },
     "externalId": {
       "type": "object",
       "additionalProperties": false,
@@ -80,14 +102,28 @@
         "value": {"type": "string", "minLength": 1}
       }
     },
+    "structureLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structure_id", "relation", "evidence"],
+      "properties": {
+        "structure_id": {"type": "string", "pattern": "^str_[0-9a-f-]{36}$"},
+        "relation": {"enum": ["primary_structure", "ion_structure", "formula_unit", "component", "polymorph", "other"]},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
     "provenanceRef": {
       "type": "object",
       "additionalProperties": false,
       "required": ["package", "ref", "granularity"],
       "properties": {
-        "package": {"enum": ["inorganic", "organic", "structure"]},
+        "package": {"enum": ["inorganic", "organic", "structure", "consolidation"]},
         "ref": {"type": "string", "minLength": 1},
-        "granularity": {"enum": ["field", "record", "link"]}
+        "granularity": {"enum": ["field", "record", "link", "derived"]}
       }
     }
   },
@@ -99,6 +135,14 @@
     {
       "if": {"properties": {"entity_type": {"const": "substance"}}, "required": ["entity_type"]},
       "then": {"properties": {"charge": {"const": 0}}}
+    },
+    {
+      "if": {"properties": {"composition_basis": {"enum": ["whole_species", "repeat_unit"]}}, "required": ["composition_basis"]},
+      "then": {"properties": {"composition": {"type": "object", "minProperties": 1}}}
+    },
+    {
+      "if": {"properties": {"composition_basis": {"const": "not_applicable"}}, "required": ["composition_basis"]},
+      "then": {"properties": {"composition": {"type": "null"}}}
     }
   ]
 }

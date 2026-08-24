@@ -4,28 +4,13 @@
   "title": "Senior-high-school teaching projection",
   "type": "object",
   "additionalProperties": false,
-  "required": ["target", "curriculum_scope", "priority", "families", "tags", "palette_groups", "search_terms"],
+  "required": ["target", "curriculum_scope", "priority", "primary_category", "tags", "palette_groups", "search_terms"],
   "properties": {
     "target": {"$ref": "#/$defs/target"},
     "curriculum_scope": {"const": "senior_high_school_cn"},
     "priority": {"enum": ["core", "common", "extended"]},
-    "families": {
-      "type": "array",
-      "minItems": 1,
-      "uniqueItems": true,
-      "items": {
-        "enum": [
-          "simple_substance",
-          "cation",
-          "anion",
-          "oxide",
-          "acid",
-          "base",
-          "salt",
-          "organic_substance",
-          "other"
-        ]
-      }
+    "primary_category": {
+      "enum": ["elemental_substance", "cation", "anion", "oxide", "acid", "base", "salt", "organic", "other"]
     },
     "tags": {
       "type": "array",
@@ -36,23 +21,21 @@
     "palette_groups": {
       "type": "array",
       "items": {
-        "enum": [
-          "common",
-          "elements",
-          "cations",
-          "anions",
-          "simple_substances",
-          "acids",
-          "bases",
-          "salts",
-          "oxides",
-          "organic"
-        ]
+        "enum": ["common", "elements", "cations", "anions", "elemental_substances", "acids", "bases", "salts", "oxides", "organic"]
       },
       "uniqueItems": true,
       "default": []
     },
     "default_rank": {"type": ["integer", "null"], "minimum": 0},
+    "mode_suitability": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "molecular": {"enum": ["primary", "secondary", "hidden"]},
+        "ionic": {"enum": ["primary", "secondary", "hidden"]},
+        "net_ionic": {"enum": ["primary", "secondary", "hidden"]}
+      }
+    },
     "search_terms": {
       "type": "array",
       "items": {"type": "string", "minLength": 1},

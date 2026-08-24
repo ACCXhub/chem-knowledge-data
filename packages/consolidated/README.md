@@ -1,28 +1,40 @@
-# Consolidated knowledge package
+# Consolidated chemistry knowledge package
 
-`packages/consolidated/` 是三个源数据包完成后面向 `chem-wiki` 的统一消费层。
+`packages/consolidated/` is the consumer-ready integration layer for `chem-wiki`.
 
-当前阶段先冻结跨包身份、去重、provenance、Reaction 参与者解析和高中教学投影契约；`packages/inorganic/**`、`packages/organic/**`、`packages/structure/**` 都作为只读输入，不在这里反向修补。
+It does not replace or rewrite the three source packages. It reads their released/stable boundaries and converges cross-package identity, provenance, teaching projection, search projection, and release mapping here.
 
-## Canonical ownership
+## Inputs
 
-- Species/Reaction 等跨包统一身份与 consumer-ready 记录：本包拥有。
-- Structure canonical identity：继续由 `packages/structure/` 拥有，本包只引用 published `structure_id`。
-- 包内原始 ID：继续属于各源包，本包通过 identity map 保留来源映射。
-- 用户收藏、最近使用、手动排序等个性化状态：属于应用层，不进入本包。
+- `packages/inorganic/` — read-only until `READY_FOR_CONSOLIDATION`
+- `packages/organic/` — completed v0.1 read-only input
+- `packages/structure/` — published canonical structure input; published `structure_id` values remain authoritative
 
-## Planned release surface
+## Ownership
 
-- `schema/identity-map.schema.json`：源包 ID → 统一 UUID 的显式映射。
-- `schema/species.schema.json`：统一 Ion/Substance 消费记录。
-- `schema/reaction.schema.json`：一等 Reaction 记录及 participant 引用。
-- `schema/teaching-projection.schema.json`：高中分类、默认优先级、搜索和 Palette 投影。
-- `data/`：仅在输入包达到 consolidation gate 后生成正式发布数据和 manifest。
+Current owner: `chatgpt-web-consolidation`.
 
-## Current input state
+The active write claim is `coordination/claims/consolidation.yaml`.
 
-- Organic：v0.1 complete，只读。
-- Structure：published，只读消费 published + valid 记录。
-- Inorganic：仍在 active 建设；完整发布等待其进入 `READY_FOR_CONSOLIDATION`。
+Source-package files remain owned by their package workstreams. Consolidation fixes cross-package inconsistencies through mappings and release projections rather than silently editing source data.
 
-统一规则见 `CONTRACT.md`。
+## Canonical responsibilities
+
+This package owns:
+
+- consolidated species identity and source-ID crosswalks;
+- organic/inorganic duplicate resolution;
+- links from species to published Structure records;
+- provenance aggregation without erasing source provenance;
+- high-school teaching categories and filter tags;
+- search/index projection for Chinese name, formula, aliases, English names, and stable external IDs;
+- Equation Lab / Reaction Builder consumer projections such as default palette priority and equation-mode suitability;
+- consumer-ready release manifests and validation results.
+
+Runtime user preferences such as pinned items, manual ordering, hidden items, recent usage, and usage frequency are application data and are not stored here.
+
+## Release principle
+
+Source records remain traceable. A consolidated record never overwrites its origin IDs; every merged entity keeps an explicit crosswalk back to package-local IDs and provenance.
+
+The first consolidated release is produced only after the inorganic package reaches `READY_FOR_CONSOLIDATION` and the integration validation gates in `CONTRACT.md` pass.

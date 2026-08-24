@@ -1,0 +1,32 @@
+{
+  "status": "partial_preview",
+  "consumer_release": false,
+  "input_snapshot": {
+    "main_commit": "105c196105fdd419911b60cae2c2b45410698c99",
+    "organic": {
+      "version": "0.1.0",
+      "tree_sha": "fa47a51879bc0ae3cce44c143616a58c2177acfb",
+      "status": "complete"
+    },
+    "structure": {
+      "tree_sha": "3d939915c8d7487478fd707db3970303d8561250",
+      "status": "published"
+    },
+    "inorganic": {
+      "tree_sha": "8b1b163ab122fd871e304a3d8902f412a0f72462",
+      "status": "active",
+      "release_ready": false
+    }
+  },
+  "resolved": {
+    "organic_species_identity_mappings": 50,
+    "organic_to_structure_links": 7
+  },
+  "pending": [
+    "full inorganic source boundary",
+    "cross-package organic/inorganic duplicate resolution",
+    "full species materialization",
+    "reaction participant resolution",
+    "consumer release manifest"
+  ]
+}
