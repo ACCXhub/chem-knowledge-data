@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/reaction.schema.json",
+  "title": "Organic Reaction Seed Record",
+  "type": "object",
+  "required": [
+    "id",
+    "name_zh",
+    "reaction_class",
+    "participants",
+    "equation_status",
+    "teaching_priority",
+    "verification_status",
+    "provenance_refs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^org-reaction:[a-z0-9][a-z0-9-]*$"
+    },
+    "name_zh": {"type": "string", "minLength": 1},
+    "reaction_class": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "substitution",
+          "addition",
+          "elimination",
+          "oxidation",
+          "reduction",
+          "esterification",
+          "hydrolysis",
+          "addition_polymerization",
+          "condensation_polymerization",
+          "fermentation",
+          "other"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "participants": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["role", "coefficient"],
+        "properties": {
+          "role": {"type": "string", "enum": ["reactant", "product", "catalyst"]},
+          "coefficient": {"type": ["integer", "string"], "description": "Integer for ordinary equations; symbolic coefficient such as n is allowed for polymerization."},
+          "substance_ref": {"type": ["string", "null"], "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"},
+          "external_species_key": {"type": ["string", "null"], "description": "Temporary cross-package species key resolved during consolidation."},
+          "formula_literal": {"type": ["string", "null"]},
+          "phase": {"type": ["string", "null"], "enum": ["s", "l", "g", "aq", null]}
+        },
+        "oneOf": [
+          {"required": ["substance_ref"]},
+          {"required": ["external_species_key"]},
+          {"required": ["formula_literal"]}
+        ],
+        "additionalProperties": false
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "equation": {"type": ["string", "null"]},
+    "equation_status": {
+      "type": "string",
+      "enum": ["balanced_seed", "transformation_only", "pending_cross_package_resolution"]
+    },
+    "phenomenon_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-phenomenon:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "experiment_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-experiment:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "concept_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-concept:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "mechanism_status": {
+      "type": "string",
+      "enum": ["not_modeled", "reviewed_external_only"],
+      "default": "not_modeled"
+    },
+    "teaching_priority": {"type": "string", "enum": ["core", "common", "extended"]},
+    "verification_status": {"type": "string", "enum": ["seed", "source_crosschecked", "reviewed"]},
+    "provenance_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
