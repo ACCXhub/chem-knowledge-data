@@ -1,0 +1,264 @@
+classes:
+  - id: org-class:hydrocarbon
+    name_zh: 烃
+    name_en: hydrocarbon
+    class_kind: structural_family
+    parent_refs: []
+    representative_substance_refs: [org-substance:methane, org-substance:ethene, org-substance:ethyne, org-substance:benzene]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 仅含碳、氢两种元素的有机物总类；子类由结构特征继续区分。
+
+  - id: org-class:alkane
+    name_zh: 烷烃
+    name_en: alkane
+    class_kind: structural_family
+    parent_refs: [org-class:hydrocarbon]
+    representative_substance_refs: [org-substance:methane, org-substance:ethane, org-substance:propane, org-substance:n-butane, org-substance:isobutane]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:alkene
+    name_zh: 烯烃
+    name_en: alkene
+    class_kind: structural_family
+    parent_refs: [org-class:hydrocarbon]
+    representative_substance_refs: [org-substance:ethene, org-substance:propene]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 碳碳双键作为结构特征记录于 org-feature:carbon-carbon-double-bond，不强行等同于官能团实体。
+
+  - id: org-class:alkyne
+    name_zh: 炔烃
+    name_en: alkyne
+    class_kind: structural_family
+    parent_refs: [org-class:hydrocarbon]
+    representative_substance_refs: [org-substance:ethyne]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 碳碳三键作为结构特征记录于 org-feature:carbon-carbon-triple-bond。
+
+  - id: org-class:aromatic-hydrocarbon
+    name_zh: 芳香烃
+    name_en: aromatic hydrocarbon
+    class_kind: structural_family
+    parent_refs: [org-class:hydrocarbon]
+    representative_substance_refs: [org-substance:benzene, org-substance:toluene]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 高中 seed 以苯及其同系物为代表，不在此包内定义芳香性计算规则。
+
+  - id: org-class:hydrocarbon-derivative
+    name_zh: 烃的衍生物
+    name_en: hydrocarbon derivative
+    class_kind: functional_family
+    parent_refs: []
+    representative_substance_refs: [org-substance:bromoethane, org-substance:ethanol, org-substance:phenol, org-substance:acetaldehyde, org-substance:acetic-acid, org-substance:ethyl-acetate]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 教学分类节点，不作为单一分子实体。
+
+  - id: org-class:haloalkane
+    name_zh: 卤代烃
+    name_en: haloalkane
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:bromoethane, org-substance:chloromethane]
+    functional_group_refs: [org-fg:halo]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:alcohol
+    name_zh: 醇
+    name_en: alcohol
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:methanol, org-substance:ethanol, org-substance:ethylene-glycol, org-substance:glycerol]
+    functional_group_refs: [org-fg:hydroxyl]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:phenol
+    name_zh: 酚
+    name_en: phenol family
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:phenol, org-substance:2-4-6-tribromophenol]
+    functional_group_refs: [org-fg:phenolic-hydroxyl]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 与普通醇羟基分类分开，避免仅按 -OH 字面模式合并。
+
+  - id: org-class:aldehyde
+    name_zh: 醛
+    name_en: aldehyde
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:formaldehyde, org-substance:acetaldehyde]
+    functional_group_refs: [org-fg:aldehyde]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:ketone
+    name_zh: 酮
+    name_en: ketone
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:acetone]
+    functional_group_refs: [org-fg:ketone-carbonyl]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:carboxylic-acid
+    name_zh: 羧酸
+    name_en: carboxylic acid
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:formic-acid, org-substance:acetic-acid, org-substance:benzoic-acid]
+    functional_group_refs: [org-fg:carboxyl]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:ester
+    name_zh: 酯
+    name_en: ester
+    class_kind: functional_family
+    parent_refs: [org-class:hydrocarbon-derivative]
+    representative_substance_refs: [org-substance:ethyl-acetate]
+    functional_group_refs: [org-fg:ester]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:carbohydrate
+    name_zh: 糖类
+    name_en: carbohydrate
+    class_kind: biomolecule_family
+    parent_refs: []
+    representative_substance_refs: [org-substance:glucose, org-substance:fructose, org-substance:sucrose, org-substance:starch, org-substance:cellulose]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 类别关系不能仅靠经验式判断。
+
+  - id: org-class:monosaccharide
+    name_zh: 单糖
+    name_en: monosaccharide
+    class_kind: biomolecule_family
+    parent_refs: [org-class:carbohydrate]
+    representative_substance_refs: [org-substance:glucose, org-substance:fructose]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: null
+
+  - id: org-class:disaccharide
+    name_zh: 二糖
+    name_en: disaccharide
+    class_kind: biomolecule_family
+    parent_refs: [org-class:carbohydrate]
+    representative_substance_refs: [org-substance:sucrose]
+    functional_group_refs: []
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+    notes: null
+
+  - id: org-class:polysaccharide
+    name_zh: 多糖
+    name_en: polysaccharide
+    class_kind: biomolecule_family
+    parent_refs: [org-class:carbohydrate]
+    representative_substance_refs: [org-substance:starch, org-substance:cellulose]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:amino-acid
+    name_zh: 氨基酸
+    name_en: amino acid
+    class_kind: biomolecule_family
+    parent_refs: []
+    representative_substance_refs: [org-substance:glycine, org-substance:alanine]
+    functional_group_refs: [org-fg:amino, org-fg:carboxyl]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: null
+
+  - id: org-class:protein
+    name_zh: 蛋白质
+    name_en: protein
+    class_kind: biomolecule_family
+    parent_refs: []
+    representative_substance_refs: []
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+    notes: 作为生物大分子类别节点，不伪造单一 formula 或单一 canonical Substance。
+
+  - id: org-class:lipid
+    name_zh: 油脂
+    name_en: fats and oils
+    class_kind: biomolecule_family
+    parent_refs: []
+    representative_substance_refs: []
+    functional_group_refs: [org-fg:ester]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 高中教学中的油脂是物质类别，不应伪装成一个固定分子式的 Substance。
+
+  - id: org-class:nucleic-acid
+    name_zh: 核酸
+    name_en: nucleic acid
+    class_kind: biomolecule_family
+    parent_refs: []
+    representative_substance_refs: []
+    functional_group_refs: []
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 生物大分子类别节点，具体核苷酸/聚合结构留后续扩展。
+
+  - id: org-class:synthetic-polymer
+    name_zh: 合成高分子
+    name_en: synthetic polymer
+    class_kind: material_family
+    parent_refs: []
+    representative_substance_refs: [org-substance:polyethylene, org-substance:polypropylene, org-substance:polyvinyl-chloride, org-substance:polystyrene]
+    functional_group_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 聚合物身份与重复单元关系需在结构包对齐后进一步标准化。
