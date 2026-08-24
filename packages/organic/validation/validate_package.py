@@ -47,8 +47,10 @@ def main() -> int:
     dataset_specs = [
         ("substance", DATA_DIR / "core_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
         ("substance", DATA_DIR / "extended_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
+        ("substance", DATA_DIR / "polymer_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
         ("functional_group", DATA_DIR / "functional_groups.yaml", "functional_groups", SCHEMA_DIR / "functional_group.schema.json"),
         ("reaction", DATA_DIR / "reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
+        ("reaction", DATA_DIR / "polymer_reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
         ("concept", DATA_DIR / "concepts.yaml", "concepts", SCHEMA_DIR / "concept.schema.json"),
         ("phenomenon", DATA_DIR / "phenomena.yaml", "phenomena", SCHEMA_DIR / "phenomenon.schema.json"),
         ("experiment", DATA_DIR / "experiments.yaml", "experiments", SCHEMA_DIR / "experiment.schema.json"),
