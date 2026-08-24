@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/chemical_class.schema.json",
+  "title": "Organic Chemical Class Seed Record",
+  "type": "object",
+  "required": ["id", "name_zh", "class_kind", "teaching_priority", "verification_status", "provenance_refs"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^org-class:[a-z0-9][a-z0-9-]*$"},
+    "name_zh": {"type": "string", "minLength": 1},
+    "name_en": {"type": ["string", "null"]},
+    "class_kind": {"type": "string", "enum": ["structural_family", "functional_family", "biomolecule_family", "material_family"]},
+    "parent_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-class:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "representative_substance_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "functional_group_refs": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^org-fg:[a-z0-9][a-z0-9-]*$"},
+      "uniqueItems": true
+    },
+    "teaching_priority": {"type": "string", "enum": ["core", "common", "extended"]},
+    "verification_status": {"type": "string", "enum": ["seed", "source_crosschecked", "reviewed"]},
+    "provenance_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
