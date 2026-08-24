@@ -1,0 +1,322 @@
+records:
+  - id: ion:hydrogen
+    entity_type: ion
+    name_zh: 氢离子
+    name_en: hydrogen ion
+    formula: H
+    charge: 1
+    composition: {H: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: [氢正离子]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:sodium
+    entity_type: ion
+    name_zh: 钠离子
+    name_en: sodium ion
+    formula: Na
+    charge: 1
+    composition: {Na: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:potassium
+    entity_type: ion
+    name_zh: 钾离子
+    name_en: potassium ion
+    formula: K
+    charge: 1
+    composition: {K: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:silver
+    entity_type: ion
+    name_zh: 银离子
+    name_en: silver ion
+    formula: Ag
+    charge: 1
+    composition: {Ag: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:ammonium
+    entity_type: ion
+    name_zh: 铵根离子
+    name_en: ammonium
+    formula: NH4
+    charge: 1
+    composition: {N: 1, H: 4}
+    category: polyatomic_cation
+    common_phases: [aq]
+    aliases_zh: [铵根]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:magnesium
+    entity_type: ion
+    name_zh: 镁离子
+    name_en: magnesium ion
+    formula: Mg
+    charge: 2
+    composition: {Mg: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:calcium
+    entity_type: ion
+    name_zh: 钙离子
+    name_en: calcium ion
+    formula: Ca
+    charge: 2
+    composition: {Ca: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:barium
+    entity_type: ion
+    name_zh: 钡离子
+    name_en: barium ion
+    formula: Ba
+    charge: 2
+    composition: {Ba: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:zinc
+    entity_type: ion
+    name_zh: 锌离子
+    name_en: zinc ion
+    formula: Zn
+    charge: 2
+    composition: {Zn: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: common
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:copper-2
+    entity_type: ion
+    name_zh: 铜(II)离子
+    name_en: copper(2+) ion
+    formula: Cu
+    charge: 2
+    composition: {Cu: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: [铜离子]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:iron-2
+    entity_type: ion
+    name_zh: 亚铁离子
+    name_en: iron(2+) ion
+    formula: Fe
+    charge: 2
+    composition: {Fe: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: [铁(II)离子]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:iron-3
+    entity_type: ion
+    name_zh: 铁(III)离子
+    name_en: iron(3+) ion
+    formula: Fe
+    charge: 3
+    composition: {Fe: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: [铁离子]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:aluminium
+    entity_type: ion
+    name_zh: 铝离子
+    name_en: aluminium ion
+    formula: Al
+    charge: 3
+    composition: {Al: 1}
+    category: monatomic_cation
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:chloride
+    entity_type: ion
+    name_zh: 氯离子
+    name_en: chloride
+    formula: Cl
+    charge: -1
+    composition: {Cl: 1}
+    category: monatomic_anion
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:bromide
+    entity_type: ion
+    name_zh: 溴离子
+    name_en: bromide
+    formula: Br
+    charge: -1
+    composition: {Br: 1}
+    category: monatomic_anion
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: common
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:iodide
+    entity_type: ion
+    name_zh: 碘离子
+    name_en: iodide
+    formula: I
+    charge: -1
+    composition: {I: 1}
+    category: monatomic_anion
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: common
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:hydroxide
+    entity_type: ion
+    name_zh: 氢氧根离子
+    name_en: hydroxide
+    formula: OH
+    charge: -1
+    composition: {O: 1, H: 1}
+    category: polyatomic_anion
+    common_phases: [aq]
+    aliases_zh: [氢氧根]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:nitrate
+    entity_type: ion
+    name_zh: 硝酸根离子
+    name_en: nitrate
+    formula: NO3
+    charge: -1
+    composition: {N: 1, O: 3}
+    category: polyatomic_anion
+    common_phases: [aq]
+    aliases_zh: [硝酸根]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:hydrogen-carbonate
+    entity_type: ion
+    name_zh: 碳酸氢根离子
+    name_en: hydrogencarbonate
+    formula: HCO3
+    charge: -1
+    composition: {H: 1, C: 1, O: 3}
+    category: polyatomic_anion
+    common_phases: [aq]
+    aliases_zh: [碳酸氢根, 重碳酸根]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:sulfate
+    entity_type: ion
+    name_zh: 硫酸根离子
+    name_en: sulfate
+    formula: SO4
+    charge: -2
+    composition: {S: 1, O: 4}
+    category: polyatomic_anion
+    common_phases: [aq]
+    aliases_zh: [硫酸根]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:carbonate
+    entity_type: ion
+    name_zh: 碳酸根离子
+    name_en: carbonate
+    formula: CO3
+    charge: -2
+    composition: {C: 1, O: 3}
+    category: polyatomic_anion
+    common_phases: [aq]
+    aliases_zh: [碳酸根]
+    teaching_priority: core
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:sulfite
+    entity_type: ion
+    name_zh: 亚硫酸根离子
+    name_en: sulfite
+    formula: SO3
+    charge: -2
+    composition: {S: 1, O: 3}
+    category: polyatomic_anion
+    common_phases: [aq]
+    aliases_zh: [亚硫酸根]
+    teaching_priority: common
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
+
+  - id: ion:sulfide
+    entity_type: ion
+    name_zh: 硫离子
+    name_en: sulfide
+    formula: S
+    charge: -2
+    composition: {S: 1}
+    category: monatomic_anion
+    common_phases: [aq]
+    aliases_zh: []
+    teaching_priority: common
+    source_refs: [moe-high-school-chemistry-standard-2020, chebi, pubchem]
+    status: candidate
