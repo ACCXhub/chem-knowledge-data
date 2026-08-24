@@ -1,0 +1,39 @@
+sources:
+  - id: moe-hs-chem-2020
+    name: 普通高中化学课程标准（2017年版2020年修订）
+    organization: 中华人民共和国教育部
+    role: curriculum_scope
+    url: https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html
+    use: >-
+      Determines the high-school teaching scope and priority boundary. It is not
+      used as the sole source for molecular identity or structure fields.
+
+  - id: chebi
+    name: ChEBI - Chemical Entities of Biological Interest
+    organization: EMBL-EBI
+    role: chemical_identity_and_ontology_reference
+    url: https://www.ebi.ac.uk/chebi/
+    license: CC-BY-4.0
+    use: >-
+      Reference for stable chemical entities, classes, nomenclature, formula,
+      charge, synonyms and ontology relations when applicable. Preserve ChEBI
+      identifiers and attribution for imported claims.
+
+  - id: pubchem
+    name: PubChem
+    organization: NCBI/NLM/NIH
+    role: factual_enrichment_and_crosscheck
+    url: https://pubchem.ncbi.nlm.nih.gov/
+    api: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
+    use: >-
+      Cross-check and enrich molecular formula, identifiers, names and other
+      objective compound properties through PUG REST. Preserve field-level
+      provenance because PubChem content is aggregated from many contributors
+      with source-specific licensing.
+
+policy:
+  teaching_scope_owner: moe-hs-chem-2020
+  preferred_identity_reference: chebi
+  factual_crosscheck: pubchem
+  provenance_required: true
+  copy_long_form_text: false
