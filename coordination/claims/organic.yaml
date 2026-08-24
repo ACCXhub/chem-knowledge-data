@@ -1,0 +1,11 @@
+package: organic
+status: active
+owner: chatgpt-web-organic
+started_at: 2026-08-24T17:28:00+08:00
+paths:
+  - packages/organic/**
+write_policy: exclusive
+note: >-
+  This chat is actively building the organic package. Other concurrent chats may
+  inspect and reference packages/organic, but should not modify files under it
+  until this claim is released or the user explicitly reassigns ownership.
