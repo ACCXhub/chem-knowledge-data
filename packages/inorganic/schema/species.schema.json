@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/inorganic/schema/species.schema.json",
+  "title": "Inorganic chemical species candidate",
+  "type": "object",
+  "required": ["id", "entity_type", "name_zh", "formula", "composition", "status"],
+  "properties": {
+    "id": {"type": "string", "minLength": 3},
+    "entity_type": {"enum": ["ion", "substance"]},
+    "name_zh": {"type": "string", "minLength": 1},
+    "name_en": {"type": ["string", "null"]},
+    "formula": {"type": "string", "minLength": 1},
+    "charge": {"type": "integer", "default": 0},
+    "composition": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
+    "category": {"type": ["string", "null"]},
+    "common_phases": {
+      "type": "array",
+      "items": {"enum": ["s", "l", "g", "aq"]},
+      "uniqueItems": true
+    },
+    "aliases_zh": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "teaching_priority": {"enum": ["core", "common", "extended"]},
+    "source_refs": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "status": {"enum": ["candidate", "reviewed", "published"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"entity_type": {"const": "ion"}}},
+      "then": {"required": ["charge"]}
+    }
+  ],
+  "additionalProperties": false
+}
