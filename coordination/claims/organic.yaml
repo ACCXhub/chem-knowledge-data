@@ -1,19 +1,18 @@
 package: organic
-status: active
+status: complete
 owner: chatgpt-web-organic
 started_at: 2026-08-24T17:28:00+08:00
-updated_at: 2026-08-24T17:33:00+08:00
+completed_at: 2026-08-24T18:08:00+08:00
 paths:
   - packages/organic/**
-write_policy: exclusive
-current_focus:
-  - organic substance taxonomy
-  - functional groups and structural-feature references
-  - reaction network
-  - experiment and phenomenon catalog
-  - concept/teaching relations
-  - package-local validation
+  - .github/workflows/validate-organic.yml
+write_policy: read_only_until_consolidation
+release:
+  version: 0.1.0
+  validation_run_id: 32715190827
+  validation_conclusion: success
 note: >-
-  This chat is actively building the organic package. Other concurrent chats may
-  inspect and reference packages/organic, but should not modify files under it
-  until this claim is released or the user explicitly reassigns ownership.
+  Organic v0.1 is complete. Other concurrent chats may inspect and consume this
+  package but should not modify packages/organic/** or its validation workflow
+  until the planned consolidation phase, unless the user explicitly reassigns
+  ownership.
