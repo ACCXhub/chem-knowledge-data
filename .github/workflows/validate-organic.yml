@@ -1,0 +1,36 @@
+name: Validate organic package
+
+on:
+  push:
+    paths:
+      - "packages/organic/**"
+      - ".github/workflows/validate-organic.yml"
+  pull_request:
+    paths:
+      - "packages/organic/**"
+      - ".github/workflows/validate-organic.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-organic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install validator dependencies
+        run: python -m pip install -r packages/organic/validation/requirements.txt
+
+      - name: Compile validator
+        run: python -m compileall -q packages/organic/validation
+
+      - name: Validate organic package
+        run: python packages/organic/validation/validate_package.py
