@@ -31,9 +31,19 @@ sources:
       provenance because PubChem content is aggregated from many contributors
       with source-specific licensing.
 
+  - id: manual-seed-2026-08
+    name: Organic package manual seed
+    organization: chem-knowledge-data
+    role: provisional_seed
+    use: >-
+      Initial high-school organic scope and basic formula/category records used
+      to bootstrap the package. These records remain status=seed until each
+      factual field is cross-checked against named external sources.
+
 policy:
   teaching_scope_owner: moe-hs-chem-2020
   preferred_identity_reference: chebi
   factual_crosscheck: pubchem
   provenance_required: true
+  seed_source: manual-seed-2026-08
   copy_long_form_text: false
