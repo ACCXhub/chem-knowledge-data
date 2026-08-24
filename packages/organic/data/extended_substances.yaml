@@ -1,0 +1,144 @@
+records:
+  - id: org-substance:chloromethane
+    name_zh: 氯甲烷
+    name_en: chloromethane
+    formula: CH3Cl
+    category: haloalkane
+    aliases: [methyl chloride]
+    functional_group_refs: [org-fg:halo]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:1-2-dibromoethane
+    name_zh: 1,2-二溴乙烷
+    name_en: 1,2-dibromoethane
+    formula: C2H4Br2
+    category: haloalkane
+    aliases: [ethylene dibromide]
+    functional_group_refs: [org-fg:halo]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:bromobenzene
+    name_zh: 溴苯
+    name_en: bromobenzene
+    formula: C6H5Br
+    category: other_organic
+    aliases: []
+    functional_group_refs: [org-fg:halo]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:nitrobenzene
+    name_zh: 硝基苯
+    name_en: nitrobenzene
+    formula: C6H5NO2
+    category: other_organic
+    aliases: []
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:benzoic-acid
+    name_zh: 苯甲酸
+    name_en: benzoic acid
+    formula: C7H6O2
+    category: carboxylic_acid
+    aliases: [benzenecarboxylic acid]
+    functional_group_refs: [org-fg:carboxyl]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:2-4-6-tribromophenol
+    name_zh: 2,4,6-三溴苯酚
+    name_en: 2,4,6-tribromophenol
+    formula: C6H3Br3O
+    category: phenol
+    aliases: []
+    functional_group_refs: [org-fg:phenolic-hydroxyl, org-fg:halo]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:chloroethene
+    name_zh: 氯乙烯
+    name_en: chloroethene
+    formula: C2H3Cl
+    category: haloalkene
+    aliases: [vinyl chloride]
+    functional_group_refs: [org-fg:halo]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:styrene
+    name_zh: 苯乙烯
+    name_en: styrene
+    formula: C8H8
+    category: other_organic
+    aliases: [ethenylbenzene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:polyethylene
+    name_zh: 聚乙烯
+    name_en: polyethylene
+    formula: (C2H4)n
+    category: polymer
+    aliases: [PE]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:polypropylene
+    name_zh: 聚丙烯
+    name_en: polypropylene
+    formula: (C3H6)n
+    category: polymer
+    aliases: [PP]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:polyvinyl-chloride
+    name_zh: 聚氯乙烯
+    name_en: polyvinyl chloride
+    formula: (C2H3Cl)n
+    category: polymer
+    aliases: [PVC]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-substance:polystyrene
+    name_zh: 聚苯乙烯
+    name_en: polystyrene
+    formula: (C8H8)n
+    category: polymer
+    aliases: [PS]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08]
