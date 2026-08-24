@@ -1,0 +1,49 @@
+crossrefs:
+  - substance_ref: org-substance:methane
+    pubchem_cid: 297
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms methane identity and formula CH4.
+
+  - substance_ref: org-substance:ethene
+    pubchem_cid: 6325
+    chebi_id: CHEBI:18153
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem lists ethene/ethylene as CID 6325 and links ChEBI CHEBI:18153.
+
+  - substance_ref: org-substance:ethyne
+    pubchem_cid: 6326
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms acetylene/ethyne identity and formula C2H2.
+
+  - substance_ref: org-substance:benzene
+    pubchem_cid: 241
+    chebi_id: CHEBI:16716
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem lists benzene as CID 241 and links ChEBI CHEBI:16716.
+
+  - substance_ref: org-substance:acetic-acid
+    pubchem_cid: 176
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms acetic acid identity and molecular formula C2H4O2.
+
+  - substance_ref: org-substance:phenol
+    pubchem_cid: 996
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms phenol identity and molecular formula C6H6O.
+
+  - substance_ref: org-substance:ethyl-acetate
+    pubchem_cid: 8857
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms ethyl acetate identity, formula C4H8O2 and ethyl ethanoate synonym.
