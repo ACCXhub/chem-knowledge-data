@@ -1,0 +1,23 @@
+package: organic
+version: 0.1.0
+scope: senior_high_school_cn
+status: candidate
+owners:
+  data: packages/organic/**
+  canonical_structure: packages/structure/**
+  inorganic_species: packages/inorganic/**
+entrypoints:
+  curriculum: data/curriculum_coverage.yaml
+  coverage_evidence: data/coverage_evidence.yaml
+  sources: sources/registry.yaml
+  validator: validation/validate_package.py
+quality:
+  provenance_required: true
+  formula_is_not_identity: true
+  mechanism_inference: false
+  canonical_structure_deferred: true
+completion_gate:
+  - all curriculum coverage keys have package-local evidence
+  - local references and provenance validate
+  - representative discrete identities are source-crosschecked where practical
+  - GitHub Actions organic validation is green
