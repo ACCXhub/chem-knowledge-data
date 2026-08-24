@@ -1,0 +1,156 @@
+coverage_evidence:
+  topics:
+    carbon_bonding_and_skeleton:
+      status: covered
+      refs: [org-concept:carbon-skeleton-and-bonding]
+    molecular_formula_and_structural_formula:
+      status: covered
+      refs: [org-concept:molecular-and-structural-formulas]
+    homologous_series:
+      status: covered
+      refs: [org-concept:homologous-series]
+    isomerism:
+      status: covered
+      refs: [org-concept:isomerism]
+    simple_organic_nomenclature:
+      status: covered
+      refs: [org-concept:organic-nomenclature]
+    functional_groups:
+      status: covered
+      refs: [org-concept:functional-group]
+    structure_determination_intro:
+      status: covered
+      refs: [org-concept:structure-determination-intro]
+    addition_polymerization:
+      status: covered
+      refs: [org-concept:addition-polymerization, org-reaction:ethene-polymerization]
+    condensation_polymerization:
+      status: covered
+      refs: [org-concept:condensation-polymerization, org-reaction:pet-polycondensation, org-reaction:phenol-formaldehyde-condensation]
+    monomer_repeat_unit_relation:
+      status: covered
+      refs: [org-concept:monomer-repeat-unit]
+
+  families:
+    alkane:
+      status: covered
+      refs: [org-class:alkane, org-substance:methane]
+    alkene:
+      status: covered
+      refs: [org-class:alkene, org-substance:ethene]
+    alkyne:
+      status: covered
+      refs: [org-class:alkyne, org-substance:ethyne]
+    aromatic_hydrocarbon:
+      status: covered
+      refs: [org-class:aromatic-hydrocarbon, org-substance:benzene, org-substance:toluene]
+    haloalkane:
+      status: covered
+      refs: [org-class:haloalkane, org-substance:bromoethane]
+    alcohol:
+      status: covered
+      refs: [org-class:alcohol, org-substance:ethanol]
+    phenol:
+      status: covered
+      refs: [org-class:phenol, org-substance:phenol]
+    aldehyde:
+      status: covered
+      refs: [org-class:aldehyde, org-substance:acetaldehyde]
+    ketone:
+      status: covered
+      refs: [org-class:ketone, org-substance:acetone]
+    carboxylic_acid:
+      status: covered
+      refs: [org-class:carboxylic-acid, org-substance:acetic-acid]
+    ester:
+      status: covered
+      refs: [org-class:ester, org-substance:ethyl-acetate]
+    carbohydrate:
+      status: covered
+      refs: [org-class:carbohydrate, org-substance:glucose, org-substance:sucrose, org-substance:starch, org-substance:cellulose]
+    amino_acid:
+      status: covered
+      refs: [org-class:amino-acid, org-substance:glycine, org-substance:alanine]
+    protein:
+      status: covered
+      refs: [org-class:protein, org-concept:protein-composition-structure-properties]
+    lipid:
+      status: covered
+      refs: [org-class:lipid, org-class:triglyceride, org-substance:triolein, org-substance:tristearin]
+    nucleic_acid:
+      status: covered
+      refs: [org-class:nucleic-acid, org-concept:nucleic-acid-overview]
+
+  reaction_classes:
+    substitution:
+      status: covered
+      refs: [org-concept:substitution-reaction, org-reaction:methane-monochlorination, org-reaction:benzene-bromination]
+    addition:
+      status: covered
+      refs: [org-concept:addition-reaction, org-reaction:ethene-bromine-addition, org-reaction:ethene-hydrogenation]
+    oxidation:
+      status: covered
+      refs: [org-concept:oxidation-of-organic-compounds, org-reaction:ethanol-catalytic-oxidation, org-reaction:acetaldehyde-oxidation-to-acetic-acid]
+    polymerization:
+      status: covered
+      refs: [org-concept:addition-polymerization, org-concept:condensation-polymerization]
+    elimination:
+      status: covered
+      refs: [org-concept:elimination-reaction, org-reaction:bromoethane-elimination, org-reaction:ethanol-dehydration-to-ethene]
+    esterification:
+      status: covered
+      refs: [org-concept:esterification, org-reaction:acetic-acid-ethanol-esterification]
+    hydrolysis:
+      status: covered
+      refs: [org-concept:ester-hydrolysis, org-reaction:ethyl-acetate-acid-hydrolysis, org-reaction:triolein-saponification]
+
+  experiments:
+    methane_properties:
+      status: covered
+      refs: [org-experiment:methane-properties]
+    ethene_properties:
+      status: covered
+      refs: [org-experiment:ethene-properties]
+    ethyne_properties:
+      status: covered
+      refs: [org-experiment:ethyne-properties]
+    benzene_and_homologue_properties:
+      status: covered
+      refs: [org-experiment:benzene-properties]
+    haloalkane_properties:
+      status: covered
+      refs: [org-experiment:haloalkane-properties]
+    ethanol_and_acetic_acid_properties:
+      status: covered
+      refs: [org-experiment:ethanol-properties]
+    phenol_properties:
+      status: covered
+      refs: [org-experiment:phenol-properties]
+    aldehyde_properties:
+      status: covered
+      refs: [org-experiment:aldehyde-properties]
+    ethyl_acetate_preparation_and_properties:
+      status: covered
+      refs: [org-experiment:ethyl-acetate-preparation]
+    functional_group_tests:
+      status: covered
+      refs: [org-experiment:functional-group-tests]
+    carbohydrate_properties:
+      status: covered
+      refs: [org-experiment:carbohydrate-properties]
+    lipid_properties:
+      status: covered
+      refs: [org-experiment:lipid-properties]
+    protein_properties:
+      status: covered
+      refs: [org-experiment:protein-properties]
+    phenol_formaldehyde_resin:
+      status: covered
+      refs: [org-experiment:phenol-formaldehyde-resin, org-reaction:phenol-formaldehyde-condensation]
+
+policy:
+  meaning_of_covered: >-
+    At least one package-local entity or relation explicitly represents the curriculum item.
+    It does not imply exhaustive coverage of all examples or canonical structure data.
+  structure_details_deferred_to: packages/structure
+  cross_package_species_resolution_deferred_to: consolidation
