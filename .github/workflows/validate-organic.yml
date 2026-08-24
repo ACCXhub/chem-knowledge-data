@@ -34,3 +34,6 @@ jobs:
 
       - name: Validate organic package
         run: python packages/organic/validation/validate_package.py
+
+      - name: Validate identity coverage
+        run: python packages/organic/validation/validate_identity_coverage.py
