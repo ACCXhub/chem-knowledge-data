@@ -1,0 +1,32 @@
+{
+  "counts": {
+    "coordination_entity": 0,
+    "crystal": 0,
+    "formula_unit": 10,
+    "ion": 9,
+    "molecule": 14,
+    "other": 0,
+    "total": 33
+  },
+  "dataset": "chem-knowledge-data/structure",
+  "dataset_version": "structure-seed-1.0.0",
+  "files": {
+    "canonical/formula_units.jsonl": {
+      "records": 10,
+      "sha256": "c2125c670999e0249fbb8164fe3fe07c3453953897a99b8feffe743cd8e56010"
+    },
+    "canonical/ions.jsonl": {
+      "records": 9,
+      "sha256": "bc61d382518d78b76108910c9a6b136310b56f010b7f5ebff15fa641a0218ffe"
+    },
+    "canonical/molecules.jsonl": {
+      "records": 14,
+      "sha256": "28f5564ac1e2882c9f36804f521c942767687c73b28620ebaaf96c016013f582"
+    }
+  },
+  "formula_convention": "hill_no_charge",
+  "generated_at": "2026-08-24T09:40:00Z",
+  "identity_namespace_uuid": "c9d2c469-8557-5661-ae35-950cde95e61f",
+  "publication_rule": "Only validation.status=valid and validation.review_status=published is cross-track stable.",
+  "schema_version": "1.1.0"
+}
