@@ -160,7 +160,7 @@ records:
     name_en: ethylene glycol
     formula: C2H6O2
     category: polyol
-    aliases: [1,2-乙二醇]
+    aliases: ["1,2-乙二醇"]
     functional_group_refs: [org-fg:hydroxyl]
     structure_ref: null
     teaching_priority: extended
@@ -172,7 +172,7 @@ records:
     name_en: glycerol
     formula: C3H8O3
     category: polyol
-    aliases: [甘油, propane-1,2,3-triol]
+    aliases: [甘油, "propane-1,2,3-triol"]
     functional_group_refs: [org-fg:hydroxyl]
     structure_ref: null
     teaching_priority: common
