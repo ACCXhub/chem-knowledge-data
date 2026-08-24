@@ -1,0 +1,143 @@
+experiments:
+  - id: org-experiment:methane-properties
+    name_zh: 甲烷性质观察
+    purpose_zh: 认识甲烷作为烷烃代表物的典型性质。
+    reaction_refs: [org-reaction:methane-monochlorination]
+    phenomenon_refs: []
+    procedure_scope: teacher_demo
+    safety_level: teacher_only
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:ethene-properties
+    name_zh: 乙烯性质实验
+    purpose_zh: 认识乙烯的不饱和性及典型加成反应现象。
+    reaction_refs: [org-reaction:ethene-bromine-addition]
+    phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene]
+    procedure_scope: observation_only
+    safety_level: controlled
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:ethyne-properties
+    name_zh: 乙炔性质实验
+    purpose_zh: 比较炔烃代表物与烷烃、烯烃的结构和性质差异。
+    reaction_refs: []
+    phenomenon_refs: []
+    procedure_scope: observation_only
+    safety_level: teacher_only
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:benzene-properties
+    name_zh: 苯及其同系物性质观察
+    purpose_zh: 认识苯的典型取代反应和甲苯侧链氧化等性质。
+    reaction_refs: [org-reaction:benzene-bromination, org-reaction:benzene-nitration, org-reaction:toluene-sidechain-oxidation]
+    phenomenon_refs: [org-phenomenon:permanganate-decolorization-by-toluene-sidechain]
+    procedure_scope: observation_only
+    safety_level: teacher_only
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-hs-chem-2020, moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:haloalkane-properties
+    name_zh: 卤代烃性质实验
+    purpose_zh: 比较卤代烃水解与消去转化，突出反应条件对产物的影响。
+    reaction_refs: [org-reaction:bromoethane-aqueous-hydrolysis, org-reaction:bromoethane-elimination]
+    phenomenon_refs: []
+    procedure_scope: observation_only
+    safety_level: controlled
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:ethanol-properties
+    name_zh: 乙醇主要性质实验
+    purpose_zh: 认识乙醇氧化、消去等典型转化及醇羟基相关性质。
+    reaction_refs: [org-reaction:ethanol-catalytic-oxidation, org-reaction:ethanol-dehydration-to-ethene]
+    phenomenon_refs: []
+    procedure_scope: observation_only
+    safety_level: controlled
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:phenol-properties
+    name_zh: 苯酚性质与检验
+    purpose_zh: 认识苯酚的典型反应以及基团之间的相互影响。
+    reaction_refs: [org-reaction:phenol-bromination]
+    phenomenon_refs: [org-phenomenon:phenol-bromine-white-precipitate]
+    procedure_scope: observation_only
+    safety_level: teacher_only
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-hs-chem-2020, moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:aldehyde-properties
+    name_zh: 醛基性质与检验
+    purpose_zh: 认识醛基的还原性及典型检验现象。
+    reaction_refs: [org-reaction:acetaldehyde-oxidation-to-acetic-acid]
+    phenomenon_refs: [org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-copper-oxide-precipitate]
+    procedure_scope: observation_only
+    safety_level: controlled
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-hs-chem-2020, moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:ethyl-acetate-preparation
+    name_zh: 乙酸乙酯的制备与性质
+    purpose_zh: 联系酯化、水解、酯的性质及有机物转化关系。
+    reaction_refs: [org-reaction:acetic-acid-ethanol-esterification, org-reaction:ethyl-acetate-acid-hydrolysis]
+    phenomenon_refs: [org-phenomenon:ethyl-acetate-fruity-odor]
+    procedure_scope: observation_only
+    safety_level: controlled
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-hs-chem-2020, moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:carbohydrate-properties
+    name_zh: 糖类性质实验
+    purpose_zh: 认识糖类水解、淀粉显色及葡萄糖相关性质。
+    reaction_refs: [org-reaction:sucrose-hydrolysis, org-reaction:starch-hydrolysis, org-reaction:cellulose-hydrolysis, org-reaction:glucose-fermentation]
+    phenomenon_refs: [org-phenomenon:starch-iodine-blue, org-phenomenon:fermentation-gas-evolution]
+    procedure_scope: observation_only
+    safety_level: routine
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:lipid-properties
+    name_zh: 油脂性质实验
+    purpose_zh: 认识油脂水解、皂化及其与生活材料的联系。
+    reaction_refs: []
+    phenomenon_refs: []
+    procedure_scope: conceptual
+    safety_level: controlled
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:protein-properties
+    name_zh: 蛋白质性质实验
+    purpose_zh: 认识蛋白质的典型性质并联系氨基酸和生物大分子知识。
+    reaction_refs: []
+    phenomenon_refs: []
+    procedure_scope: conceptual
+    safety_level: routine
+    safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
+
+  - id: org-experiment:phenol-formaldehyde-resin
+    name_zh: 酚醛树脂相关性质观察
+    purpose_zh: 联系缩聚反应与合成高分子材料。
+    reaction_refs: []
+    phenomenon_refs: []
+    procedure_scope: conceptual
+    safety_level: teacher_only
+    safety_notes_zh: [仅记录知识关系；本数据包不提供具体制备操作。]
+    verification_status: seed
+    provenance_refs: [moe-lab-guidance-2025, manual-seed-2026-08]
