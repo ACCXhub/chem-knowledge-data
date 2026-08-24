@@ -28,6 +28,7 @@
         "alkyne",
         "aromatic_hydrocarbon",
         "haloalkane",
+        "haloalkene",
         "alcohol",
         "polyol",
         "phenol",
@@ -38,6 +39,10 @@
         "carbohydrate",
         "amino_acid",
         "amide",
+        "lipid",
+        "protein",
+        "nucleic_acid",
+        "polymer",
         "other_organic"
       ]
     },
