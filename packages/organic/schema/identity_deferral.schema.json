@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/identity_deferral.schema.json",
+  "title": "Organic Substance Identity Deferral",
+  "type": "object",
+  "required": ["substance_ref", "reason", "note"],
+  "properties": {
+    "substance_ref": {"type": "string", "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"},
+    "reason": {
+      "type": "string",
+      "enum": [
+        "stereochemical_representation_pending",
+        "non_discrete_macromolecular_identity",
+        "polymeric_identity_requires_structure_policy"
+      ]
+    },
+    "note": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}
