@@ -1,0 +1,36 @@
+classes:
+  - id: org-class:higher-fatty-acid
+    name_zh: 高级脂肪酸
+    name_en: higher fatty acid
+    class_kind: functional_family
+    parent_refs: [org-class:carboxylic-acid]
+    representative_substance_refs: [org-substance:oleic-acid, org-substance:stearic-acid]
+    functional_group_refs: [org-fg:carboxyl]
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 以油酸和硬脂酸作为高中教学代表，不将链长边界硬编码为跨教材的唯一分类标准。
+
+  - id: org-class:triglyceride
+    name_zh: 甘油三酯
+    name_en: triacylglycerol
+    class_kind: biomolecule_family
+    parent_refs: [org-class:lipid]
+    representative_substance_refs: [org-substance:triolein, org-substance:tristearin]
+    functional_group_refs: [org-fg:ester]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 用具体甘油三酯承载油脂水解和皂化计量关系，而不是为“油脂”类别伪造统一分子式。
+
+  - id: org-class:fatty-acid-sodium-salt
+    name_zh: 高级脂肪酸钠盐
+    name_en: sodium salts of higher fatty acids
+    class_kind: functional_family
+    parent_refs: []
+    representative_substance_refs: [org-substance:sodium-oleate, org-substance:sodium-stearate]
+    functional_group_refs: []
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: 作为皂化产物与肥皂主要成分的代表性教学类别，不等同于商品肥皂的全部组成。
