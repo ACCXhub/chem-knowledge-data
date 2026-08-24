@@ -1,0 +1,230 @@
+concepts:
+  - id: org-concept:functional-group
+    name_zh: 官能团
+    category: classification
+    summary_zh: 在高中有机化学中，用于联系结构特征、物质类别和典型性质的核心分类概念。
+    prerequisite_refs: []
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: source_crosschecked
+    provenance_refs: [moe-hs-chem-2020, iupac-gold-book-functional-group]
+
+  - id: org-concept:homologous-series
+    name_zh: 同系物与同系列
+    category: classification
+    summary_zh: 具有相似结构和化学性质、组成上相差一个或若干CH2单元的一类有机物关系。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: [org-substance:methane, org-substance:ethane, org-substance:propane]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:isomerism
+    name_zh: 同分异构现象
+    category: structure
+    summary_zh: 分子式相同而结构不同的有机化合物必须作为不同实体处理，不能仅以分子式去重。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:n-butane, org-substance:isobutane, org-substance:glucose, org-substance:fructose]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:organic-nomenclature
+    name_zh: 简单有机化合物命名
+    category: method
+    summary_zh: 高中范围内依据碳骨架、官能团和取代基识别并命名简单有机化合物。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:structure-determination-intro
+    name_zh: 有机物结构确定方法概览
+    category: method
+    summary_zh: 认识通过化学性质及质谱、红外光谱、核磁共振氢谱等信息确定有机物结构的基本思路。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:addition-reaction
+    name_zh: 加成反应
+    category: reaction_type
+    summary_zh: 不饱和键相关的典型反应类型之一，反应后不饱和程度通常降低。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:ethene, org-substance:ethyne]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:substitution-reaction
+    name_zh: 取代反应
+    category: reaction_type
+    summary_zh: 有机物分子中的原子或原子团被其他原子或原子团替代的一类反应。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:methane, org-substance:benzene, org-substance:bromoethane]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:elimination-reaction
+    name_zh: 消去反应
+    category: reaction_type
+    summary_zh: 有机物在适当条件下失去小分子并形成不饱和键的典型转化类型。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:bromoethane, org-substance:ethanol, org-substance:ethene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:oxidation-of-organic-compounds
+    name_zh: 有机物氧化
+    category: reaction_type
+    summary_zh: 高中范围内用于描述烃及烃的衍生物被氧化剂氧化、醇到醛以及醛到羧酸等典型变化。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: [org-substance:ethanol, org-substance:acetaldehyde, org-substance:acetic-acid, org-substance:toluene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:esterification
+    name_zh: 酯化反应
+    category: reaction_type
+    summary_zh: 羧酸和醇在适当条件下生成酯和水的典型可逆反应。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: [org-substance:acetic-acid, org-substance:ethanol, org-substance:ethyl-acetate]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:ester-hydrolysis
+    name_zh: 酯的水解
+    category: reaction_type
+    summary_zh: 酯在酸性或碱性条件下发生水解，是酯化关系的逆向或相关转化。
+    prerequisite_refs: [org-concept:esterification]
+    related_substance_refs: [org-substance:ethyl-acetate, org-substance:acetic-acid, org-substance:ethanol]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:organic-conversion-network
+    name_zh: 烃及其衍生物转化关系
+    category: conversion
+    summary_zh: 将卤代烃、醇、醛、羧酸、酯及烯烃等通过典型反应组织为可追踪的转化网络。
+    prerequisite_refs: [org-concept:addition-reaction, org-concept:substitution-reaction, org-concept:elimination-reaction]
+    related_substance_refs: [org-substance:ethene, org-substance:bromoethane, org-substance:ethanol, org-substance:acetaldehyde, org-substance:acetic-acid, org-substance:ethyl-acetate]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:unsaturation-test
+    name_zh: 不饱和结构的典型检验现象
+    category: identification
+    summary_zh: 结合溴水等试剂的褪色现象识别烯烃等不饱和有机物时，必须同时考虑其他可使试剂褪色的情形。
+    prerequisite_refs: [org-concept:addition-reaction]
+    related_substance_refs: [org-substance:ethene, org-substance:ethyne]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-concept:aldehyde-group-test
+    name_zh: 醛基检验
+    category: identification
+    summary_zh: 通过银氨溶液或新制氢氧化铜等典型实验现象辅助判断醛基，实验条件和干扰因素需单独记录。
+    prerequisite_refs: [org-concept:functional-group, org-concept:oxidation-of-organic-compounds]
+    related_substance_refs: [org-substance:formaldehyde, org-substance:acetaldehyde, org-substance:glucose]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+
+  - id: org-concept:phenol-test
+    name_zh: 苯酚的典型检验
+    category: identification
+    summary_zh: 苯酚可通过与溴水反应等典型实验现象进行辅助识别，结论需结合具体条件。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: [org-substance:phenol]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-concept:functional-group-influence
+    name_zh: 基团之间的相互影响
+    category: structure
+    summary_zh: 同一分子中不同基团会相互影响，使其性质不能简单视为孤立官能团性质的机械叠加。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: [org-substance:phenol, org-substance:toluene]
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:aromatic-hydrocarbon-properties
+    name_zh: 芳香烃代表物的性质
+    category: classification
+    summary_zh: 以苯及其同系物为代表比较芳香烃与脂肪烃在结构和典型反应上的差异。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:benzene, org-substance:toluene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:addition-polymerization
+    name_zh: 加聚反应
+    category: polymer
+    summary_zh: 含不饱和键的小分子单体通过加成方式形成高分子链的聚合反应类型。
+    prerequisite_refs: [org-concept:addition-reaction]
+    related_substance_refs: [org-substance:ethene, org-substance:polyethylene, org-substance:chloroethene, org-substance:polyvinyl-chloride]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:condensation-polymerization
+    name_zh: 缩聚反应
+    category: polymer
+    summary_zh: 单体在形成高分子链的同时伴随生成小分子的聚合反应类型。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:monomer-repeat-unit
+    name_zh: 单体、链节与聚合物关系
+    category: polymer
+    summary_zh: 根据简单高分子的重复结构分析链节并反推可能单体，是高中合成高分子部分的核心关系。
+    prerequisite_refs: [org-concept:addition-polymerization]
+    related_substance_refs: [org-substance:polyethylene, org-substance:polypropylene, org-substance:polyvinyl-chloride, org-substance:polystyrene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:polymer-and-macromolecule
+    name_zh: 高分子与生物大分子
+    category: polymer
+    summary_zh: 区分聚合物重复单元、经验式与真实结构，并避免仅按经验式把淀粉和纤维素等不同实体合并。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:starch, org-substance:cellulose, org-substance:polyethylene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:carbohydrate-hydrolysis
+    name_zh: 糖类水解
+    category: biomolecule
+    summary_zh: 蔗糖、淀粉和纤维素等糖类在适当条件下发生水解，产物身份不能只由分子式判断。
+    prerequisite_refs: []
+    related_substance_refs: [org-substance:sucrose, org-substance:starch, org-substance:cellulose, org-substance:glucose, org-substance:fructose]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:carbohydrate-reactions
+    name_zh: 糖类的主要化学性质
+    category: biomolecule
+    summary_zh: 覆盖葡萄糖的还原性相关实验、糖类水解及发酵等高中常见性质与转化。
+    prerequisite_refs: [org-concept:carbohydrate-hydrolysis]
+    related_substance_refs: [org-substance:glucose, org-substance:sucrose, org-substance:starch]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
