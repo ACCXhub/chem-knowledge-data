@@ -1,0 +1,37 @@
+sources:
+  - id: moe-high-school-chemistry-standard-2020
+    name: 普通高中化学课程标准（2017年版2020年修订）
+    organization: 中华人民共和国教育部
+    role: scope_and_teaching_coverage
+    url: https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html
+    notes: 用于确定高中化学课程范围与教学层级，不作为分子结构数据库。
+
+  - id: chebi
+    name: ChEBI — Chemical Entities of Biological Interest
+    organization: EMBL-EBI
+    role: chemical_identity_ontology_and_cross_reference
+    url: https://www.ebi.ac.uk/chebi/
+    license: CC-BY-4.0
+    notes: 化学实体、名称、公式、电荷、结构与 ontology 的重要结构化来源；canonical 化前仍需按字段审查。
+
+  - id: pubchem
+    name: PubChem
+    organization: NCBI
+    role: chemical_identity_properties_and_cross_reference
+    url: https://pubchem.ncbi.nlm.nih.gov/
+    api: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
+    notes: 用于公式、formal charge、结构标识、同义词和外部标识等结构化事实的交叉核验；名称检索存在歧义时必须记录 CID 并人工/规则确认。
+
+  - id: iupac
+    name: IUPAC
+    organization: International Union of Pure and Applied Chemistry
+    role: nomenclature_and_element_identity
+    url: https://iupac.org/
+    notes: 元素与命名规范的权威校准来源；沿用主项目 M02 已确认的元素 canonical 决策。
+
+  - id: nist
+    name: NIST Chemistry WebBook / Atomic Spectra Database
+    organization: National Institute of Standards and Technology
+    role: authoritative_physical_property_calibration
+    url: https://www.nist.gov/
+    notes: 仅对明确适用的物性字段使用，不用其替代高中课程范围来源。
