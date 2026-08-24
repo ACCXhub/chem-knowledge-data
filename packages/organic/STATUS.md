@@ -1,41 +1,61 @@
 # Organic package status
 
-**Status:** ACTIVE
+**Status:** COMPLETE_V0_1
 
-**Current owner:** `chatgpt-web-organic`
+**Owner during build:** `chatgpt-web-organic`
 
-**Write scope:** `packages/organic/**`
+**Frozen write scope:** `packages/organic/**`
 
-## Current phase
+**Completed:** 2026-08-24
 
-Build the first high-school organic chemistry data package independently, then consolidate it later with the inorganic and structure packages.
+## v0.1 scope
 
-Current seed coverage:
+This is the completed independent pre-consolidation high-school organic chemistry package. It is ready to be consumed or compared with the inorganic and structure packages before the later cross-package consolidation pass.
 
-- 44 representative organic substances across core, extended and polymer seed files;
-- 9 functional-group records plus 2 structural-feature records;
-- 22 organic chemical-class / teaching taxonomy nodes;
-- 24 reaction records forming an initial hydrocarbon → derivative → biomolecule/polymer conversion network;
-- 29 concept / teaching-relation records, including amino-acid, protein, lipid and nucleic-acid coverage;
-- 8 experiment phenomena;
-- 13 experiment catalog records;
-- 15 source-crosschecked external identity links;
-- package-local JSON Schemas and a reference/provenance validator covering polymer files, biomolecule concepts and identity crossrefs.
+Validated coverage:
 
-## Boundaries kept during parallel work
+- **50** representative organic Substance records;
+- **10** functional-group records plus **2** structural-feature records;
+- **25** chemical-class / teaching taxonomy nodes;
+- **27** Reaction records across hydrocarbons, derivatives, carbohydrates, lipids and polymers;
+- **35** Concept / teaching-relation records;
+- **14** Phenomenon records;
+- **14** Experiment catalog records;
+- **41** source-crosschecked external identity links;
+- **9** explicit identity deferrals, so all 50 Substance records have either a checked external identity or a documented reason for later structure/consolidation resolution;
+- curriculum evidence for **10 topics, 16 families, 7 reaction classes and 14 experiment/activity groups**.
 
-- canonical structure patterns, SMILES/InChI, conformers and structure-derived descriptors belong to `packages/structure/**`;
-- inorganic reactants/products are represented only as temporary `external_species_key` values and are not redefined here;
-- reaction records do not infer atom mapping, bond diff or mechanism;
-- proteins, oils/fats and nucleic acids may be represented as teaching/class nodes instead of inventing a fake single molecular formula;
-- duplicate molecular formulae are allowed because formula is not chemical identity.
+## Validation evidence
 
-## Next organic work
+GitHub Actions workflow **Validate organic package**, run `32715190827`, completed successfully on Python 3.13.
 
-1. continue ChEBI/PubChem identity cross-checks for representative substances;
-2. deepen lipids, amino acids/proteins and remaining biomolecule relations without collapsing classes into fake single compounds;
-3. complete remaining curriculum reaction/phenomenon links and representative condensation-polymerization relations;
-4. run the package validator after checkout and repair any schema/reference findings;
-5. promote records from `seed` only after named-source cross-checks.
+The gate passed:
 
-Other concurrent sessions should treat this package as read-only while the claim is active.
+- package-local JSON Schema checks;
+- duplicate-ID checks;
+- provenance reference checks;
+- local entity reference integrity;
+- curriculum coverage evidence completeness;
+- external identity cross-reference integrity;
+- identity crossref-or-deferral completeness.
+
+Expected duplicate-formula warnings were retained for chemically distinct identities:
+
+- `(C6H10O5)n`: starch / cellulose;
+- `C4H10`: n-butane / isobutane;
+- `C6H12O6`: glucose / fructose.
+
+These are warnings by design because molecular formula is not chemical identity.
+
+## Deliberate boundaries for consolidation
+
+- canonical SMILES, InChI/InChIKey, SMARTS, conformers and structure-derived descriptors remain owned by `packages/structure/**`;
+- inorganic participants remain temporary cross-package species keys and are not redefined here;
+- no atom mapping, bond diff or reaction mechanism is inferred from reaction equations;
+- proteins, nucleic acids and heterogeneous material classes are not assigned fake single fixed molecular formulae;
+- polymer identities use the teaching-level monomer/repeat-unit relationship; terminal groups, tacticity and canonical polymer structure remain deferred where appropriate;
+- stereochemical identity ambiguities such as generic `alanine`/`fructose` seeds are explicitly deferred rather than silently mapped to one stereoisomer.
+
+## Next phase
+
+No further organic-package expansion is required for v0.1. Keep this package read-only until the planned consolidation phase aligns IDs, structure links and cross-package species references with `packages/inorganic/**` and `packages/structure/**`.
