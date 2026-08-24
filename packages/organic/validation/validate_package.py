@@ -52,6 +52,7 @@ def main() -> int:
         ("reaction", DATA_DIR / "reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
         ("reaction", DATA_DIR / "polymer_reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
         ("concept", DATA_DIR / "concepts.yaml", "concepts", SCHEMA_DIR / "concept.schema.json"),
+        ("concept", DATA_DIR / "biomolecule_concepts.yaml", "concepts", SCHEMA_DIR / "concept.schema.json"),
         ("phenomenon", DATA_DIR / "phenomena.yaml", "phenomena", SCHEMA_DIR / "phenomenon.schema.json"),
         ("experiment", DATA_DIR / "experiments.yaml", "experiments", SCHEMA_DIR / "experiment.schema.json"),
         ("chemical_class", DATA_DIR / "classes.yaml", "classes", SCHEMA_DIR / "chemical_class.schema.json"),
