@@ -8,6 +8,18 @@ sources:
       Determines the high-school teaching scope and priority boundary. It is not
       used as the sole source for molecular identity or structure fields.
 
+  - id: moe-lab-guidance-2025
+    name: 普通高中化学教学装备配置标准相关学习实践活动建议（2025）
+    organization: 中华人民共和国教育部
+    role: experiment_scope_and_activity_reference
+    url: https://www.moe.gov.cn/srcsite/A06/s3732/202507/W020250701322477393561.pdf
+    use: >-
+      Confirms current high-school organic experiment/activity coverage such as
+      methane, ethene, ethyne, benzene/homologues, haloalkanes, ethanol/acetic
+      acid, phenol, aldehydes, ethyl acetate, functional-group tests,
+      carbohydrates, lipids, proteins and phenol-formaldehyde resin. It does not
+      by itself define canonical molecular identity.
+
   - id: chebi
     name: ChEBI - Chemical Entities of Biological Interest
     organization: EMBL-EBI
@@ -31,19 +43,32 @@ sources:
       provenance because PubChem content is aggregated from many contributors
       with source-specific licensing.
 
+  - id: iupac-gold-book-functional-group
+    name: IUPAC Gold Book - functional group (F02555)
+    organization: IUPAC
+    role: terminology_reference
+    url: https://goldbook.iupac.org/terms/view/F02555
+    license: CC-BY-SA-4.0-for-individual-terms
+    use: >-
+      Terminology cross-check only. Do not copy long-form definitions into the
+      dataset; preserve attribution if a definition fragment is ever published.
+
   - id: manual-seed-2026-08
     name: Organic package manual seed
     organization: chem-knowledge-data
     role: provisional_seed
     use: >-
-      Initial high-school organic scope and basic formula/category records used
-      to bootstrap the package. These records remain status=seed until each
-      factual field is cross-checked against named external sources.
+      Initial high-school organic scope and curated relationship records used to
+      bootstrap the package. These records remain status=seed until factual
+      fields are cross-checked against named external sources.
 
 policy:
   teaching_scope_owner: moe-hs-chem-2020
+  experiment_scope_reference: moe-lab-guidance-2025
   preferred_identity_reference: chebi
   factual_crosscheck: pubchem
+  terminology_reference: iupac-gold-book-functional-group
   provenance_required: true
   seed_source: manual-seed-2026-08
   copy_long_form_text: false
+  seed_records_are_not_reviewed: true
