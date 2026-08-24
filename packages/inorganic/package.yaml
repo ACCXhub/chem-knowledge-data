@@ -1,0 +1,34 @@
+package: inorganic
+version: 0.1.0
+status: active
+scope: high-school-inorganic-chemistry
+language: zh-CN
+
+owns:
+  - ions
+  - inorganic_substances
+  - inorganic_reactions
+  - inorganic_experiments
+  - inorganic_phenomena
+  - inorganic_concepts
+  - inorganic_teaching_projection
+
+references:
+  - elements
+  - structures
+
+working_principles:
+  - reaction_is_first_class_entity
+  - claim_level_provenance
+  - raw_and_canonical_separated
+  - high_school_scope_first
+  - no_mechanism_inference_from_equations
+  - no_structure_canonicalization_in_this_package
+
+release_gate:
+  - schema_valid
+  - provenance_present_for_canonical_claims
+  - duplicate_ids_absent
+  - formulas_and_charges_validated
+  - reaction_mass_and_charge_checks_pass_where_applicable
+  - source_licenses_reviewed
