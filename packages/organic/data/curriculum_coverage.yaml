@@ -1,7 +1,7 @@
 coverage:
   package: organic
   level: senior_high_school_cn
-  scope_status: active_seed
+  scope_status: complete_v0_1
   source_refs:
     - moe-hs-chem-2020
     - moe-lab-guidance-2025
@@ -93,4 +93,4 @@ coverage:
 
 notes:
   - This file defines collection coverage only; it is not a source of chemical identity facts.
-  - A listed family or experiment may remain incomplete while the package is in seed status.
+  - v0.1 curriculum requirements have package-local evidence in data/coverage_evidence.yaml; later expansion belongs to a new package version or consolidation work.
