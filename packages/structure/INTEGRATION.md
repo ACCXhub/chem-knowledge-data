@@ -1,36 +1,50 @@
-# Cross-track integration for Inorganic and Organic
+# Structure integration seam
 
-This file is the read-first contract for the two parallel chemistry-data workstreams.
+其他数据包只通过本文件约定的稳定 seam 使用 Structure。
 
-## You may
+## Read
 
-- read `data/manifest.json`;
-- read records with `validation.review_status == "published"`;
-- store their `structure_id` in your own package;
-- keep your own conventional formula, Chinese name, curriculum taxonomy and teaching metadata;
-- create a structure request **inside your own package** when a needed structure is missing.
+优先读取：
 
-## You may not
+- `data/manifest.json`
+- `data/canonical/*.jsonl`
+- `data/links/organic_v0_1.jsonl`
+- `data/links/inorganic_ions_seed.jsonl`
+- `data/deferrals/organic_v0_1.jsonl`
 
-- modify any file under `packages/structure/**`;
-- copy a complete Structure record and treat the copy as canonical;
-- create a competing `structure_id`;
-- equate a display formula string with Structure's Hill/no-charge comparison formula;
-- turn a salt/formula unit into a molecule just to obtain a SMILES.
+accepted link 是当前跨包稳定映射。调用方不要按 formula、SMILES 或 PubChem CID 自己重新计算 `structure_id`。
 
-## Missing structure request
+## Link model
 
-Use `schema/structure-request.schema.json` as the request shape, but store the request under your own owner path, for example:
+`structure-link.schema.json` 使用通用：
 
-- `packages/inorganic/structure_requests/...`
-- `packages/organic/structure_requests/...`
+- `entity_kind`
+- `entity_ref`
+- `structure_id`
+- `relation`
 
-Structure later resolves it to a published `structure_id`.
+因此 `Ion` 不需要伪装为 `Substance`。
 
-## Stable identity
+主要 relation：
 
-Use `structure_id` as the only dataset-owned structure identity. PubChem CID, ChEBI ID, COD number, SMILES and InChI are evidence/representations, not a replacement for `structure_id`.
+- `primary_structure`
+- `ion_structure`
+- `formula_unit`
+- `repeat_unit_structure`
 
-## Current publication
+`repeat_unit_structure` 只表示聚合物的 repeat-unit abstraction，不表示完整 polymer molecule。
 
-See `data/manifest.json` for exact counts and file hashes. Only records marked `published + valid` are stable references.
+## Missing/ambiguous structure
+
+无法安全发布 canonical Structure 时使用 `structure-deferral.schema.json`。调用方应把 deferral 当作显式知识状态，而不是空字符串或临时假结构。
+
+典型原因：
+
+- generic identity 未固定 stereochemistry
+- heterogeneous macromolecular material
+- full polymer chain identity 未固定
+- crystallographic / coordination evidence 不足
+
+## New requests
+
+其他 workstream 如新增实体且缺结构，应使用 `structure-request.schema.json` 在自己的工作区记录请求；Structure owner 后续统一采纳。不要直接修改 `packages/structure/**`。
