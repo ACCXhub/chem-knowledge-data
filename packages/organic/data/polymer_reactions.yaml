@@ -20,3 +20,24 @@ reactions:
     notes: >-
       这里固定单体与聚合物关系，不在 seed 阶段写死端基相关的精确失水计量；
       正式发布前应按选定教材表示法和结构包中的重复单元共同核验。
+
+  - id: org-reaction:phenol-formaldehyde-condensation
+    name_zh: 苯酚与甲醛形成酚醛树脂的缩聚关系
+    reaction_class: [condensation_polymerization]
+    participants:
+      - {role: reactant, coefficient: n, substance_ref: org-substance:phenol}
+      - {role: reactant, coefficient: n, substance_ref: org-substance:formaldehyde}
+      - {role: product, coefficient: 1, external_species_key: organic-material:phenol-formaldehyde-resin}
+    conditions: [缩聚条件]
+    equation: null
+    equation_status: transformation_only
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:phenol-formaldehyde-resin]
+    concept_refs: [org-concept:condensation-polymerization]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+    notes: >-
+      酚醛树脂具有条件相关的网络结构和组成，本包只记录高中教学需要的单体—缩聚—材料关系，
+      不伪造单一分子式、固定链结构或精确端基计量。
