@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.invalid/chem-knowledge-data/organic/reaction.schema.json",
-  "title": "Organic Reaction Seed Record",
+  "title": "Organic Reaction Record",
   "type": "object",
   "required": [
     "id",
@@ -14,10 +14,7 @@
     "provenance_refs"
   ],
   "properties": {
-    "id": {
-      "type": "string",
-      "pattern": "^org-reaction:[a-z0-9][a-z0-9-]*$"
-    },
+    "id": {"type": "string", "pattern": "^org-reaction:[a-z0-9][a-z0-9-]*$"},
     "name_zh": {"type": "string", "minLength": 1},
     "reaction_class": {
       "type": "array",
@@ -30,6 +27,7 @@
           "elimination",
           "oxidation",
           "reduction",
+          "acid_base",
           "esterification",
           "hydrolysis",
           "addition_polymerization",
@@ -48,25 +46,31 @@
         "required": ["role", "coefficient"],
         "properties": {
           "role": {"type": "string", "enum": ["reactant", "product", "catalyst"]},
-          "coefficient": {"type": ["integer", "string"], "description": "Integer for ordinary equations; symbolic coefficient such as n is allowed for polymerization."},
-          "substance_ref": {"type": ["string", "null"], "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"},
-          "external_species_key": {"type": ["string", "null"], "description": "Temporary cross-package species key resolved during consolidation."},
+          "coefficient": {
+            "oneOf": [
+              {"type": "integer", "minimum": 1},
+              {"type": "string", "enum": ["n"]}
+            ]
+          },
+          "substance_ref": {"type": "string", "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"},
+          "external_species_key": {"type": "string", "minLength": 1},
           "formula_literal": {"type": ["string", "null"]},
           "phase": {"type": ["string", "null"], "enum": ["s", "l", "g", "aq", null]}
         },
-        "anyOf": [
-          {"required": ["substance_ref"]},
-          {"required": ["external_species_key"]},
-          {"required": ["formula_literal"]}
+        "oneOf": [
+          {
+            "required": ["substance_ref"],
+            "not": {"required": ["external_species_key"]}
+          },
+          {
+            "required": ["external_species_key"],
+            "not": {"required": ["substance_ref"]}
+          }
         ],
         "additionalProperties": false
       }
     },
-    "conditions": {
-      "type": "array",
-      "items": {"type": "string"},
-      "uniqueItems": true
-    },
+    "conditions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
     "equation": {"type": ["string", "null"]},
     "equation_status": {
       "type": "string",
