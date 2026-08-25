@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
+from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -13,6 +15,7 @@ SCHEMA_DIR = PACKAGE_ROOT / "schema"
 SOURCES_FILE = PACKAGE_ROOT / "sources" / "registry.yaml"
 CURRICULUM_FILE = DATA_DIR / "curriculum_coverage.yaml"
 COVERAGE_EVIDENCE_FILE = DATA_DIR / "coverage_evidence.yaml"
+POLYMER_FORMULA_RE = re.compile(r"^\((.+)\)n$")
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -40,6 +43,66 @@ def iter_strings(value: Any) -> Iterable[str]:
     elif isinstance(value, list):
         for child in value:
             yield from iter_strings(child)
+
+
+def parse_formula(formula: str) -> Counter[str] | None:
+    """Parse the package's simple molecular formula notation.
+
+    Returns None for a syntactically valid symbolic repeat formula such as
+    ``(C2H4)n``. The parser intentionally rejects charges, hydrate dots and other
+    notations not owned by this organic Substance formula field.
+    """
+
+    polymer_match = POLYMER_FORMULA_RE.fullmatch(formula)
+    if polymer_match:
+        inner = parse_formula(polymer_match.group(1))
+        if inner is None:
+            raise ValueError("nested symbolic repeat formula is not supported")
+        return None
+
+    stack: list[Counter[str]] = [Counter()]
+    index = 0
+    while index < len(formula):
+        char = formula[index]
+        if char == "(":
+            stack.append(Counter())
+            index += 1
+            continue
+        if char == ")":
+            if len(stack) == 1:
+                raise ValueError("unmatched closing parenthesis")
+            group = stack.pop()
+            index += 1
+            digit_start = index
+            while index < len(formula) and formula[index].isdigit():
+                index += 1
+            multiplier = int(formula[digit_start:index] or "1")
+            if multiplier < 1:
+                raise ValueError("formula multiplier must be positive")
+            for element, count in group.items():
+                stack[-1][element] += count * multiplier
+            continue
+        if not char.isupper() or not char.isascii():
+            raise ValueError(f"unexpected character {char!r}")
+
+        element = char
+        index += 1
+        if index < len(formula) and formula[index].islower() and formula[index].isascii():
+            element += formula[index]
+            index += 1
+        digit_start = index
+        while index < len(formula) and formula[index].isdigit():
+            index += 1
+        count = int(formula[digit_start:index] or "1")
+        if count < 1:
+            raise ValueError("atom count must be positive")
+        stack[-1][element] += count
+
+    if len(stack) != 1:
+        raise ValueError("unmatched opening parenthesis")
+    if not stack[0]:
+        raise ValueError("formula contains no elements")
+    return stack[0]
 
 
 def validate_schema_records(
@@ -114,17 +177,93 @@ def collect_curriculum_requirements(curriculum: dict[str, Any]) -> dict[str, set
     }
 
 
+def validate_balanced_reactions(
+    reactions: list[dict[str, Any]],
+    substance_formula_by_id: dict[str, str],
+    errors: list[str],
+    warnings: list[str],
+) -> None:
+    for reaction in reactions:
+        if reaction.get("equation_status") != "balanced_seed":
+            continue
+
+        reaction_id = reaction.get("id", "<unknown>")
+        if not reaction.get("equation"):
+            errors.append(f"reaction:{reaction_id}: balanced_seed requires equation text")
+
+        left: Counter[str] = Counter()
+        right: Counter[str] = Counter()
+        symbolic = False
+
+        for participant in reaction.get("participants", []):
+            role = participant.get("role")
+            if role == "catalyst":
+                continue
+            coefficient = participant.get("coefficient")
+            if not isinstance(coefficient, int):
+                symbolic = True
+                break
+
+            substance_ref = participant.get("substance_ref")
+            if substance_ref:
+                formula = substance_formula_by_id.get(substance_ref)
+                if not formula:
+                    errors.append(
+                        f"reaction:{reaction_id}: missing formula for {substance_ref}"
+                    )
+                    continue
+            else:
+                formula = participant.get("formula_literal")
+                if not formula:
+                    errors.append(
+                        f"reaction:{reaction_id}: external participant "
+                        f"{participant.get('external_species_key')} needs formula_literal "
+                        "for atom-balance validation"
+                    )
+                    continue
+
+            try:
+                atoms = parse_formula(formula)
+            except ValueError as exc:
+                errors.append(
+                    f"reaction:{reaction_id}: invalid participant formula {formula}: {exc}"
+                )
+                continue
+            if atoms is None:
+                symbolic = True
+                break
+
+            destination = left if role == "reactant" else right
+            for element, count in atoms.items():
+                destination[element] += count * coefficient
+
+        if symbolic:
+            warnings.append(
+                f"reaction:{reaction_id}: atom-balance check skipped for symbolic polymer notation"
+            )
+            continue
+        if left != right:
+            errors.append(
+                f"reaction:{reaction_id}: atom balance mismatch "
+                f"reactants={dict(sorted(left.items()))} products={dict(sorted(right.items()))}"
+            )
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
 
     source_doc = load_yaml(SOURCES_FILE)
     sources = source_doc.get("sources", [])
-    source_ids = {
-        source["id"]
-        for source in sources
-        if isinstance(source, dict) and isinstance(source.get("id"), str)
-    }
+    source_ids: set[str] = set()
+    for source in sources:
+        if not isinstance(source, dict) or not isinstance(source.get("id"), str):
+            errors.append("sources/registry.yaml: each source must have a string id")
+            continue
+        source_id = source["id"]
+        if source_id in source_ids:
+            errors.append(f"sources/registry.yaml: duplicate source id {source_id}")
+        source_ids.add(source_id)
 
     dataset_specs = [
         ("substance", DATA_DIR / "core_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
@@ -161,11 +300,29 @@ def main() -> int:
 
     feature_doc = load_yaml(DATA_DIR / "functional_groups.yaml")
     feature_records = feature_doc.get("structural_features", [])
-    feature_ids = {
-        record["id"]
-        for record in feature_records
-        if isinstance(record, dict) and isinstance(record.get("id"), str)
-    }
+    if not isinstance(feature_records, list):
+        errors.append("functional_groups.yaml: structural_features must be a list")
+        feature_records = []
+    feature_validator = Draft202012Validator(
+        load_json(SCHEMA_DIR / "structural_feature.schema.json")
+    )
+    feature_ids: set[str] = set()
+    for index, record in enumerate(feature_records):
+        if not isinstance(record, dict):
+            errors.append(f"structural_feature:{index}: record must be a mapping")
+            continue
+        record_id = record.get("id", f"<index:{index}>")
+        for validation_error in sorted(
+            feature_validator.iter_errors(record), key=lambda item: list(item.path)
+        ):
+            location = ".".join(str(part) for part in validation_error.path)
+            errors.append(
+                f"structural_feature:{record_id}:{location}: {validation_error.message}"
+            )
+        if isinstance(record_id, str):
+            if record_id in feature_ids or record_id in source_path_by_record_id:
+                errors.append(f"duplicate id {record_id}")
+            feature_ids.add(record_id)
 
     id_sets = {
         "org-substance:": {
@@ -246,14 +403,34 @@ def main() -> int:
 
     substance_records = records_by_kind.get("substance", [])
     formula_index: dict[str, list[str]] = {}
+    substance_formula_by_id: dict[str, str] = {}
     for record in substance_records:
-        formula_index.setdefault(record["formula"], []).append(record["id"])
+        formula = record["formula"]
+        record_id = record["id"]
+        formula_index.setdefault(formula, []).append(record_id)
+        substance_formula_by_id[record_id] = formula
+        try:
+            parse_formula(formula)
+        except ValueError as exc:
+            errors.append(f"substance:{record_id}: invalid formula {formula}: {exc}")
+        if "external_ids" in record:
+            errors.append(
+                f"substance:{record_id}: external_ids must live only in identity_crossrefs.yaml"
+            )
+
     for formula, ids in sorted(formula_index.items()):
         if len(ids) > 1:
             warnings.append(
                 f"shared formula {formula}: {', '.join(ids)} "
                 "(allowed; verify these are distinct identities)"
             )
+
+    validate_balanced_reactions(
+        records_by_kind.get("reaction", []),
+        substance_formula_by_id,
+        errors,
+        warnings,
+    )
 
     curriculum = load_yaml(CURRICULUM_FILE)
     evidence_doc = load_yaml(COVERAGE_EVIDENCE_FILE)
@@ -310,6 +487,7 @@ def main() -> int:
             f"{section}={len(items)}" for section, items in sorted(requirements.items())
         )
     )
+    print("chemistry_balance: checked for all non-symbolic balanced_seed reactions")
     for warning in warnings:
         print(f"WARN: {warning}")
     return 0
