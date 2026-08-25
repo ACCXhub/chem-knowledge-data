@@ -1,16 +1,14 @@
-# Structure：化学结构数据包
+# 化学结构管理（Structure Registry）
 
-`packages/structure/` 是仓库内**化学结构数据与结构派生数据**的 canonical owner。
+`packages/structure_registry/` 是仓库内**机器可用化学结构身份与结构表示**的 canonical owner。
 
-这里的 “Structure” 指 SMILES、InChI、InChIKey、离子 / 分子 / 化学式单元 / 聚合物重复单元等**机器可用化学结构数据**，不是高中课程里的“结构化学（原子结构、化学键、VSEPR、杂化、晶体类型等）”。结构化学知识应由独立知识包负责。
+这里管理的是 SMILES、InChI、InChIKey、`structure_id`、离子 / 分子 / 化学式单元 / 聚合物重复单元等可计算结构数据。它与高中课程中的**结构化学（Structural Chemistry）**严格分开：后者位于 `packages/structural_chemistry/`，负责原子结构、化学键、VSEPR、杂化、晶体类型及结构—性质教学知识。
 
 当前发布版本：**`structure-foundation-1.0.0`**。
 
-本包已经覆盖当前 Organic v0.1 与 Inorganic 离子 seed 的结构接缝；其他工作流只读已发布的 `structure_id`，不得在自己的包里复制、修补或重建 canonical Structure。
-
 ## 本包负责
 
-- 与外部来源无关的 `structure_id`
+- 与外部来源无关的稳定 `structure_id`
 - molecule / ion / formula unit / polymer repeat unit 的结构表示
 - canonical / isomeric SMILES（仅适用于离散分子或离子）
 - Standard InChI / InChIKey（适用时）
@@ -22,10 +20,10 @@
 
 ## 本包不负责
 
+- 高中结构化学知识点
 - 无机 / 有机教学分类
 - Substance 的中文教学知识
 - Reaction / Experiment / Phenomenon / Concept
-- 高中结构化学知识点
 - 用户界面的中文名称、常规化学式排版与教学解释
 
 ## 当前发布数据
@@ -45,7 +43,7 @@
 ## 主要入口
 
 - `CONTRACT.md`：ownership、ID 与结构表示规则
-- `INTEGRATION.md`：其他数据包如何引用 Structure
+- `INTEGRATION.md`：其他数据包如何引用 Structure Registry
 - `schema/structure-record.schema.json`
 - `schema/structure-link.schema.json`
 - `schema/structure-deferral.schema.json`
@@ -61,18 +59,18 @@
 ## 重建与验证
 
 ```bash
-python packages/structure/pipelines/build_release.py
-python packages/structure/validation/validate_dataset.py --strict
-python -m unittest discover -s packages/structure/tests -v
+python packages/structure_registry/pipelines/build_release.py
+python packages/structure_registry/validation/validate_dataset.py --strict
+python -m unittest discover -s packages/structure_registry/tests -v
 ```
 
 `build_seed.py` 仅作为历史兼容入口保留；当前正式构建入口是 `build_release.py`。
 
 ## 并行协作规则
 
-当 `WORKSTREAMS.md` 将本包标记为 `PUBLISHED / LOCKED` 时，只有 Structure canonical owner 可以修改 `packages/structure/**`。
+当 `WORKSTREAMS.md` 将本包标记为 `PUBLISHED / LOCKED` 时，只有化学结构管理 canonical owner 可以修改 `packages/structure_registry/**`。
 
-无机、有机、consolidation 只消费已发布的 `structure_id`、link 与 deferral；新增需求通过 structure request seam 提交，不在调用方内部建立第二份结构事实。
+无机、有机、结构化学、consolidation 只消费已发布的 `structure_id`、link 与 deferral；新增需求通过 structure request seam 提交，不在调用方内部建立第二份结构事实。
 
 ## 文档语言约定
 
