@@ -6,11 +6,15 @@
   "$defs": {
     "participant": {
       "type": "object",
-      "required": ["role", "coefficient", "species_id", "source_species_ref"],
+      "required": ["role", "coefficient", "species_id", "non_species_ref", "source_species_ref"],
       "properties": {
         "role": {"enum": ["reactant", "product", "catalyst", "reagent"]},
         "coefficient": {"type": ["integer", "number", "string"]},
         "species_id": {"type": ["string", "null"]},
+        "non_species_ref": {
+          "type": ["string", "null"],
+          "description": "Explicit non-discrete teaching material reference. It is not promoted to Substance identity."
+        },
         "source_species_ref": {"type": "string", "minLength": 1},
         "formula_literal": {"type": ["string", "null"]},
         "phase": {"type": ["string", "null"]}
@@ -34,9 +38,7 @@
     "concept_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
     "net_ionic": {
       "type": ["object", "null"],
-      "properties": {
-        "participants": {"type": "array", "items": {"$ref": "#/$defs/participant"}}
-      },
+      "properties": {"participants": {"type": "array", "items": {"$ref": "#/$defs/participant"}}},
       "required": ["participants"],
       "additionalProperties": false
     },
