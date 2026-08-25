@@ -1,6 +1,6 @@
 # Structure release: structure-foundation-1.0.0
 
-Status: **PUBLISHED / LOCKED candidate — verified on working branch**
+Status: **PUBLISHED / LOCKED**
 
 Schema:
 
@@ -55,9 +55,9 @@ The strict validator checks:
 - Organic and Inorganic coverage completeness;
 - manifest counts, per-file record counts and SHA-256.
 
-## Fresh verification evidence
+## Verification evidence
 
-GitHub Actions **Validate structure package**, run `32809697660`, completed successfully on Python 3.13 with pinned `rdkit==2025.9.4` and `jsonschema==4.25.1`.
+GitHub Actions **Validate structure package**, working-branch run `32809697660`, completed successfully on Python 3.13 with pinned `rdkit==2025.9.4` and `jsonschema==4.25.1`.
 
 ```text
 build_release.py
@@ -71,6 +71,8 @@ Ran 16 tests
 OK
 ```
 
-The same workflow generated and committed the canonical release data to the working branch as commit `a0c2b4d`.
+Pull-request run `32809798607` independently passed the same rebuild, strict validation, tests, and the generated-data no-diff reproducibility gate.
 
-`packages/structure/**` remains the locked canonical owner. Final `PUBLISHED / LOCKED` status is established after the verified branch is merged to `main` and the main-tree manifest is re-read.
+PR #3 was squash-merged into `main` as commit `db02499d04475b3f710e7399b4e0a3dbaeea198e`. The `main` manifest was re-read after merge and confirms `structure-foundation-1.0.0`, schema `1.2.0`, all 87 records, 23 Inorganic links, 46 Organic links and 9 Organic deferrals.
+
+`packages/structure/**` remains the locked canonical owner. Future Structure changes are additive releases triggered by stable new cross-track entities/requests or new evidence, not speculative volume expansion.
