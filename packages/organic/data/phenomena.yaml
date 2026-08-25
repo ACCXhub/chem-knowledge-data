@@ -62,20 +62,20 @@ phenomena:
   - id: org-phenomenon:aldehyde-silver-mirror
     name_zh: 醛基的银镜现象
     observation_zh: 在规范实验条件下，洁净容器内壁可形成银白色金属银沉积或银镜。
-    interpretation_zh: 是高中醛基检验的典型现象之一，但应结合试剂状态、加热条件和样品组成判断。
+    interpretation_zh: 是高中醛基及具有相应还原性的葡萄糖等体系的典型现象之一，但应结合试剂状态、加热条件和样品组成判断。
     diagnostic_strength: typical
     reaction_refs: []
-    experiment_refs: [org-experiment:aldehyde-properties, org-experiment:functional-group-tests]
+    experiment_refs: [org-experiment:aldehyde-properties, org-experiment:functional-group-tests, org-experiment:carbohydrate-properties]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
 
-  - id: org-phenomenon:aldehyde-copper-oxide-precipitate
-    name_zh: 醛基与新制氢氧化铜反应现象
+  - id: org-phenomenon:aldehyde-cuprous-oxide-precipitate
+    name_zh: 醛基与新制氢氧化铜反应生成氧化亚铜
     observation_zh: 加热条件下可由蓝色体系形成砖红色氧化亚铜沉淀。
-    interpretation_zh: 是高中范围内醛基还原性相关的典型实验现象之一。
+    interpretation_zh: 是高中范围内醛基还原性相关的典型实验现象之一；沉淀物为Cu2O而不是CuO。
     diagnostic_strength: typical
     reaction_refs: []
-    experiment_refs: [org-experiment:aldehyde-properties, org-experiment:functional-group-tests]
+    experiment_refs: [org-experiment:aldehyde-properties, org-experiment:functional-group-tests, org-experiment:carbohydrate-properties]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
 
@@ -135,6 +135,26 @@ phenomena:
     interpretation_zh: 该现象用于联系蛋白质中特定结构单元与定性实验，不作为所有蛋白质的唯一通用鉴别方法。
     diagnostic_strength: supporting
     reaction_refs: []
-    experiment_refs: [org-experiment:protein-properties, org-experiment:functional-group-tests]
+    experiment_refs: [org-experiment:protein-properties]
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-lab-guidance-2025]
+
+  - id: org-phenomenon:ethanol-sodium-gas-evolution
+    name_zh: 乙醇与钠反应放出气体
+    observation_zh: 乙醇与钠发生反应时可观察到气体生成。
+    interpretation_zh: 气体为氢气，用于联系醇羟基中的氢可被活泼金属取代；该记录不提供实验操作步骤。
+    diagnostic_strength: supporting
+    reaction_refs: [org-reaction:ethanol-sodium]
+    experiment_refs: [org-experiment:ethanol-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-phenomenon:acetic-acid-bicarbonate-gas-evolution
+    name_zh: 乙酸与碳酸氢钠反应放出二氧化碳
+    observation_zh: 乙酸与碳酸氢钠反应时可观察到明显气泡。
+    interpretation_zh: 气体为二氧化碳，可用于展示羧酸酸性并与醇、酚的典型性质进行比较。
+    diagnostic_strength: typical
+    reaction_refs: [org-reaction:acetic-acid-bicarbonate]
+    experiment_refs: [org-experiment:ethanol-properties]
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
