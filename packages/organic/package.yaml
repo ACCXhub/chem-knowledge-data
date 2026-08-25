@@ -2,7 +2,7 @@ package: organic
 version: 0.2.0
 scope: senior_high_school_cn
 status: complete
-completed_at: 2026-08-25
+completed_at: "2026-08-25"
 owners:
   data: packages/organic/**
   canonical_structure: packages/structure/**
