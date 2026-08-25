@@ -1,0 +1,78 @@
+schema_version: 0.1.0
+links:
+  - source_package: organic
+    source_id: org-substance:methane
+    structure_id: str_1e25d01e-be69-586c-bf74-43f223766882
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "297"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
+
+  - source_package: organic
+    source_id: org-substance:ethene
+    structure_id: str_fe77eac6-c433-5a8f-af6e-df4f790a1661
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "6325"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
+
+  - source_package: organic
+    source_id: org-substance:ethyne
+    structure_id: str_95243312-4277-513a-bb4c-0c87f849ae31
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "6326"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
+
+  - source_package: organic
+    source_id: org-substance:benzene
+    structure_id: str_18b59f73-384d-5961-9ed5-50b1d823bf87
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "241"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
+
+  - source_package: organic
+    source_id: org-substance:methanol
+    structure_id: str_5148e95d-7f22-565d-a5c9-4817afb33f81
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "887"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
+
+  - source_package: organic
+    source_id: org-substance:ethanol
+    structure_id: str_1babe928-4562-5c1a-af1c-f26fd845f8dd
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "702"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
+
+  - source_package: organic
+    source_id: org-substance:acetic-acid
+    structure_id: str_780a7f3e-891e-5a1f-ba3f-c7370c514814
+    resolution_method: authoritative_external_id
+    evidence:
+      namespace: pubchem_cid
+      value: "176"
+    source_refs:
+      - packages/organic/data/identity_crossrefs.yaml
+      - packages/structure/data/canonical/molecules.jsonl
