@@ -1,2 +1,2 @@
-jsonschema>=4.22,<5
-rdkit>=2025.3
+jsonschema==4.25.1
+rdkit==2025.9.4
