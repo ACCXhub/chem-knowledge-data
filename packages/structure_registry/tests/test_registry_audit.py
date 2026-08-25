@@ -5,12 +5,14 @@ import sys
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PACKAGE_ROOT.parents[1]
 VALIDATION = PACKAGE_ROOT / "validation"
 sys.path.insert(0, str(VALIDATION))
 
-from validate_dataset import validate_structure_chemistry  # noqa: E402
+from validate_dataset import validate_manifest, validate_structure_chemistry  # noqa: E402
 
 
 def read_json(path: Path) -> dict:
@@ -94,6 +96,40 @@ class StructureRegistryAuditTests(unittest.TestCase):
         self.assertTrue(
             any("molecule scope" in issue for issue in validate_structure_chemistry(ion)),
             msg="charged structure can be mislabeled as molecule without a chemistry error",
+        )
+
+    def test_resolved_request_requires_resolved_structure_id(self) -> None:
+        schema = read_json(PACKAGE_ROOT / "schema" / "structure-request.schema.json")
+        validator = Draft202012Validator(schema)
+        request = {
+            "schema_version": "1.2.0",
+            "request_id": "sreq_00000000-0000-5000-8000-000000000000",
+            "requester_track": "structural_chemistry",
+            "local_entity_ref": "example:test",
+            "status": "resolved",
+            "resolved_structure_id": None,
+        }
+        self.assertFalse(validator.is_valid(request), msg="resolved request may not keep resolved_structure_id=null")
+
+        request["status"] = "requested"
+        request["resolved_structure_id"] = "str_00000000-0000-5000-8000-000000000000"
+        self.assertFalse(validator.is_valid(request), msg="open request may not claim a resolved_structure_id")
+
+    def test_manifest_must_list_every_published_data_file(self) -> None:
+        manifest = read_json(PACKAGE_ROOT / "data" / "manifest.json")
+        manifest = json.loads(json.dumps(manifest))
+        manifest["files"].pop("links/organic.jsonl")
+        errors: list[str] = []
+        counts = {
+            "molecule": 46,
+            "ion": 24,
+            "formula_unit": 12,
+            "polymer_repeat_unit": 5,
+        }
+        validate_manifest(manifest, counts, errors)
+        self.assertTrue(
+            any("manifest file set mismatch" in error for error in errors),
+            msg=f"validator accepts an incomplete manifest file set: {errors}",
         )
 
 
