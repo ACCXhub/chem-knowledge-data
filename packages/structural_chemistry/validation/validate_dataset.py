@@ -18,6 +18,20 @@ DATA_FILES = {
     "exam_tags": ROOT / "data" / "exam_tags.jsonl",
 }
 
+REQUIRED_SCHEMAS = {
+    "atomic_configuration.schema.json",
+    "concept.schema.json",
+    "vsepr_model.schema.json",
+    "molecular_structure_example.schema.json",
+    "bonding_example.schema.json",
+    "crystal_model.schema.json",
+    "coordination_example.schema.json",
+    "relation.schema.json",
+    "structure_property_rule.schema.json",
+    "exam_tag.schema.json",
+    "curriculum_scope.schema.json",
+}
+
 
 def load_jsonl(path: Path) -> list[dict]:
     rows: list[dict] = []
@@ -25,10 +39,9 @@ def load_jsonl(path: Path) -> list[dict]:
         if not line.strip():
             continue
         try:
-            row = json.loads(line)
+            rows.append(json.loads(line))
         except json.JSONDecodeError as exc:
             raise AssertionError(f"{path}:{line_no}: invalid JSON: {exc}") from exc
-        rows.append(row)
     return rows
 
 
@@ -36,11 +49,15 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     registry = json.loads((ROOT / "sources" / "source_registry.json").read_text(encoding="utf-8"))
     curriculum = json.loads((ROOT / "curriculum" / "scope.json").read_text(encoding="utf-8"))
+    coverage = json.loads((ROOT / "curriculum" / "coverage.json").read_text(encoding="utf-8"))
     source_keys = {row["key"] for row in registry["sources"]}
+
+    schema_files = {path.name for path in (ROOT / "schema").glob("*.schema.json")}
+    missing_schemas = REQUIRED_SCHEMAS - schema_files
+    assert not missing_schemas, f"missing schemas: {sorted(missing_schemas)}"
 
     datasets = {name: load_jsonl(path) for name, path in DATA_FILES.items()}
     datasets["curriculum_scope"] = curriculum
-
     all_rows = [row for rows in datasets.values() for row in rows]
     ids = [row["id"] for row in all_rows]
     assert len(ids) == len(set(ids)), "duplicate package-local IDs"
@@ -62,6 +79,7 @@ def main() -> None:
 
     concepts = datasets["concepts"]
     concept_ids = {row["id"] for row in concepts}
+    exam_ids = {row["id"] for row in datasets["exam_tags"]}
 
     for row in datasets["relations"]:
         assert row["source_ref"] in concept_ids, f"{row['id']}: bad source_ref"
@@ -71,18 +89,40 @@ def main() -> None:
         missing = set(row["concept_refs"]) - concept_ids
         assert not missing, f"{row['id']}: missing concept refs {sorted(missing)}"
 
+    scopes = {"intramolecular", "intermolecular", "lattice", "formation_model", "intracomplex"}
+    for row in datasets["bonding_examples"]:
+        for interaction in row["interactions"]:
+            assert interaction["concept_ref"] in concept_ids, f"{row['id']}: unknown interaction concept"
+            assert interaction["scope"] in scopes, f"{row['id']}: invalid interaction scope"
+
+    for row in datasets["crystal_models"]:
+        assert row["crystal_class"] in concept_ids, f"{row['id']}: unknown crystal class"
+
+    for row in datasets["structure_property_rules"]:
+        assert row["structure_concept_ref"] in concept_ids, f"{row['id']}: unknown structure concept"
+        assert row.get("qualifier"), f"{row['id']}: generalized rule requires qualifier"
+
+    vsepr_patterns = {row["ax_e_notation"] for row in datasets["vsepr_models"]}
     for row in datasets["vsepr_models"]:
-        assert row["electron_domains"] == row["bonded_atoms"] + row["lone_pairs_on_central"], (
-            f"{row['id']}: electron-domain count mismatch"
-        )
-    patterns = [row["ax_e_notation"] for row in datasets["vsepr_models"]]
-    assert len(patterns) == len(set(patterns)), "duplicate VSEPR pattern"
+        assert row["electron_domains"] == row["bonded_atoms"] + row["lone_pairs_on_central"], f"{row['id']}: electron-domain count mismatch"
+    assert len(vsepr_patterns) == len(datasets["vsepr_models"]), "duplicate VSEPR pattern"
 
     allowed_hybrid = {None, "sp", "sp2", "sp3"}
     for row in datasets["molecular_examples"]:
-        assert row["central_hybridization_model"] in allowed_hybrid, (
-            f"{row['id']}: hypervalent hybrid labels are intentionally not published as canonical truth"
-        )
+        assert row["central_hybridization_model"] in allowed_hybrid, f"{row['id']}: unsupported hybridization truth claim"
+        pattern = row["vsepr_pattern"]
+        if pattern.startswith("AX"):
+            assert pattern in vsepr_patterns, f"{row['id']}: unknown VSEPR pattern {pattern}"
+        assert row.get("identity_resolution"), f"{row['id']}: cross-package identity must be explicit"
+
+    curriculum_ids = {row["id"] for row in curriculum}
+    known_families = set(datasets) - {"curriculum_scope"}
+    assert {row["scope_ref"] for row in coverage} == curriculum_ids, "coverage must include every curriculum scope exactly once"
+    assert len(coverage) == len(curriculum_ids), "duplicate curriculum coverage entries"
+    for row in coverage:
+        assert not (set(row["record_families"]) - known_families), f"{row['scope_ref']}: unknown record family"
+        assert not (set(row["concept_refs"]) - concept_ids), f"{row['scope_ref']}: unknown concept coverage ref"
+        assert not (set(row["exam_tag_refs"]) - exam_ids), f"{row['scope_ref']}: unknown exam-tag coverage ref"
 
     expected = manifest["records"]
     actual = {name: len(rows) for name, rows in datasets.items()}
@@ -90,7 +130,7 @@ def main() -> None:
     assert manifest["total_records"] == sum(actual.values()), "manifest total mismatch"
 
     print(f"structural_chemistry: {manifest['total_records']} records validated")
-    print("atomic configurations: 1..36 complete; concept/relation/source/manifest checks passed")
+    print("1..36 configurations, schema coverage, typed relations, interaction scopes and curriculum coverage passed")
 
 
 if __name__ == "__main__":
