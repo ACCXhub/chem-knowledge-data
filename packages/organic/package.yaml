@@ -23,6 +23,7 @@ quality:
   external_identity_single_owner: data/identity_crossrefs.yaml
   identity_policy: source_crossref_or_explicit_deferral
   metadata_schema_validation: true
+  reciprocal_reaction_experiment_phenomenon_links: true
 validation:
   workflow: .github/workflows/validate-organic.yml
   python: "3.13"
@@ -31,7 +32,7 @@ validation:
     functional_groups: 10
     structural_features: 2
     chemical_classes: 25
-    reactions: 30
+    reactions: 31
     concepts: 52
     phenomena: 16
     experiments: 14
@@ -45,6 +46,7 @@ completion_gate:
   curriculum_coverage: passed
   schema_integrity: passed
   local_reference_integrity: passed
+  relation_graph_integrity: passed
   provenance_integrity: passed
   formula_integrity: passed
   reaction_atom_balance: passed_for_non_symbolic_balanced_seed
