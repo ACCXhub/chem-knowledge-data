@@ -30,6 +30,8 @@ jobs:
         run: python packages/inorganic/validation/audit_rule_consistency_v1.py
       - name: Reaction taxonomy semantic audit
         run: python packages/inorganic/validation/audit_reaction_taxonomy_v1.py
+      - name: Identity and search collision audit
+        run: python packages/inorganic/validation/audit_identity_search_v1.py
       - name: Independent inorganic v1 audit
         run: python packages/inorganic/validation/audit_v1.py
       - name: PubChem substance cross-check
