@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import json
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -45,15 +45,16 @@ def main() -> None:
 
     substances = rows_by_kind["substance"]
     reactions = rows_by_kind["reaction"]
-    concepts = rows_by_kind["concept"]
     tags = rows_by_kind["exam_tag"]
 
-    # Electrolyte projection semantics.
+    # Electrolyte projection semantics. A strong electrolyte with no explicit ions can be
+    # intentional when the high-school projection is equilibrium-sensitive (for example
+    # chromic/dichromic acid). Such cases need consumer review, but are not auto-rewritten.
     for row in substances:
         behavior = row.get("aqueous_behavior")
         ions = row.get("ions", [])
         if behavior == "strong_electrolyte" and not ions:
-            errors.append(f"{row['id']}: strong_electrolyte without ionic components")
+            warnings.append(f"{row['id']}: strong_electrolyte has no explicit ionic projection")
         if behavior in {"weak_electrolyte", "weak_base"} and ions:
             errors.append(f"{row['id']}: weak electrolyte/base unexpectedly has ionic components")
 
@@ -73,14 +74,11 @@ def main() -> None:
 
     # Link-density audit for consumer readiness.
     substance_reaction_count: Counter[str] = Counter()
-    ion_reaction_count: Counter[str] = Counter()
     for reaction in reactions:
         for part in reaction.get("reactants", []) + reaction.get("products", []):
             sid = part["species_id"]
             if sid.startswith("substance:"):
                 substance_reaction_count[sid] += 1
-            elif sid.startswith("ion:"):
-                ion_reaction_count[sid] += 1
 
     orphan_core_substances = [
         row["id"] for row in substances
