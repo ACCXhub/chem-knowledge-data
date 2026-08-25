@@ -2,53 +2,72 @@
 
 **Status:** COMPLETE_FOUNDATION_V1 / PUBLISHED / LOCKED
 
-**Owner:** 化学结构管理（Structure Registry）canonical owner
+**Owner:** `chatgpt-web-structure-registry`
 
 **Write scope:** `packages/structure_registry/**`
 
-**Release:** `structure-foundation-1.0.0`
+**Release:** `structure-registry-foundation-1.0.1`
 
 **Published:** 2026-08-25
 
-## 完成状态
+## 当前稳定内容
 
-当前稳定输入范围内，Structure Registry foundation 已完成：
+Structure Registry foundation 保持 **87** 条 canonical Structure：46 molecules、24 ions、12 formula units、5 polymer repeat units。
 
-- Organic v0.1：**50/50** 个实体由 accepted full-identity links 或 explicit deferrals 明确处理；
-- current Inorganic ion seed：**23/23** ions linked；
-- **87** 条 canonical Structure：46 molecules、24 ions、12 formula units、5 polymer repeat units；
-- canonical 数据可由 pinned evidence 确定性重建；
-- formula unit、ion、molecule、polymer repeat unit 语义分离；
-- 未解决 stereochemical / polymer / macromolecular identity 使用 explicit deferral，而不是猜测结构；
-- 下游通过稳定 link / deferral seam 消费数据。
+跨包数字按发布时冻结输入解释：
 
-## 重命名说明
+- Organic v0.1 snapshot：**50/50** 个实体由 accepted full-identity links 或 explicit deferrals 明确处理；
+- Inorganic 23-ion seed snapshot：**23/23** ions linked。
 
-原包路径 `packages/structure/` 已改为：
+这些数字不覆盖 Organic / Inorganic 后续 audit 的实时状态。新稳定实体通过 request seam 进入下一次增量 Structure Registry release。
 
-`packages/structure_registry/`
+## v1.0.1 重审结果
 
-中文名称统一为“化学结构管理”，用于与高中“结构化学”包 `packages/structural_chemistry/` 明确区分。此次重命名不改变既有 `structure_id`、SMILES、InChI、InChIKey、schema 或 canonical 化学身份。
+重命名后的独立审计发现并收敛了以下契约问题：
 
-## 验证
+- schema `$id` 仍指向旧 `packages/structure/` 路径；
+- link / deferral evidence 仍引用已删除旧路径；
+- cross-track schema 无法表达已存在的 `structural_chemistry` requester；
+- manifest 机器数据集名仍为旧 `chem-knowledge-data/structure`；
+- 历史 `build_seed.py` 仍能直接覆盖当前 canonical release；
+- root workstream 与独立 claim 的 Organic review 状态存在不同步。
 
-foundation 发布已经通过独立 CI 重建、strict validation、unit tests 与 generated-data reproducibility gate：
+修正后，`structure_registry` 是唯一机器结构管理包；高中结构化学继续由 `packages/structural_chemistry/` 独立拥有。
+
+## 身份稳定性
+
+本次是契约 / 路径 / provenance / 发布元数据修正，不重新定义化学实体。
+
+以下身份边界保持冻结：
+
+- `structure_id` namespace 不变；
+- 已发布 canonical Structure 的 SMILES / InChI / InChIKey 不因包重命名重算身份；
+- molecule / ion / formula_unit / polymer_repeat_unit 的结构语义不变；
+- formula unit 继续不伪装为离散分子；
+- 未解决 stereochemical / polymer / macromolecular identity 继续使用 explicit deferral。
+
+## 验证门禁
+
+正式 CI 继续执行：
 
 ```text
-built 87 structures; inorganic links=23; organic links=46; organic deferrals=9
-OK: formula_unit=12, ion=24, molecule=46, polymer_repeat_unit=5; total=87; unique_ids=87; inorganic=23/23; organic=50/50
-Ran 16 tests
-OK
+build_release.py
+validate_dataset.py --strict
+unittest discover
+生成数据 zero-diff reproducibility check
 ```
 
-## 证据边界下的未来增量
+v1.0.1 额外加入 schema identity、cross-track requester、evidence path、release metadata 与 legacy-builder regression tests。
 
-以下内容属于未来 additive release，不是 foundation 遗漏：
+## 未来增量
 
-- Inorganic 新稳定 Substance 的结构请求；
+以下内容需要新的可靠 evidence 或新的稳定跨包实体后再增量发布：
+
+- Inorganic 新稳定 Substance / Ion 的结构请求；
+- Organic review 结束后的新增或修订 identity requests；
+- Structural Chemistry 需要解析到 canonical Structure 的新示例；
 - 有明确 metal–ligand connectivity evidence 的 coordination entities；
 - 有 crystallographic evidence 的 crystal records；
-- chain length / end groups / tacticity 明确后的 full polymer identities；
-- teaching/source identity 完成消歧后的 stereochemical identities。
+- chain length / end groups / tacticity 明确后的 full polymer identities。
 
-其他 workstream 必须继续把 `packages/structure_registry/**` 视为只读，并通过已发布 `structure_id` / link / deferral 使用结构事实。
+其他 workstream 把 `packages/structure_registry/**` 视为只读，通过 published `structure_id` / link / deferral 使用结构事实。
