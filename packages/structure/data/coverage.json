@@ -1,0 +1,17 @@
+{
+  "dataset_version": "structure-foundation-1.0.0",
+  "generated_at": "2026-08-25T04:28:00Z",
+  "inorganic": {
+    "accepted_links": 23,
+    "covered_entities": 23,
+    "deferrals": 0,
+    "target_entities": 23
+  },
+  "organic": {
+    "accepted_identity_links": 41,
+    "covered_entities": 50,
+    "deferrals": 9,
+    "repeat_unit_links": 5,
+    "target_entities": 50
+  }
+}

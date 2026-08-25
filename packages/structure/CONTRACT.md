@@ -1,98 +1,96 @@
 # Structure track contract
 
-`packages/structure/` is the canonical owner of chemistry structure records in this repository.
+`packages/structure/` 是仓库内 chemical Structure 的 canonical owner。
 
 ## Write ownership
 
-The active Structure workstream owns and may modify:
+只有 Structure workstream 修改 `packages/structure/**`。其他 workstream 可以读取 published `structure_id`、accepted links 与 deferrals，但不复制或重建 canonical SMILES / InChI / InChIKey。
 
-- `packages/structure/**`
+## Owned data
 
-Other workstreams may read and reference published structure IDs, but must not edit, duplicate, or locally patch structure records. Cross-track corrections belong in the caller's own package as requests/notes and are reconciled by Structure.
+Structure owns:
 
-## What this track owns
+- source-neutral deterministic `structure_id`
+- structure scope 与 formal charge
+- discrete molecule / ion 的 canonical + isomeric SMILES
+- Standard InChI / InChIKey（适用时）
+- formula-unit identity（不把离子晶体伪装成分子）
+- teaching-level polymer repeat-unit abstraction
+- deterministic derived descriptors
+- external structure identifiers 与 provenance
+- Structure-side cross-track link acceptance
+- unresolved structure deferrals
 
-- source-neutral `structure_id`
-- `structure_scope`
-- canonical/isomeric SMILES when chemically meaningful
-- Standard InChI and InChIKey when available
-- machine comparison formula and formal charge
-- normalization/validation metadata
-- reproducible 2D/3D derivation metadata
-- deterministic structure descriptors
-- external structure identifiers and field-level provenance
-- accepted `Substance ↔ Structure` links
-
-## What this track does not own
-
-- inorganic/organic curriculum taxonomy
-- canonical Substance names
-- curriculum-facing chemical-formula typography
-- Reaction, Experiment, Phenomenon, Concept, Question, ExamTag data
-- source-specific raw payloads as canonical fields
+Structure does not own curriculum taxonomy, canonical Substance teaching names, Reaction, Experiment, Phenomenon, Concept, Question or ExamTag.
 
 ## Public cross-track seam
 
-Other tracks may read:
+稳定读取面：
 
 - `structure_id`
 - `structure_scope`
-- `molecular_formula` (`hill_no_charge`, machine-comparison only)
+- `molecular_formula`
 - `formal_charge`
-- canonical/isomeric SMILES when present
-- Standard InChI/InChIKey when present
+- canonical/isomeric SMILES when applicable
+- Standard InChI/InChIKey when applicable
+- `repeat_unit_smiles` + attachment points for polymer repeat units
 - validation/review status
-- external IDs and provenance
+- external IDs/provenance
+- accepted `entity_ref ↔ structure_id` links
+- explicit deferrals
 
-A caller stores a `structure_id` reference. It must not copy the complete canonical structure record into its own package.
+调用方保存 `structure_id`，不复制完整 Structure record。
 
-## Formula convention
+## Identity
 
-Structure uses Hill ordering with charge removed. Charge is a separate integer.
+External IDs such as PubChem CID, ChEBI ID or COD ID are evidence, never canonical IDs.
 
-Examples:
+1. 有 valid Standard InChI：`structure_id = UUIDv5(frozen_namespace, "inchi:" + StandardInChI)`。
+2. 无 Standard InChI 的受控抽象（例如 polymer repeat unit）：使用 scope + normalized representation + formal charge 生成 deterministic UUIDv5。
+3. 同一 representation 必须稳定生成相同 ID。
 
-- ammonia: `H3N`, charge `0`
-- ammonium: `H4N`, charge `+1`
-- sulfate: `O4S`, charge `-2`
-
-This is deliberately different from user-facing formula ownership. Inorganic/Organic may display `NH3`, `NH4+`, `SO4^2-`, `Na2SO4`, parentheses, hydration dots, and teaching notation as appropriate.
-
-## Identity rule
-
-Namespace UUID:
+Frozen namespace:
 
 `c9d2c469-8557-5661-ae35-950cde95e61f`
 
-For a valid Standard InChI:
-
-`structure_id = "str_" + UUIDv5(namespace, "inchi:" + standard_inchi)`
-
-For records without Standard InChI, Structure uses a deterministic scope-specific normalized identity key. The implementation in `pipelines/ids.py` is authoritative.
-
-External IDs such as PubChem CID, ChEBI ID or COD number are references, never canonical IDs.
-
-## Representation rule
-
-A chemical formula is not automatically a molecular structure. The schema distinguishes:
+## Structure scopes
 
 - `molecule`
 - `ion`
 - `formula_unit`
+- `polymer_repeat_unit`
 - `coordination_entity`
 - `crystal`
 - `other`
 
-SMILES/InChI fields are optional for non-discrete structures. A disconnected salt representation may support a formula-unit record, but must not be reclassified as a molecule.
+### Formula unit
 
-## Source and normalization policy
+化学式不是分子结构。NaCl、Na2SO4、sodium oleate 等离子型实体可发布 formula-unit identity / InChI，但 canonical molecular SMILES 保持为空。
 
-See `sources/SOURCE_POLICY.md`.
+### Polymer repeat unit
 
-Preferred evidence is PubChem/ChEBI for discrete chemical entities and COD for crystal structures. RDKit may normalize, validate and derive reproducible fields, but RDKit output is derived evidence rather than authority.
+Repeat unit 使用两个 dummy attachment points 表示链连接位点，例如 polyethylene `*CC*`。它只是教学/拓扑抽象：
 
-## Parallel-work rule
+- 不代表完整 polymer molecule；
+- 不声明 chain length / molecular weight / terminal groups；
+- tacticity 或 stereochemical information 未定义时保持未定义；
+- Standard InChI/InChIKey 不用于 repeat-unit identity。
 
-Inorganic and Organic workstreams may propose structure links **inside their own packages**. They must not create or modify files under `packages/structure/**`.
+## Source/normalization policy
 
-Structure owns final canonical structure records and accepted links. This prevents parallel workstreams from creating competing representations.
+- PubChem：结构标识与外部 CID 证据。
+- ChEBI：curated cross-check。
+- COD：crystal scope。
+- InChI standard：标准结构标识。
+- RDKit：normalization/validation/descriptor tool，不是 authority source。
+- Organic/Inorganic 源包只提供跨包 identity/coverage demand；它们不成为 Structure representation 的第二 canonical owner。
+
+## Publication
+
+只有 `validation.status == valid` 且 `validation.review_status == published` 的 record 可作为 accepted link target。
+
+Source conflict、stereo ambiguity、heterogeneous/macromolecular identity 等不能静默猜测，必须留下 explicit deferral。
+
+## Parallel work
+
+Organic / Inorganic 可以提出 structure demand；最终 structure record、scope、ID 和 accepted link 由本包拥有。Consolidation 消费这些结果，不反向改写 Structure identity。
