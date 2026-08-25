@@ -1,0 +1,35 @@
+name: Validate structural chemistry package
+
+on:
+  push:
+    paths:
+      - "packages/structural_chemistry/**"
+      - "coordination/claims/structural_chemistry.yaml"
+      - ".github/workflows/validate-structural-chemistry.yml"
+  pull_request:
+    paths:
+      - "packages/structural_chemistry/**"
+      - "coordination/claims/structural_chemistry.yaml"
+      - ".github/workflows/validate-structural-chemistry.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-structural-chemistry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Compile validator
+        run: python -m compileall -q packages/structural_chemistry/validation
+
+      - name: Validate structural chemistry package
+        run: python packages/structural_chemistry/validation/validate.py

@@ -1,0 +1,36 @@
+{
+  "package": "structural_chemistry",
+  "dataset_version": "structural-chemistry-foundation-0.1.0",
+  "schema_version": "0.1.0",
+  "status": "active_foundation",
+  "language": "zh-CN",
+  "record_counts": {
+    "concept": 43,
+    "atomic_example": 28,
+    "molecular_geometry": 15,
+    "crystal_model": 15,
+    "coordination_example": 6,
+    "structure_property_relation": 21,
+    "total": 128
+  },
+  "source_count": 7,
+  "topic_count": 24,
+  "canonical_dependencies": {
+    "structure": "structure-foundation-1.0.0",
+    "inorganic": "read_only_ready_for_consolidation_or_audit_hold",
+    "organic": "read_only_complete_or_review_active",
+    "consolidated": "read_only_active"
+  },
+  "known_direct_structure_links": [
+    "str_1e25d01e-be69-586c-bf74-43f223766882",
+    "str_30930b4c-d90b-5ce1-9e59-b86b1a3a367e",
+    "str_18b59f73-384d-5961-9ed5-50b1d823bf87"
+  ],
+  "release_gate": "not_yet_published",
+  "next": [
+    "run foundation validator",
+    "cross-check inorganic and organic review outputs after they relock",
+    "resolve additional published structure links only where evidence exists",
+    "publish after reference, misconception, and upstream-state review"
+  ]
+}

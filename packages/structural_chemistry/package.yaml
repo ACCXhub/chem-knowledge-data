@@ -1,0 +1,41 @@
+package: structural_chemistry
+version: 0.1.0
+status: active
+scope: high-school-structure-and-properties
+language: zh-CN
+
+owns:
+  - atomic_structure_teaching
+  - bonding_concepts
+  - molecular_geometry
+  - molecular_polarity
+  - intermolecular_forces
+  - crystal_models
+  - coordination_chemistry_teaching
+  - structure_property_relations
+  - structural_chemistry_curriculum_projection
+
+references:
+  - elements
+  - inorganic_species
+  - organic_species
+  - structures
+  - consolidated_species
+
+working_principles:
+  - high_school_scope_first
+  - structure_identity_is_external
+  - evidence_backed_facts
+  - teaching_simplification_is_explicit
+  - provenance_preserved
+  - no_reaction_or_mechanism_ownership
+  - no_formula_only_identity_merge
+
+release_gate:
+  - schema_valid
+  - duplicate_ids_absent
+  - source_refs_resolve
+  - curriculum_topics_resolve
+  - structure_refs_resolve_when_present
+  - relation_targets_resolve
+  - teaching_notes_do_not_override_canonical_facts

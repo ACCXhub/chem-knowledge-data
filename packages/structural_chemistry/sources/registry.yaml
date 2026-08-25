@@ -1,0 +1,50 @@
+sources:
+  - id: sc_src_cn_curriculum_2020
+    name: 普通高中化学课程标准（2017年版2020年修订）
+    publisher: 中华人民共和国教育部 / 人民教育出版社课程教材研究所
+    url: https://www.pep.com.cn/xw/zt/rjwy/gzkb2020/202205/P020220517517668288401.pdf
+    role: curriculum_scope
+    usage: 仅用于课程范围、主题组织与高中教学边界，不复制教材正文或视觉资产。
+
+  - id: sc_src_pep_xb2_catalog
+    name: 普通高中教科书 化学 选择性必修2 物质结构与性质
+    publisher: 人民教育出版社
+    url: https://r2-ndr.ykt.cbern.com.cn/edu_product/esp/assets_document/b82cefe7-d631-4bde-baf9-352ca033cba4.pkg/pdf.pdf
+    role: curriculum_scope
+    usage: 仅使用目录层级与主题范围作为教学投影依据。
+
+  - id: sc_src_iupac_goldbook
+    name: IUPAC Compendium of Chemical Terminology (Gold Book), 5th ed.
+    publisher: IUPAC
+    version: "5.0.0 / 2025 online edition"
+    url: https://goldbook.iupac.org/
+    license_note: individual terms CC BY-SA 4.0; 本包只做短摘要与术语链接，不镜像整套集合。
+    role: terminology
+
+  - id: sc_src_nist_asd
+    name: NIST Atomic Spectra Database
+    publisher: National Institute of Standards and Technology
+    url: https://physics.nist.gov/PhysRefData/ASD/
+    role: atomic_reference
+    usage: 基态电子排布/能级等原子事实的权威核对来源；高中教学表示保持独立。
+
+  - id: sc_src_pubchem
+    name: PubChem
+    publisher: U.S. National Library of Medicine / NCBI
+    url: https://pubchem.ncbi.nlm.nih.gov/
+    role: molecular_identity_reference
+    usage: 分子 identity 与基础结构事实交叉核对；canonical Structure 仍引用 packages/structure。
+
+  - id: sc_src_structure_package
+    name: chem-knowledge-data Structure package
+    publisher: ACCXhub/chem-knowledge-data
+    version: structure-foundation-1.0.0
+    url: https://github.com/ACCXhub/chem-knowledge-data/tree/main/packages/structure
+    role: canonical_structure_reference
+
+  - id: sc_src_iucr
+    name: IUCr Online Dictionary of Crystallography / IUCr educational references
+    publisher: International Union of Crystallography
+    url: https://dictionary.iucr.org/
+    role: crystallography_terminology
+    usage: 晶胞、晶格、配位数等术语与晶体学边界核对。

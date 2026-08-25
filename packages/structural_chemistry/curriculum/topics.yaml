@@ -1,0 +1,126 @@
+version: 0.1.0
+scope: high-school-structure-and-properties
+source_refs:
+  - sc_src_cn_curriculum_2020
+  - sc_src_pep_xb2_catalog
+
+topics:
+  - id: sc_topic_atomic_structure
+    name_zh: 原子结构
+    priority: core
+    children:
+      - sc_topic_orbitals
+      - sc_topic_electron_configuration
+      - sc_topic_periodic_structure_relation
+
+  - id: sc_topic_orbitals
+    name_zh: 原子轨道与能级
+    priority: core
+
+  - id: sc_topic_electron_configuration
+    name_zh: 核外电子排布
+    priority: core
+
+  - id: sc_topic_periodic_structure_relation
+    name_zh: 原子结构与元素性质
+    priority: core
+
+  - id: sc_topic_bonding
+    name_zh: 化学键与微粒间作用力
+    priority: core
+    children:
+      - sc_topic_covalent_bond
+      - sc_topic_sigma_pi
+      - sc_topic_bond_parameters
+      - sc_topic_bond_polarity
+      - sc_topic_intermolecular_forces
+
+  - id: sc_topic_covalent_bond
+    name_zh: 共价键
+    priority: core
+
+  - id: sc_topic_sigma_pi
+    name_zh: σ键与π键
+    priority: core
+
+  - id: sc_topic_bond_parameters
+    name_zh: 键参数
+    priority: core
+
+  - id: sc_topic_bond_polarity
+    name_zh: 键的极性与电负性
+    priority: core
+
+  - id: sc_topic_molecular_geometry
+    name_zh: 分子的空间结构
+    priority: core
+    children:
+      - sc_topic_vsepr
+      - sc_topic_hybridization
+      - sc_topic_molecular_polarity
+      - sc_topic_chirality
+
+  - id: sc_topic_vsepr
+    name_zh: 价层电子对互斥模型
+    priority: core
+
+  - id: sc_topic_hybridization
+    name_zh: 杂化轨道教学模型
+    priority: common
+
+  - id: sc_topic_molecular_polarity
+    name_zh: 分子极性
+    priority: core
+
+  - id: sc_topic_chirality
+    name_zh: 分子手性
+    priority: common
+
+  - id: sc_topic_intermolecular_forces
+    name_zh: 分子间作用力与氢键
+    priority: core
+
+  - id: sc_topic_crystals
+    name_zh: 晶体结构与性质
+    priority: core
+    children:
+      - sc_topic_crystal_basics
+      - sc_topic_molecular_crystal
+      - sc_topic_covalent_crystal
+      - sc_topic_ionic_crystal
+      - sc_topic_metallic_crystal
+
+  - id: sc_topic_crystal_basics
+    name_zh: 晶体与晶胞基础
+    priority: core
+
+  - id: sc_topic_molecular_crystal
+    name_zh: 分子晶体
+    priority: core
+
+  - id: sc_topic_covalent_crystal
+    name_zh: 共价晶体
+    priority: core
+
+  - id: sc_topic_ionic_crystal
+    name_zh: 离子晶体
+    priority: core
+
+  - id: sc_topic_metallic_crystal
+    name_zh: 金属晶体
+    priority: core
+
+  - id: sc_topic_coordination
+    name_zh: 配位化学基础
+    priority: common
+    children:
+      - sc_topic_coordinate_bond
+      - sc_topic_complexes
+
+  - id: sc_topic_coordinate_bond
+    name_zh: 配位键
+    priority: common
+
+  - id: sc_topic_complexes
+    name_zh: 配合物、超分子与简单配位模型
+    priority: common
