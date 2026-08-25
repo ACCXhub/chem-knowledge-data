@@ -40,3 +40,6 @@ jobs:
 
       - name: Validate package manifest
         run: python packages/organic/validation/validate_manifest.py
+
+      - name: Validate relation graph reciprocity
+        run: python packages/organic/validation/validate_graph_reciprocity.py
