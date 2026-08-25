@@ -1,6 +1,6 @@
 # Structure release: structure-foundation-1.0.0
 
-Status: **PUBLISHED / LOCKED**
+Status: **PUBLISHED / LOCKED candidate — verified on working branch**
 
 Schema:
 
@@ -25,45 +25,52 @@ Zero coordination/crystal records are deliberate: no connectivity or crystallogr
 
 Organic `COMPLETE_V0_1`:
 
-- 41 primary/formula-unit accepted links
-- 5 additional repeat-unit abstraction links
-- 9 explicit full-identity deferrals
-- **50 / 50 substances accounted**
-- **0 unaccounted**
+- 41 accepted full-identity links;
+- 5 additional repeat-unit abstraction links;
+- 9 explicit full-identity deferrals;
+- **50 / 50 Organic substances accounted**;
+- **0 unaccounted**.
 
 Current Inorganic ion seed:
 
-- 23 accepted `ion_structure` links
-- **23 / 23 ions linked**
-- **0 unaccounted**
+- 23 accepted `ion_structure` links;
+- **23 / 23 ions linked**;
+- **0 unaccounted**.
 
-The existing phosphate Structure remains published as useful extra coverage even though phosphate is not in the current 23-ion inorganic seed snapshot.
+The phosphate Structure remains published as useful extra coverage even though phosphate is not in the current 23-ion Inorganic seed snapshot.
 
 ## Integrity gates
 
 The strict validator checks:
 
-- JSON Schema
-- deterministic Structure/link/deferral IDs
-- duplicate IDs, InChIKeys and external IDs
-- SMILES parse/sanitization
-- formula + formal-charge consistency
-- Standard InChI/InChIKey consistency
-- formula-unit no-fake-molecule rule
-- polymer repeat-unit attachment points and fallback identity
-- accepted-link target existence/publication/scope
-- organic and inorganic coverage completeness
-- manifest counts, record counts and SHA-256
+- JSON Schema;
+- deterministic Structure/link/deferral IDs;
+- duplicate Structure IDs, InChIKeys and external IDs;
+- SMILES parse/sanitization;
+- formula and formal-charge consistency;
+- Standard InChI/InChIKey consistency;
+- formula-unit no-fake-molecule rule;
+- polymer repeat-unit attachment points and deterministic fallback identity;
+- accepted-link target existence and scope;
+- Organic and Inorganic coverage completeness;
+- manifest counts, per-file record counts and SHA-256.
 
-Fresh local verification for this release:
+## Fresh verification evidence
+
+GitHub Actions **Validate structure package**, run `32809697660`, completed successfully on Python 3.13 with pinned `rdkit==2025.9.4` and `jsonschema==4.25.1`.
 
 ```text
-python packages/structure/validation/validate_dataset.py --strict
-OK: molecule=46, ion=24, formula_unit=12, polymer_repeat_unit=5; canonical_total=87; organic_accounted=50/50; inorganic_ions_linked=23/23; unique_ids=87
+build_release.py
+built 87 structures; inorganic links=23; organic links=46; organic deferrals=9
+
+validate_dataset.py --strict
+OK: formula_unit=12, ion=24, molecule=46, polymer_repeat_unit=5; total=87; unique_ids=87; inorganic=23/23; organic=50/50
 
 python -m unittest discover -s packages/structure/tests -v
-Ran 19 tests
+Ran 16 tests
 OK
 ```
 
-`packages/structure/**` remains the locked canonical owner.
+The same workflow generated and committed the canonical release data to the working branch as commit `a0c2b4d`.
+
+`packages/structure/**` remains the locked canonical owner. Final `PUBLISHED / LOCKED` status is established after the verified branch is merged to `main` and the main-tree manifest is re-read.
