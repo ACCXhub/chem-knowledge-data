@@ -9,9 +9,9 @@ write_policy: owner_only
 inputs:
   inorganic: read_only_ready_for_consolidation
   organic: read_only_complete
-  structure: read_only_published
+  structure_registry: read_only_published
   consolidated: read_only_active
 note: >-
-  本工作流负责高中“物质结构与性质/结构化学”知识数据，不拥有分子 Structure canonical identity。
-  packages/structure 继续负责可计算分子/离子/晶格结构表示；本包负责原子电子排布、化学键、
-  VSEPR/分子空间构型、分子极性、晶体类型、配位化学与结构-性质教学关系。
+  本工作流负责高中“物质结构与性质/结构化学”知识数据，不拥有机器可用化学结构的 canonical identity。
+  packages/structure_registry 负责 structure_id、SMILES、InChI/InChIKey、分子/离子/化学式单元等结构管理；
+  本包负责原子电子排布、化学键、VSEPR/分子空间构型、分子极性、晶体类型、配位化学与结构-性质教学关系。
