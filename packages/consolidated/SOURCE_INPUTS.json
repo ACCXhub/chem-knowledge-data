@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "inputs": {
+    "inorganic": {
+      "path": "packages/inorganic",
+      "release": "1.0.1",
+      "state": "READY_FOR_CONSOLIDATION",
+      "release_commit": "7539e961923c6215bfb8c512b007ff0d5a5bf6fa",
+      "expected_total_records": 642
+    },
+    "organic": {
+      "path": "packages/organic",
+      "release": "0.2.0",
+      "state": "complete",
+      "release_commit": "6ce30013fec589248f5cefdcd8bd88c098d92ae7",
+      "expected_substances": 57,
+      "expected_reactions": 31
+    },
+    "structure_registry": {
+      "path": "packages/structure_registry",
+      "release": "structure-registry-foundation-1.0.1",
+      "state": "PUBLISHED",
+      "release_commit": "d8a0d62c4b408c62836de108841afa6e54dcf1b5",
+      "expected_structures": 87,
+      "expected_inorganic_links": 23,
+      "expected_organic_links": 46,
+      "expected_organic_deferrals": 9
+    },
+    "structural_chemistry": {
+      "path": "packages/structural_chemistry",
+      "release": "structural-chemistry-v1.0.2",
+      "state": "READY_FOR_CONSOLIDATION",
+      "release_commit": "a840e79f5600e346fc6f89fddfb0caad0437a977",
+      "expected_total_records": 291
+    }
+  }
+}

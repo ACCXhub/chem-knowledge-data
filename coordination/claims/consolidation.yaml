@@ -5,12 +5,27 @@ started_at: 2026-08-24T20:50:00+08:00
 paths:
   - packages/consolidated/**
   - coordination/claims/consolidation.yaml
+  - .github/workflows/validate-consolidated.yml
 write_policy: owner_only
 inputs:
-  inorganic: read_only_until_ready_for_consolidation
-  organic: read_only_complete_v0_1
-  structure: read_only_published
+  inorganic:
+    version: 1.0.1
+    state: ready_for_consolidation
+    mode: read_only
+  organic:
+    version: 0.2.0
+    state: complete
+    mode: read_only
+  structure_registry:
+    version: structure-registry-foundation-1.0.1
+    state: published
+    mode: read_only
+  structural_chemistry:
+    version: structural-chemistry-v1.0.2
+    state: ready_for_consolidation
+    mode: read_only
 note: >-
-  Consolidation owns only the new consumer-ready package and its claim. Source
-  packages remain read-only inputs under their existing owners. Cross-package ID,
-  schema, provenance, teaching projection, and release mapping converge here.
+  Consolidation owns the consumer-ready integration package, its validation
+  workflow and this claim. Source packages remain immutable inputs. Cross-package
+  identity, reaction references, structure links, provenance, teaching/search
+  projection and release artifacts converge only under packages/consolidated/.

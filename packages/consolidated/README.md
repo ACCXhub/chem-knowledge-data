@@ -1,50 +1,60 @@
 # Consolidated chemistry knowledge package
 
-`packages/consolidated/` is the consumer-ready integration layer for `chem-wiki`.
+`packages/consolidated/` 是 `chem-wiki` 的统一 consumer-ready 知识数据层。
 
-It does not replace or rewrite the three source packages. It reads their released/stable boundaries and converges cross-package identity, provenance, teaching projection, search projection, and release mapping here.
+它不重写源包，而是把各源包已经发布/完成的稳定边界转换成一套可直接导入应用的统一发布物。
 
-## Inputs
+## 当前冻结输入
 
-- `packages/inorganic/` — read-only until `READY_FOR_CONSOLIDATION`
-- `packages/organic/` — completed v0.1 read-only input
-- `packages/structure/` — published canonical structure input; published `structure_id` values remain authoritative
+- `packages/inorganic/` — v1.0.1，`READY_FOR_CONSOLIDATION`
+- `packages/organic/` — v0.2.0，完整性复核完成
+- `packages/structure_registry/` — `structure-registry-foundation-1.0.1`，published Structure canonical owner
+- `packages/structural_chemistry/` — `structural-chemistry-v1.0.2`，`READY_FOR_CONSOLIDATION`
 
-## Ownership
+精确输入版本由 `SOURCE_INPUTS.json` 固定。源包后续升级时，consolidation 通过新的 source snapshot/release revision 接入，不在旧发布物上静默漂移。
 
-Current owner: `chatgpt-web-consolidation`.
+## 本包负责
 
-The active write claim is `coordination/claims/consolidation.yaml`.
+- 统一 consumer species 记录与 source-ID crosswalk；
+- Organic ↔ Inorganic 重复候选检测与显式 resolution；
+- Reaction participant 的跨包 species 引用解析；
+- 直接消费 `structure_registry` 的 accepted Structure links；
+- source provenance 聚合与保留；
+- 高中分类、搜索 token、默认 Palette 排序与 equation-mode projection；
+- 无机规则集与课程投影的发布打包；
+- Organic / Inorganic / Structural Chemistry 非 species 知识记录的统一 envelope/index；
+- release manifest、unresolved findings 与机器验证报告。
 
-Source-package files remain owned by their package workstreams. Consolidation fixes cross-package inconsistencies through mappings and release projections rather than silently editing source data.
+## 身份原则
 
-## Canonical responsibilities
+源包 ID 永久保留为 provenance/import anchor。Consolidated ID 是稳定 consumer import key；主应用可以继续将它映射到 M01 typed UUID。
 
-This package owns:
+未经审查的 formula/name 相同不会自动合并。跨包实体只有在明确 cross-reference、共享受信结构身份或人工 reviewed resolution 下才可共享同一 consolidated identity。
 
-- consolidated species identity and source-ID crosswalks;
-- organic/inorganic duplicate resolution;
-- links from species to published Structure records;
-- provenance aggregation without erasing source provenance;
-- high-school teaching categories and filter tags;
-- search/index projection for Chinese name, formula, aliases, English names, and stable external IDs;
-- Equation Lab / Reaction Builder consumer projections such as default palette priority and equation-mode suitability;
-- consumer-ready release manifests and validation results.
+`structure_registry` 的 published `structure_id` 直接复用，不重新计算、不复制成第二套结构身份。
 
-Runtime user preferences such as pinned items, manual ordering, hidden items, recent usage, and usage frequency are application data and are not stored here.
+## Equation Lab / Reaction Builder
 
-## Active artifacts
+本包生成统一 teaching projection，支持：
 
-- `CONTRACT.md` — integration and release contract.
-- `MAPPING.md` — source-to-consumer mapping policy and open gaps.
-- `STATUS.md` — current consolidation phase and publish gate.
-- `schema/species.schema.json` — consumer species record boundary.
-- `schema/crosswalk.schema.json` — source identity resolution boundary.
-- `schema/teaching_projection.schema.json` — high-school search/palette projection boundary.
-- `data/structure_links.yaml` — reviewed source-species to published-Structure links. The first links use exact PubChem CID agreement between completed Organic identity cross-references and published Structure records.
+- 高中分类：单质、阳离子、阴离子、酸、碱、盐、氧化物、有机物等；
+- 中文名 / 别名 / 英文名 / ASCII 化学式检索；
+- molecular / ionic / net-ionic 模式感知；
+- 默认 Palette 优先级；
+- 0..N 物种候选，而不是强行生成唯一化学答案。
 
-## Release principle
+收藏、拖拽顺序、最近使用、使用频率、隐藏项和自定义托盘属于应用运行时偏好，不进入本仓库。
 
-Source records remain traceable. A consolidated record never overwrites its origin IDs; every merged entity keeps an explicit crosswalk back to package-local IDs and provenance.
+## 目录
 
-The first consolidated release is produced only after the inorganic package reaches `READY_FOR_CONSOLIDATION` and the integration validation gates in `CONTRACT.md` pass.
+- `CONTRACT.md` — consolidation 的稳定边界与发布门禁
+- `MAPPING.md` — 各源包到 consumer release 的映射规则
+- `SOURCE_INPUTS.json` — 当前冻结源版本
+- `schema/` — consumer artifact JSON Schema
+- `tools/build_release.py` — deterministic release generator
+- `validation/validate_release.py` — release integrity validator
+- `generated/` — 机器生成 consumer artifacts；只由 generator 更新
+
+## 发布原则
+
+生成链必须可重复：同一 source snapshot + 同一 generator 应产生同一业务数据。发布前要求 crosswalk、Reaction 引用、Structure link、manifest/hash、教学投影和 unresolved finding 检查全部通过。

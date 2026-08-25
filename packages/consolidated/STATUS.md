@@ -1,34 +1,48 @@
 # Consolidated status
 
-Status: **ACTIVE / CONTRACT-READY / WAITING_FOR_INORGANIC**
+**State:** `ACTIVE / INPUTS-READY / BUILDING-FIRST-CONSUMER-RELEASE`
 
-Owner: `chatgpt-web-consolidation`
+**Owner:** `chatgpt-web-consolidation`
 
-## Current state
+## 已确认输入
 
-- Organic v0.1 is a completed read-only input.
-- Structure is a published read-only input; published `structure_id` values remain canonical.
-- Inorganic is still active and is consumed only through stable public boundaries until it reports `READY_FOR_CONSOLIDATION`.
-- Consolidation owns only `packages/consolidated/**` plus its coordination claim.
+- Inorganic v1.0.1：`READY_FOR_CONSOLIDATION`，642 canonical records。
+- Organic v0.2.0：完整性复核完成，57 substances / 31 reactions 等稳定输入。
+- Structure Registry：`structure-registry-foundation-1.0.1`，87 published Structure；accepted links 为 consolidation 的唯一 Structure 关联来源。
+- Structural Chemistry：`structural-chemistry-v1.0.2`，291 canonical records，`READY_FOR_CONSOLIDATION`。
 
-## Ready now
+## 当前 Delta
 
-- source ownership and immutability contract;
-- cross-package identity policy;
-- species / Structure separation;
-- provenance merge policy;
-- high-school teaching taxonomy projection;
-- search projection;
-- Equation Lab / Reaction Builder consumer requirements;
-- duplicate-resolution and release gates.
+此前 consolidation 仍按“等待无机 + Organic v0.1 + packages/structure”设计。仓库已发生三个关键变化：
 
-## Active consolidation work
+1. 无机已经完成 v1.0.1；
+2. Organic 已完成 v0.2.0；
+3. 原 Structure 包已拆为 `structure_registry` 与 `structural_chemistry`。
 
-1. Freeze consumer-facing schema contracts that can be defined without final inorganic coverage.
-2. Build source-ID crosswalk and Structure-link rules against completed Organic + published Structure inputs.
-3. Keep unresolved mappings explicit rather than merging by formula/name guesswork.
-4. When Inorganic becomes ready, ingest its released boundary, resolve duplicates, generate the first complete consumer release, and run release validation.
+当前工作因此转入首个真实 consumer release 的生成与验证，不再停留在 contract-only 阶段。
 
-## Publish gate
+## 当前 Deliverables
 
-No consolidated release is `PUBLISHED` until all release gates in `CONTRACT.md` pass, including `READY_FOR_CONSOLIDATION` from Inorganic.
+- source snapshot/version pin；
+- consumer species + source crosswalk；
+- accepted Structure link projection；
+- Reaction participant 跨包解析；
+- teaching/search/Equation Lab Palette projection；
+- non-species knowledge envelope/index；
+- rules/curriculum consumer bundle；
+- unresolved findings；
+- deterministic manifest/hash；
+- consolidated validation workflow。
+
+## 发布门禁
+
+首个 release 只有在以下条件全部满足后才进入 `READY_FOR_APP_IMPORT`：
+
+- 所有发布 species 均可回溯到源记录；
+- Reaction 必需 participant 全部解析到 consolidated species；
+- Structure link 仅指向已发布 `structure_registry` 记录；
+- crosswalk 无一源 ID 多目标冲突；
+- formula/name 相似项不会被静默自动合并；
+- teaching/search projection 不含用户运行时偏好；
+- generated manifest 的 counts/hash 与文件实际内容一致；
+- validator 零 blocking error。
