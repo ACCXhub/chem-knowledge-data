@@ -1,8 +1,8 @@
 # Inorganic v1 status
 
-**State:** `READY_FOR_CONSOLIDATION`
+**State:** `AUDIT_CANDIDATE`
 
-**Release:** `1.0.0`
+**Release:** `1.0.1-rc1`
 
 **Owner boundary:** `packages/inorganic/`
 
@@ -11,12 +11,12 @@
 - 48 element teaching projections
 - 57 ions / polyatomic groups
 - 194 inorganic substances
-- 151 first-class reactions
+- 152 first-class reactions
 - 63 phenomena
 - 31 experiments
 - 64 concepts
 - 32 exam tags
-- **640 canonical records total**
+- **641 canonical records total**
 - 7 validated consumer rule sets
 - 10-domain curriculum coverage map
 - source/licensing review
@@ -42,3 +42,7 @@ Merged release commit: `80bb64b959850d48f7f588b82ad4fa51344e98f0`.
 ## Handoff
 
 `packages/consolidated/` and the application importer may consume this package as a stable read-only source. Further changes to inorganic canonical identities should be treated as a new dataset revision with migration/provenance review rather than ad-hoc consumer patches.
+
+## Post-release audit
+
+v1.0.0 之后执行了独立公式/组成、最简计量系数、JSON Schema、语义覆盖和 PubChem 诊断交叉检查。当前 rc1 在 audit 分支收敛命名歧义、平衡分类、一个非最简系数问题、Li2CO3 溶解性规则和核心 Ba(OH)2 反应覆盖。通过最终 CI 与人工复核后再恢复 READY_FOR_CONSOLIDATION。

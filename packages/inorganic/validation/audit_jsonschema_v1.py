@@ -24,6 +24,7 @@ DATA_FILES = [
     DATA / "v1" / "reactions.01.ext.jsonl",
     DATA / "v1" / "reactions.02.ext.jsonl",
     DATA / "v1" / "reactions.03.ext.jsonl",
+    DATA / "v1" / "reactions.04.ext.jsonl",
     DATA / "phenomena.jsonl",
     DATA / "v1" / "phenomena.ext.jsonl",
     DATA / "experiments.jsonl",
