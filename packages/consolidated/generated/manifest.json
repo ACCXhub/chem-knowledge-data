@@ -1,4 +1,14 @@
 {
+  "artifact_contract": [
+    "species.jsonl",
+    "crosswalk.jsonl",
+    "structure_links.jsonl",
+    "teaching_projection.jsonl",
+    "reactions.jsonl",
+    "knowledge_records.jsonl",
+    "unresolved_findings.jsonl"
+  ],
+  "audit_gate": "independent-pre-release-v1",
   "blocking_findings": 0,
   "counts": {
     "findings": 13,
@@ -6,7 +16,7 @@
     "reactions": 183,
     "source_crosswalks": 309,
     "species": 309,
-    "structure_links": 66,
+    "structure_links": 69,
     "teaching_projections": 309
   },
   "files": {
@@ -28,7 +38,7 @@
     },
     "knowledge_records.jsonl": {
       "records": 637,
-      "sha256": "37bfd85c069cc68dceffa1dd5fa5e01d8c256d06f029702843919b1ae1b43bf5"
+      "sha256": "490d9aaf326bb92e6aaab659c2683c6cf7240da7f98f6860579cca647b9db1da"
     },
     "reactions.jsonl": {
       "records": 183,
@@ -56,15 +66,15 @@
       "sha256": "fe131dffb14778f51acc94454325b84ccdd87faafb7570660630b9604bef8acd"
     },
     "source_snapshot.json": {
-      "sha256": "1cd88b68fd103a55a4a68a178183bc22283de9eda23b7914f9564e74df3f1df1"
+      "sha256": "86ca591c45a2d677a5693c0addff8586375ec190e2b0ca3e48a9a4abacdbb029"
     },
     "species.jsonl": {
       "records": 309,
-      "sha256": "a4f8ccf78143d166a3b5d2979355899cecf63924d675094e5e4a43d7d14c985b"
+      "sha256": "9077b5d070f5f40b23b3c001d09f370068239d9edf910b93296a2dd8292293fb"
     },
     "structure_links.jsonl": {
-      "records": 66,
-      "sha256": "af995175fb92c2131256f477da3d58fb12547901dc0877754cfa9fc5acb3724a"
+      "records": 69,
+      "sha256": "0b7ed2cb27ed9c00b9db3d4f91d50c7a8647b4ffd34ea7aa6827487aedc951be"
     },
     "teaching_projection.jsonl": {
       "records": 309,
@@ -72,13 +82,13 @@
     },
     "unresolved_findings.jsonl": {
       "records": 13,
-      "sha256": "34666316333872b14e2873fbb2fd95f0e0b6fc9c12224d13d106c6864f35e14d"
+      "sha256": "ce59f4ae29e75b4e9225b70606f324f12a9bce022a342b9abe19471e3d32ec86"
     }
   },
   "info_findings": 13,
   "package": "consolidated",
-  "release": "consolidated-draft-1",
+  "release": "consolidated-1.0.0",
   "review_findings": 0,
   "source_snapshot_file": "source_snapshot.json",
-  "state": "generated_candidate"
+  "state": "READY_FOR_APP_IMPORT"
 }
