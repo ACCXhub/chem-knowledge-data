@@ -33,6 +33,16 @@ This package owns:
 
 Runtime user preferences such as pinned items, manual ordering, hidden items, recent usage, and usage frequency are application data and are not stored here.
 
+## Active artifacts
+
+- `CONTRACT.md` — integration and release contract.
+- `MAPPING.md` — source-to-consumer mapping policy and open gaps.
+- `STATUS.md` — current consolidation phase and publish gate.
+- `schema/species.schema.json` — consumer species record boundary.
+- `schema/crosswalk.schema.json` — source identity resolution boundary.
+- `schema/teaching_projection.schema.json` — high-school search/palette projection boundary.
+- `data/structure_links.yaml` — reviewed source-species to published-Structure links. The first links use exact PubChem CID agreement between completed Organic identity cross-references and published Structure records.
+
 ## Release principle
 
 Source records remain traceable. A consolidated record never overwrites its origin IDs; every merged entity keeps an explicit crosswalk back to package-local IDs and provenance.
