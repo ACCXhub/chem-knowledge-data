@@ -26,6 +26,8 @@ jobs:
         run: python packages/inorganic/validation/audit_jsonschema_v1.py
       - name: Semantic inorganic v1 audit
         run: python packages/inorganic/validation/audit_semantics_v1.py
+      - name: Solubility rule consistency audit
+        run: python packages/inorganic/validation/audit_rule_consistency_v1.py
       - name: Independent inorganic v1 audit
         run: python packages/inorganic/validation/audit_v1.py
       - name: PubChem substance cross-check
