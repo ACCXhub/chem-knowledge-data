@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 
 from rdkit import Chem, rdBase
@@ -41,6 +42,20 @@ def normalize_formula_unit(source_smiles: str) -> NonDiscreteStructure:
     )
 
 
+def _repeat_unit_formula(mol: "Chem.Mol") -> str:
+    """Return a Hill formula for the chemical repeat unit, excluding dummy attachment atoms."""
+    with_h = Chem.AddHs(mol)
+    counts = Counter(atom.GetSymbol() for atom in with_h.GetAtoms() if atom.GetAtomicNum() != 0)
+    if "C" in counts:
+        order = ["C"]
+        if "H" in counts:
+            order.append("H")
+        order.extend(sorted(symbol for symbol in counts if symbol not in {"C", "H"}))
+    else:
+        order = sorted(counts)
+    return "".join(symbol + (str(counts[symbol]) if counts[symbol] != 1 else "") for symbol in order)
+
+
 def normalize_repeat_unit(repeat_unit_smiles: str) -> NonDiscreteStructure:
     mol = Chem.MolFromSmiles(repeat_unit_smiles, sanitize=True)
     if mol is None:
@@ -57,7 +72,7 @@ def normalize_repeat_unit(repeat_unit_smiles: str) -> NonDiscreteStructure:
             formal_charge=charge,
         ),
         structure_scope="polymer_repeat_unit",
-        molecular_formula=hill_formula_no_charge(mol),
+        molecular_formula=_repeat_unit_formula(mol),
         formal_charge=charge,
         repeat_unit_smiles=normalized,
         attachment_point_count=attachment_points,
