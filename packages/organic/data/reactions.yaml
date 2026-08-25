@@ -30,7 +30,7 @@ reactions:
     equation: C2H4 + Br2 -> C2H4Br2
     equation_status: balanced_seed
     phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene]
-    experiment_refs: [org-experiment:ethene-properties]
+    experiment_refs: [org-experiment:ethene-properties, org-experiment:functional-group-tests]
     concept_refs: [org-concept:addition-reaction, org-concept:unsaturation-test]
     mechanism_status: not_modeled
     teaching_priority: core
@@ -128,7 +128,7 @@ reactions:
     equation: C2H6O -> C2H4 + H2O
     equation_status: balanced_seed
     phenomenon_refs: []
-    experiment_refs: []
+    experiment_refs: [org-experiment:ethanol-properties]
     concept_refs: [org-concept:elimination-reaction, org-concept:organic-conversion-network]
     mechanism_status: not_modeled
     teaching_priority: core
@@ -187,7 +187,7 @@ reactions:
     equation: C2H4O2 + C2H6O <=> C4H8O2 + H2O
     equation_status: balanced_seed
     phenomenon_refs: [org-phenomenon:ethyl-acetate-fruity-odor]
-    experiment_refs: [org-experiment:ethyl-acetate-preparation]
+    experiment_refs: [org-experiment:ethanol-properties, org-experiment:ethyl-acetate-preparation]
     concept_refs: [org-concept:esterification, org-concept:organic-conversion-network]
     mechanism_status: not_modeled
     teaching_priority: core
@@ -285,7 +285,7 @@ reactions:
     equation: C6H6O + 3 Br2 -> C6H3Br3O + 3 HBr
     equation_status: balanced_seed
     phenomenon_refs: [org-phenomenon:phenol-bromine-white-precipitate]
-    experiment_refs: [org-experiment:phenol-properties]
+    experiment_refs: [org-experiment:phenol-properties, org-experiment:functional-group-tests]
     concept_refs: [org-concept:functional-group-influence, org-concept:phenol-test]
     mechanism_status: not_modeled
     teaching_priority: core
