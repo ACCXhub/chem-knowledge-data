@@ -33,14 +33,15 @@ sources:
     publisher: U.S. National Library of Medicine / NCBI
     url: https://pubchem.ncbi.nlm.nih.gov/
     role: molecular_identity_reference
-    usage: 分子 identity 与基础结构事实交叉核对；canonical Structure 仍引用 packages/structure。
+    usage: 分子 identity 与基础结构事实交叉核对；canonical Structure 仍引用 packages/structure_registry。
 
   - id: sc_src_structure_package
-    name: chem-knowledge-data Structure package
+    name: chem-knowledge-data Structure Registry package
     publisher: ACCXhub/chem-knowledge-data
     version: structure-foundation-1.0.0
-    url: https://github.com/ACCXhub/chem-knowledge-data/tree/main/packages/structure
+    url: https://github.com/ACCXhub/chem-knowledge-data/tree/main/packages/structure_registry
     role: canonical_structure_reference
+    usage: 保留既有 source id 以避免本包记录引用漂移；其 canonical path 已收敛为 packages/structure_registry。
 
   - id: sc_src_iucr
     name: IUCr Online Dictionary of Crystallography / IUCr educational references
