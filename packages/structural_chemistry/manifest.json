@@ -1,0 +1,50 @@
+{
+  "package": "structural_chemistry",
+  "release": "structural-chemistry-v1.0.0",
+  "state": "READY_FOR_CONSOLIDATION",
+  "records": {
+    "atomic_configurations": 36,
+    "concepts": 54,
+    "vsepr_models": 13,
+    "molecular_examples": 21,
+    "bonding_examples": 18,
+    "crystal_models": 14,
+    "coordination_examples": 8,
+    "relations": 62,
+    "structure_property_rules": 12,
+    "exam_tags": 23,
+    "curriculum_scope": 8
+  },
+  "total_records": 269,
+  "coverage": {
+    "curriculum_module": "物质结构与性质",
+    "atomic_configurations": "Z=1..36",
+    "vsepr": "AX2 through AX4E2 common high-school models",
+    "crystal_classes": [
+      "ionic",
+      "molecular",
+      "covalent_network",
+      "metallic",
+      "mixed/transition concept"
+    ],
+    "coordination": "simple representative coordination entities"
+  },
+  "canonical_boundary": {
+    "owns": [
+      "structural chemistry concepts",
+      "teaching models",
+      "teaching relations",
+      "atomic electron configurations 1-36",
+      "VSEPR teaching patterns",
+      "crystal classification teaching models",
+      "coordination teaching examples"
+    ],
+    "does_not_own": [
+      "Structure canonical identity",
+      "Substance/Ion canonical identity",
+      "Reaction",
+      "Mechanism",
+      "user preference"
+    ]
+  }
+}

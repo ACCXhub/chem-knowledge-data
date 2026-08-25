@@ -1,17 +1,19 @@
 package: structural_chemistry
-status: active
+status: complete
 owner: chatgpt-web-structural-chemistry
 started_at: 2026-08-25T13:02:00+08:00
+completed_at: 2026-08-25T13:30:00+08:00
 paths:
   - packages/structural_chemistry/**
   - coordination/claims/structural_chemistry.yaml
-write_policy: owner_only
+write_policy: read_only_until_consolidation
 inputs:
-  inorganic: read_only_ready_for_consolidation
+  inorganic: read_only_audit_hold
   organic: read_only_complete
   structure_registry: read_only_published
   consolidated: read_only_active
+release: structural-chemistry-v1.0.0
 note: >-
-  本工作流负责高中“物质结构与性质/结构化学”知识数据，不拥有机器可用化学结构的 canonical identity。
-  packages/structure_registry 负责 structure_id、SMILES、InChI/InChIKey、分子/离子/化学式单元等结构管理；
-  本包负责原子电子排布、化学键、VSEPR/分子空间构型、分子极性、晶体类型、配位化学与结构-性质教学关系。
+  本工作流完成高中“物质结构与性质/结构化学”知识数据发布。packages/structure_registry 继续负责
+  canonical structure_id 与可计算结构表示；本包只拥有原子电子排布、化学键、VSEPR/分子空间构型、
+  分子极性、晶体类型、配位化学与结构-性质教学关系。当前 release 作为 consolidation 只读输入。

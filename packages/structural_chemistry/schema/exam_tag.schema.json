@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Structural Chemistry Exam Tag",
+  "type": "object",
+  "required": ["id","entity_type","name_zh","domain","teaching_priority","concept_refs","meaning","source_refs","status"],
+  "properties": {
+    "id": {"type":"string","pattern":"^sc:exam-tag:"},
+    "entity_type": {"const":"exam_tag"},
+    "name_zh": {"type":"string"},
+    "domain": {"type":"string"},
+    "teaching_priority": {"enum":["core","common","extended"]},
+    "concept_refs": {"type":"array","items":{"type":"string","pattern":"^sc:concept:"},"minItems":1,"uniqueItems":true},
+    "meaning": {"type":"string"},
+    "source_refs": {"type":"array","items":{"type":"string"},"minItems":1,"uniqueItems":true},
+    "status": {"const":"published"}
+  },
+  "additionalProperties": false
+}

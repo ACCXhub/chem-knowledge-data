@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Structural Chemistry Concept",
+  "type": "object",
+  "required": ["id","entity_type","name_zh","name_en","domain","teaching_priority","source_refs","status"],
+  "properties": {
+    "id": {"type":"string","pattern":"^sc:concept:"},
+    "entity_type": {"const":"concept"},
+    "name_zh": {"type":"string","minLength":1},
+    "name_en": {"type":"string","minLength":1},
+    "domain": {"type":"string"},
+    "teaching_priority": {"enum":["core","common","extended"]},
+    "source_refs": {"type":"array","items":{"type":"string"},"minItems":1,"uniqueItems":true},
+    "status": {"const":"published"}
+  },
+  "additionalProperties": false
+}
