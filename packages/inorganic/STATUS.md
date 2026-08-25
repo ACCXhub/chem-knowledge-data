@@ -6,6 +6,8 @@
 
 **Owner boundary:** `packages/inorganic/`
 
+**Audit closure:** release metadata、数据语义、课程映射与验证证据已在发布后独立复核中收敛。
+
 ## Final release content
 
 - 48 element teaching projections
