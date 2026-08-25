@@ -1,0 +1,61 @@
+reactions:
+  - id: org-reaction:ethanol-sodium
+    name_zh: 乙醇与钠反应生成乙醇钠
+    reaction_class: [other]
+    participants:
+      - {role: reactant, coefficient: 2, substance_ref: org-substance:ethanol}
+      - {role: reactant, coefficient: 2, external_species_key: inorganic:sodium, formula_literal: Na}
+      - {role: product, coefficient: 2, substance_ref: org-substance:sodium-ethoxide}
+      - {role: product, coefficient: 1, external_species_key: inorganic:hydrogen, formula_literal: H2}
+    conditions: []
+    equation: 2 C2H6O + 2 Na -> 2 C2H5NaO + H2
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:ethanol-sodium-gas-evolution]
+    experiment_refs: [org-experiment:ethanol-properties]
+    concept_refs: [org-concept:hydroxy-compound-acidity-comparison, org-concept:functional-group-influence]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 记录高中层面的总体计量关系，不把活泼金属反应扩展为机理推断。
+
+  - id: org-reaction:phenol-sodium-hydroxide
+    name_zh: 苯酚与氢氧化钠反应
+    reaction_class: [acid_base]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:phenol}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:sodium-hydroxide, formula_literal: NaOH, phase: aq}
+      - {role: product, coefficient: 1, substance_ref: org-substance:sodium-phenoxide}
+      - {role: product, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: []
+    equation: C6H6O + NaOH -> C6H5NaO + H2O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:phenol-properties]
+    concept_refs: [org-concept:hydroxy-compound-acidity-comparison, org-concept:functional-group-influence]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 用于比较酚羟基与醇羟基的性质；不把“含OH”视作相同酸碱行为。
+
+  - id: org-reaction:acetic-acid-bicarbonate
+    name_zh: 乙酸与碳酸氢钠反应
+    reaction_class: [acid_base]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:acetic-acid}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:sodium-hydrogen-carbonate, formula_literal: NaHCO3}
+      - {role: product, coefficient: 1, substance_ref: org-substance:sodium-acetate}
+      - {role: product, coefficient: 1, external_species_key: inorganic:carbon-dioxide, formula_literal: CO2}
+      - {role: product, coefficient: 1, external_species_key: inorganic:water, formula_literal: H2O}
+    conditions: []
+    equation: C2H4O2 + NaHCO3 -> C2H3NaO2 + CO2 + H2O
+    equation_status: balanced_seed
+    phenomenon_refs: [org-phenomenon:acetic-acid-bicarbonate-gas-evolution]
+    experiment_refs: [org-experiment:ethanol-properties]
+    concept_refs: [org-concept:hydroxy-compound-acidity-comparison]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+    notes: 将乙酸的酸性与可观察的二氧化碳放出联系起来，和乙醇、苯酚的羟基性质作区分。
