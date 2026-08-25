@@ -37,3 +37,6 @@ jobs:
 
       - name: Validate identity coverage
         run: python packages/organic/validation/validate_identity_coverage.py
+
+      - name: Validate package manifest
+        run: python packages/organic/validation/validate_manifest.py
