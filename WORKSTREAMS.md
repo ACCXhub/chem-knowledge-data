@@ -7,7 +7,7 @@
 | `packages/inorganic/` | **COMPLETE / LOCKED** | `chatgpt-web-inorganic`（已完成） | v1.0.0 已完成并标记 `READY_FOR_CONSOLIDATION`；作为 consolidation 只读输入，源包本身保持不变 |
 | `packages/organic/` | **COMPLETE / LOCKED** | `chatgpt-web-organic`（已完成） | v0.1 已完成；作为 consolidation 只读输入，源包本身保持不变 |
 | `packages/structure/` | **PUBLISHED / LOCKED** | Structure canonical owner | 仅 Structure canonical owner 修改；其他工作流只读 published `structure_id` |
-| `packages/structural_chemistry/` | **ACTIVE / LOCKED** | `chatgpt-web-structural-chemistry` | 负责高中“物质结构与性质/结构化学”教学知识数据；只读复用其他包身份，不重建 Structure canonical identity |
+| `packages/structural_chemistry/` | **COMPLETE / LOCKED** | `chatgpt-web-structural-chemistry`（已完成） | `structural-chemistry-v1.0.0` 已完成并标记 `READY_FOR_CONSOLIDATION`；作为 consolidation 只读输入 |
 | `packages/consolidated/` | **ACTIVE / LOCKED** | `chatgpt-web-consolidation` | 负责跨包 ID/schema/provenance/教学投影与最终 consumer release；不反向修改源包 |
 
 ## 并行规则
@@ -18,5 +18,6 @@
 - `packages/organic/` v0.1 作为只读完成输入参与统一，不在 consolidation 中回写源文件。
 - `packages/structure/` 保持结构 canonical owner；其他包复用 published `structure_id`，不复制或重建结构身份。
 - `packages/structural_chemistry/` 与 `packages/structure/` 职责不同：前者拥有高中结构化学教学事实/模型/关系，后者拥有可计算 Structure identity 与表示。
+- `packages/structural_chemistry/` v1.0.0 作为只读完成输入参与 consolidation，不在 consolidation 中回写源文件。
 - `packages/consolidated/` 是统一后的 consumer-ready canonical owner；跨包 ID 对齐、去重、provenance 合并、教学分类/搜索投影和正式发布数据都在这里收敛。
 - 用户个性化排序、收藏、最近使用等运行时偏好属于应用层，不进入知识数据 canonical 包。
