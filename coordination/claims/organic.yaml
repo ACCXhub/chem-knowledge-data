@@ -1,18 +1,22 @@
 package: organic
-status: review_active
+status: complete
 owner: chatgpt-web-organic
 started_at: 2026-08-24T17:28:00+08:00
 review_started_at: 2026-08-25T13:11:00+08:00
+completed_at: 2026-08-25T20:12:00+08:00
 paths:
   - packages/organic/**
   - .github/workflows/validate-organic.yml
-write_policy: exclusive_review
-review_focus:
-  - curriculum completeness
-  - chemistry correctness
-  - data model and schema consistency
+write_policy: read_only_until_consolidation
+release:
+  version: 0.2.0
+  merge_commit: 6ce30013fec589248f5cefdcd8bd88c098d92ae7
+  validation_run_id: 32846195446
+  validation_conclusion: success
 note: >-
-  The user explicitly reopened the organic package for a full integrity review.
-  Other concurrent chats may inspect and consume packages/organic/**, but should
-  not modify the organic package or its validation workflow until this review is
-  closed and the claim returns to read-only status.
+  Organic v0.2 integrity review is complete. Curriculum coverage, chemistry
+  correctness, package schemas, identity coverage, atom balance, manifest
+  counts, and Reaction/Experiment/Phenomenon relation integrity were rechecked.
+  Other concurrent chats may inspect and consume this package but should keep
+  packages/organic/** and its validation workflow read-only until consolidation
+  or an explicit future organic-version assignment.
