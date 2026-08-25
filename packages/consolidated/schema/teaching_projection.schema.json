@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/teaching_projection.schema.json",
+  "title": "High-school teaching and palette projection",
+  "type": "object",
+  "required": [
+    "species_id",
+    "primary_category",
+    "tags",
+    "search_tokens",
+    "default_priority",
+    "equation_modes"
+  ],
+  "properties": {
+    "species_id": {"type": "string", "minLength": 3},
+    "primary_category": {
+      "enum": [
+        "elemental_substance",
+        "cation",
+        "anion",
+        "acid",
+        "base",
+        "salt",
+        "oxide",
+        "organic",
+        "other"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "search_tokens": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "default_priority": {
+      "enum": ["core", "common", "extended"]
+    },
+    "default_palette_rank": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "equation_modes": {
+      "type": "object",
+      "required": ["molecular", "ionic", "net_ionic"],
+      "properties": {
+        "molecular": {"enum": ["recommended", "available", "deemphasized"]},
+        "ionic": {"enum": ["recommended", "available", "deemphasized"]},
+        "net_ionic": {"enum": ["recommended", "available", "deemphasized"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "description": "Generated education/UI projection. Runtime user preferences such as pinning, manual order, recency, hidden items, and usage frequency are intentionally excluded.",
+  "additionalProperties": false
+}
