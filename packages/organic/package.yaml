@@ -13,6 +13,8 @@ entrypoints:
   sources: sources/registry.yaml
   validator: validation/validate_package.py
   identity_validator: validation/validate_identity_coverage.py
+  manifest_validator: validation/validate_manifest.py
+  relation_validator: validation/validate_relations.py
 quality:
   provenance_required: true
   formula_is_not_identity: true
