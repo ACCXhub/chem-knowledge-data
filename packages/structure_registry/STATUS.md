@@ -21,43 +21,45 @@ Structure Registry foundation 保持 **87** 条 canonical Structure：46 molecul
 
 这些数字不覆盖 Organic / Inorganic 后续 audit 的实时状态。新稳定实体通过 request seam 进入下一次增量 Structure Registry release。
 
-## v1.0.1 重审结果
+## v1.0.1 独立重审结果
 
-重命名后的独立审计发现并收敛了以下契约问题：
+本轮重审收敛了重命名、发布契约和数据完整性上的实际缺口：
 
-- schema `$id` 仍指向旧 `packages/structure/` 路径；
-- link / deferral evidence 仍引用已删除旧路径；
-- cross-track schema 无法表达已存在的 `structural_chemistry` requester；
-- manifest 机器数据集名仍为旧 `chem-knowledge-data/structure`；
-- 历史 `build_seed.py` 仍能直接覆盖当前 canonical release；
-- root workstream 与独立 claim 的 Organic review 状态存在不同步。
-
-修正后，`structure_registry` 是唯一机器结构管理包；高中结构化学继续由 `packages/structural_chemistry/` 独立拥有。
+- 4 个 schema `$id` 从旧 `packages/structure/` 切换到 `packages/structure_registry/`；
+- link / deferral evidence 不再引用已删除旧路径；
+- cross-track schema 可表达 `structural_chemistry` requester；
+- manifest dataset identity 与 release version 统一为 Structure Registry 命名；
+- 移除可覆盖当前 canonical release 的历史 `build_seed.py` 与 obsolete seed evidence；
+- `resolved` structure request 必须携带 `resolved_structure_id`，未 resolved request 不得提前声明结果；
+- manifest 必须完整登记全部发布数据文件；
+- formula unit 的组成与净电荷从 Standard InChI 反向核验；
+- molecule / ion scope 与净 formal charge 建立硬一致性约束；
+- link / deferral ID 必须按冻结 UUIDv5 规则可复算；
+- `ion_structure`、`formula_unit`、`repeat_unit_structure`、`polymorph` 等 relation 与目标 Structure scope 建立一致性校验。
 
 ## 身份稳定性
 
-本次是契约 / 路径 / provenance / 发布元数据修正，不重新定义化学实体。
+本次没有重新定义已有化学实体：
 
-以下身份边界保持冻结：
-
-- `structure_id` namespace 不变；
-- 已发布 canonical Structure 的 SMILES / InChI / InChIKey 不因包重命名重算身份；
-- molecule / ion / formula_unit / polymer_repeat_unit 的结构语义不变；
+- frozen `structure_id` namespace 不变；
+- 已发布 87 条 canonical Structure 的身份不重新分配；
+- SMILES / InChI / InChIKey 不因包重命名重算身份；
+- molecule / ion / formula_unit / polymer_repeat_unit 的结构语义保持不变；
 - formula unit 继续不伪装为离散分子；
 - 未解决 stereochemical / polymer / macromolecular identity 继续使用 explicit deferral。
 
-## 验证门禁
+## 最终验证门禁
 
-正式 CI 继续执行：
+正式只读 CI 执行：
 
 ```text
-build_release.py
-validate_dataset.py --strict
-unittest discover
-生成数据 zero-diff reproducibility check
+python packages/structure_registry/pipelines/build_release.py
+python packages/structure_registry/validation/validate_dataset.py --strict
+python -m unittest discover -s packages/structure_registry/tests -v
+git diff --exit-code -- packages/structure_registry/data
 ```
 
-v1.0.1 额外加入 schema identity、cross-track requester、evidence path、release metadata 与 legacy-builder regression tests。
+最终审计套件为 **27 tests**，并要求 deterministic rebuild 后 canonical data zero-diff。
 
 ## 未来增量
 
