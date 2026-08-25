@@ -1,0 +1,22 @@
+{
+  "rule_set": "metal_activity_hs_v1",
+  "version": "1.0.0",
+  "series": ["K","Ca","Na","Mg","Al","Zn","Fe","Sn","Pb","H","Cu","Hg","Ag","Pt","Au"],
+  "semantics_zh": "用于高中条件下判断常见金属与稀酸、盐溶液反应倾向的经验序列。",
+  "rules": [
+    {"id":"activity:acid","summary_zh":"通常 H 前的金属可从非氧化性稀酸中置换出 H2；需排除钝化、氧化性酸和特殊条件。"},
+    {"id":"activity:salt","summary_zh":"在水溶液中，较活泼且不优先与水剧烈反应的金属通常可置换较不活泼金属离子。"},
+    {"id":"activity:water-override","elements":["K","Ca","Na"],"summary_zh":"K、Ca、Na 在盐溶液中应优先考虑与水反应，不能机械套用金属置换盐的规则。"},
+    {"id":"activity:al-passivation","elements":["Al","Fe"],"summary_zh":"常温下 Al、Fe 遇浓硫酸或浓硝酸可发生钝化，属于条件覆盖规则。"},
+    {"id":"activity:oxidizing-acid","summary_zh":"硝酸和热浓硫酸属于氧化性酸，产物不能按“金属 + H+ → H2”简单预测。"}
+  ],
+  "canonical_examples": [
+    "reaction:magnesium-hcl",
+    "reaction:zinc-hcl",
+    "reaction:iron-hcl",
+    "reaction:iron-cuso4",
+    "reaction:zinc-cuso4",
+    "reaction:copper-agno3"
+  ],
+  "sources": ["src:editorial-hs-inorganic-v1","src:moe-hs-chem-2020"]
+}
