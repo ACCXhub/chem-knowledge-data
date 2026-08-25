@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/coverage_evidence.schema.json",
+  "title": "Organic Curriculum Coverage Evidence",
+  "type": "object",
+  "required": ["coverage_evidence", "policy"],
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["status", "refs"],
+      "properties": {
+        "status": {"const": "covered"},
+        "refs": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "section": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"$ref": "#/$defs/entry"}
+    }
+  },
+  "properties": {
+    "coverage_evidence": {
+      "type": "object",
+      "required": ["topics", "families", "reaction_classes", "experiments"],
+      "properties": {
+        "topics": {"$ref": "#/$defs/section"},
+        "families": {"$ref": "#/$defs/section"},
+        "reaction_classes": {"$ref": "#/$defs/section"},
+        "experiments": {"$ref": "#/$defs/section"}
+      },
+      "additionalProperties": false
+    },
+    "policy": {"type": "object", "minProperties": 1}
+  },
+  "additionalProperties": false
+}
