@@ -16,12 +16,7 @@
 
 本包 ID 仅标识本包教学记录，例如 `sc:concept:*`、`sc:vsepr:*`。它们发布后稳定。
 
-本包**不拥有**：
-
-- molecule / ion / formula unit 的 canonical `structure_id`；
-- inorganic / organic Substance 或 Ion identity；
-- Reaction identity；
-- Mechanism / Atom Mapping / Bond Diff。
+本包**不拥有** molecule / ion / formula unit 的 canonical `structure_id`，也不拥有 inorganic / organic Substance、Ion、Reaction、Mechanism、Atom Mapping 或 Bond Diff。
 
 formula、中文名、英文名是教学展示和 cross-package resolution hint，不得当作跨包主键。
 
@@ -32,12 +27,8 @@ formula、中文名、英文名是教学展示和 cross-package resolution hint�
 - “离子/共价”不是绝对二分；教学分类保留模型边界。
 - 晶体结构—性质规则均带 general-trend qualifier，不能当作无例外规则。
 - 配位示例若水溶液实际物种可能更复杂，几何字段可留空而不是伪造唯一结构。
+- 成键示例显式区分 intramolecular / intermolecular / lattice / formation_model / intracomplex，避免把氢键等分子间作用力误标成分子内键。
 
 ## Cross-package seam
 
-Consolidation 可将本包示例解析到：
-
-- `packages/structure/` published `structure_id`；
-- inorganic / organic / consolidated species IDs。
-
-解析必须通过显式 crosswalk；禁止按 formula 自动唯一化。
+Consolidation 可将本包示例解析到 `packages/structure_registry/` published `structure_id`，或 inorganic / organic / consolidated species IDs。解析必须通过显式 crosswalk；禁止按 formula 自动唯一化。
