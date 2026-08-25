@@ -7,9 +7,6 @@ records:
     aliases: [cis-9-octadecenoic acid]
     functional_group_refs: [org-fg:carboxyl]
     structure_ref: null
-    external_ids:
-      pubchem_cid: 445639
-      chebi: null
     teaching_priority: common
     verification_status: source_crosschecked
     provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
@@ -22,9 +19,6 @@ records:
     aliases: [octadecanoic acid]
     functional_group_refs: [org-fg:carboxyl]
     structure_ref: null
-    external_ids:
-      pubchem_cid: 5281
-      chebi: null
     teaching_priority: common
     verification_status: source_crosschecked
     provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
@@ -37,9 +31,6 @@ records:
     aliases: [glyceryl trioleate]
     functional_group_refs: [org-fg:ester]
     structure_ref: null
-    external_ids:
-      pubchem_cid: 5497163
-      chebi: null
     teaching_priority: common
     verification_status: source_crosschecked
     provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
@@ -52,9 +43,6 @@ records:
     aliases: [glyceryl tristearate]
     functional_group_refs: [org-fg:ester]
     structure_ref: null
-    external_ids:
-      pubchem_cid: 11146
-      chebi: null
     teaching_priority: common
     verification_status: source_crosschecked
     provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
@@ -67,9 +55,6 @@ records:
     aliases: []
     functional_group_refs: []
     structure_ref: null
-    external_ids:
-      pubchem_cid: 23665730
-      chebi: CHEBI:81860
     teaching_priority: common
     verification_status: source_crosschecked
     provenance_refs: [pubchem, chebi, manual-seed-2026-08, moe-lab-guidance-2025]
@@ -82,9 +67,6 @@ records:
     aliases: []
     functional_group_refs: []
     structure_ref: null
-    external_ids:
-      pubchem_cid: 2724691
-      chebi: null
     teaching_priority: common
     verification_status: source_crosschecked
     provenance_refs: [pubchem, manual-seed-2026-08, moe-lab-guidance-2025]
