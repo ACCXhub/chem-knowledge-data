@@ -30,14 +30,6 @@ def has_product(reaction: dict[str, Any], species_id: str | None = None, phase: 
     )
 
 
-def has_reactant(reaction: dict[str, Any], species_id: str | None = None, phase: str | None = None) -> bool:
-    return any(
-        (species_id is None or part["species_id"] == species_id)
-        and (phase is None or part["phase"] == phase)
-        for part in reaction["reactants"]
-    )
-
-
 def main() -> None:
     reactions = [row for path in REACTION_FILES for row in load_jsonl(path)]
     phenomena = [row for path in PHENOMENON_FILES for row in load_jsonl(path)]
@@ -53,8 +45,6 @@ def main() -> None:
             errors.append(f"{rid}: precipitation has no solid product")
         if types.intersection({"gas_evolution", "gas_preparation"}) and not has_product(reaction, phase="g"):
             errors.append(f"{rid}: gas-generation classification has no gaseous product")
-        if "combustion" in types and not has_reactant(reaction, species_id="substance:oxygen"):
-            errors.append(f"{rid}: combustion has no O2 reactant")
         if "neutralization" in types and not has_product(reaction, species_id="substance:water"):
             errors.append(f"{rid}: neutralization has no water product")
         if "acid_carbonate" in types and not has_product(reaction, species_id="substance:carbon-dioxide"):
@@ -66,6 +56,8 @@ def main() -> None:
         if "qualitative_test" in types and not reaction.get("phenomenon_ids"):
             errors.append(f"{rid}: qualitative_test has no linked observable phenomenon")
 
+    # "combustion" is intentionally not constrained to O2: Chinese high-school usage also
+    # describes vigorous burning in other oxidants (for example Na in Cl2).
     for phenomenon in phenomena:
         if phenomenon.get("category") != "precipitate":
             continue
