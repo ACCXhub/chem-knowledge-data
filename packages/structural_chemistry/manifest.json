@@ -1,23 +1,28 @@
 {
   "package": "structural_chemistry",
-  "release": "structural-chemistry-v1.0.0",
+  "release": "structural-chemistry-v1.0.1",
   "state": "READY_FOR_CONSOLIDATION",
   "records": {
     "atomic_configurations": 36,
-    "concepts": 54,
+    "concepts": 61,
     "vsepr_models": 13,
     "molecular_examples": 21,
     "bonding_examples": 18,
     "crystal_models": 14,
     "coordination_examples": 8,
-    "relations": 62,
+    "relations": 69,
     "structure_property_rules": 12,
-    "exam_tags": 23,
-    "curriculum_scope": 8
+    "exam_tags": 26,
+    "curriculum_scope": 11
   },
-  "total_records": 269,
+  "total_records": 289,
   "coverage": {
     "curriculum_module": "物质结构与性质",
+    "curriculum_themes": [
+      "原子结构与元素的性质",
+      "微粒间相互作用与物质性质",
+      "研究物质结构的方法与价值"
+    ],
     "atomic_configurations": "Z=1..36",
     "vsepr": "AX2 through AX4E2 common high-school models",
     "crystal_classes": [
@@ -27,7 +32,14 @@
       "metallic",
       "mixed/transition concept"
     ],
-    "coordination": "simple representative coordination entities"
+    "coordination": "simple representative coordination entities",
+    "structure_methods": [
+      "atomic spectroscopy",
+      "molecular spectroscopy",
+      "X-ray diffraction",
+      "evidence-model distinction"
+    ],
+    "multiscale_structure": "atom → molecule → supramolecular structure → aggregate state"
   },
   "canonical_boundary": {
     "owns": [
@@ -37,7 +49,8 @@
       "atomic electron configurations 1-36",
       "VSEPR teaching patterns",
       "crystal classification teaching models",
-      "coordination teaching examples"
+      "coordination teaching examples",
+      "structure-research curriculum projection"
     ],
     "does_not_own": [
       "Structure canonical identity",

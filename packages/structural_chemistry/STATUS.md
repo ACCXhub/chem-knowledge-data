@@ -1,11 +1,11 @@
 # STATUS
 
 - package: `structural_chemistry`
-- release: `structural-chemistry-v1.0.0`
+- release: `structural-chemistry-v1.0.1`
 - state: **READY_FOR_CONSOLIDATION**
 - owner: `chatgpt-web-structural-chemistry`
-- canonical records: **269**
-- curriculum scope: 高中选择性必修“物质结构与性质”核心范围
+- canonical records: **289**
+- curriculum scope: 高中选择性必修“物质结构与性质”三个主题完整范围
 - atomic configurations: 1—36 complete
 - blockers: none
 
@@ -21,8 +21,9 @@
 - VSEPR AXE pattern 唯一且电子域计数自洽；
 - structure-property general trend 必须带 qualifier；
 - exam tag concept refs 可解析；
-- 8 个课程范围节点都有 coverage 证据；
+- 11 个课程范围节点都有 coverage 证据；
+- 第三主题固定覆盖多尺度结构、超分子、原子/分子光谱、X射线衍射、结构证据和结构导向设计；
 - manifest 计数与数据文件一致；
 - 示例 formula 不作为 canonical identity。
 
-当前包可作为 consolidation 新输入；`packages/structure_registry/` 仍为 canonical `structure_id` owner。
+当前包可作为 consolidation 输入；`packages/structure_registry/` 仍为 canonical `structure_id` owner。
