@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/package_manifest.schema.json",
+  "title": "Organic Package Manifest",
+  "type": "object",
+  "required": ["package", "version", "scope", "status", "owners", "entrypoints", "quality", "validation", "completion_gate", "next_phase"],
+  "properties": {
+    "package": {"const": "organic"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "scope": {"const": "senior_high_school_cn"},
+    "status": {"enum": ["review", "complete"]},
+    "completed_at": {"type": ["string", "null"]},
+    "owners": {"type": "object", "minProperties": 1},
+    "entrypoints": {"type": "object", "minProperties": 1},
+    "quality": {"type": "object", "minProperties": 1},
+    "validation": {
+      "type": "object",
+      "required": ["workflow", "python", "counts"],
+      "properties": {
+        "workflow": {"type": "string", "minLength": 1},
+        "python": {"type": "string", "minLength": 1},
+        "counts": {
+          "type": "object",
+          "required": ["substances", "functional_groups", "structural_features", "chemical_classes", "reactions", "concepts", "phenomena", "experiments", "identity_crossrefs", "identity_deferrals", "curriculum_topics", "curriculum_families", "curriculum_reaction_classes", "curriculum_experiment_groups"],
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        }
+      },
+      "additionalProperties": false
+    },
+    "completion_gate": {"type": "object", "minProperties": 1},
+    "next_phase": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}
