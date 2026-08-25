@@ -5,8 +5,7 @@
 - `ids.py`：生成稳定 dataset IDs。
 - `fetch_pubchem.py`：可选的 evidence fetcher；不会直接写 canonical data。
 - `normalize_rdkit.py`：解析 / sanitize 离散结构，生成 Standard InChI/InChIKey、canonical/isomeric SMILES、Hill/no-charge formula、formal charge 与确定性 descriptors。
-- `build_release.py`：从仓库内 pinned evidence 重建完整 foundation release。
-- `build_seed.py`：历史兼容入口。
+- `build_release.py`：从仓库内 pinned evidence 重建完整 foundation release，也是当前唯一正式 canonical 构建入口。
 
 ## 重建
 
@@ -16,6 +15,8 @@ python packages/structure_registry/validation/validate_dataset.py --strict
 ```
 
 重建已提交的 foundation 不要求联网，因为最小证据已经固定在 `sources/` 中。
+
+历史 seed builder 已从活动目录移除，避免旧逻辑覆盖当前 manifest 或 canonical 数据。历史实现仍由 Git 版本历史保留。
 
 新抓取的数据不会自动发布；新 evidence 先进入 draft / review，只有经过校验与审核的记录才成为跨包稳定引用。
 
