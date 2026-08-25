@@ -10,9 +10,7 @@
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -29,9 +27,7 @@
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -47,9 +43,7 @@
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -67,9 +61,7 @@
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -87,9 +79,7 @@
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -99,14 +89,11 @@
     "requirements": [
       "用模型预测常见分子空间结构",
       "分子极性与键极性/空间结构关系",
-      "结构测定方法概念",
       "手性入门"
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -122,9 +109,7 @@
     ],
     "priority": "core",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
-    ],
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   },
   {
@@ -139,9 +124,50 @@
     ],
     "priority": "common",
     "entity_type": "curriculum_scope",
-    "source_refs": [
-      "moe_hs_chem_2020"
+    "source_refs": ["moe_hs_chem_2020"],
+    "status": "published"
+  },
+  {
+    "id": "sc:curriculum:3.1",
+    "theme": "研究物质结构的方法与价值",
+    "topic": "物质结构的多尺度认识",
+    "requirements": [
+      "从原子、分子、超分子到聚集态认识物质结构的尺度层次",
+      "理解不同尺度结构共同影响物质性质",
+      "认识超分子结构与非共价相互作用的联系"
     ],
+    "priority": "common",
+    "entity_type": "curriculum_scope",
+    "source_refs": ["moe_hs_chem_2020"],
+    "status": "published"
+  },
+  {
+    "id": "sc:curriculum:3.2",
+    "theme": "研究物质结构的方法与价值",
+    "topic": "物质结构的实验研究方法",
+    "requirements": [
+      "认识原子光谱可为原子能级和电子跃迁提供实验信息",
+      "认识分子光谱可为分子结构模型提供实验约束",
+      "认识X射线衍射是研究晶体结构的重要方法",
+      "理解结构模型应接受实验事实和测量证据检验"
+    ],
+    "priority": "core",
+    "entity_type": "curriculum_scope",
+    "source_refs": ["moe_hs_chem_2020"],
+    "status": "published"
+  },
+  {
+    "id": "sc:curriculum:3.3",
+    "theme": "研究物质结构的方法与价值",
+    "topic": "物质结构研究的价值",
+    "requirements": [
+      "用结构—性质关系解释结构研究的科学价值",
+      "认识结构信息可服务于新物质和新材料的设计",
+      "区分实验事实、结构模型和基于模型的预测"
+    ],
+    "priority": "common",
+    "entity_type": "curriculum_scope",
+    "source_refs": ["moe_hs_chem_2020"],
     "status": "published"
   }
 ]
