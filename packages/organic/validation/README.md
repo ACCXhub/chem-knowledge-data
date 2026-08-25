@@ -9,6 +9,7 @@ python -m pip install -r packages/organic/validation/requirements.txt
 python packages/organic/validation/validate_package.py
 python packages/organic/validation/validate_identity_coverage.py
 python packages/organic/validation/validate_manifest.py
+python packages/organic/validation/validate_relations.py
 ```
 
 The v0.2 gate checks:
@@ -22,6 +23,7 @@ The v0.2 gate checks:
 - `source_crosschecked` Substance-to-crossref consistency;
 - crossref-or-explicit-deferral completeness for every Substance;
 - curriculum requirement-to-evidence completeness;
-- package-manifest counts against actual dataset contents.
+- package-manifest counts against actual dataset contents;
+- reciprocal Reaction / Experiment / Phenomenon graph links.
 
 Shared molecular formulae remain warnings because formula is not chemical identity. Symbolic polymer equations remain explicit symbolic cases and are reported separately from ordinary atom-balance checks. Canonical molecular structure validation belongs to `packages/structure/**`; cross-package inorganic species IDs are resolved during consolidation.
