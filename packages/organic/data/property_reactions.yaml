@@ -59,3 +59,23 @@ reactions:
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
     notes: 将乙酸的酸性与可观察的二氧化碳放出联系起来，和乙醇、苯酚的羟基性质作区分。
+
+  - id: org-reaction:ethyl-acetate-alkaline-hydrolysis
+    name_zh: 乙酸乙酯的碱性水解
+    reaction_class: [hydrolysis]
+    participants:
+      - {role: reactant, coefficient: 1, substance_ref: org-substance:ethyl-acetate}
+      - {role: reactant, coefficient: 1, external_species_key: inorganic:sodium-hydroxide, formula_literal: NaOH, phase: aq}
+      - {role: product, coefficient: 1, substance_ref: org-substance:sodium-acetate}
+      - {role: product, coefficient: 1, substance_ref: org-substance:ethanol}
+    conditions: [加热]
+    equation: C4H8O2 + NaOH -> C2H3NaO2 + C2H6O
+    equation_status: balanced_seed
+    phenomenon_refs: []
+    experiment_refs: [org-experiment:ethyl-acetate-preparation]
+    concept_refs: [org-concept:ester-hydrolysis, org-concept:organic-conversion-network]
+    mechanism_status: not_modeled
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+    notes: 与酸性可逆水解分开记录，突出碱性水解生成羧酸盐的总体关系。
