@@ -3,6 +3,10 @@
   "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/inorganic/schema/catalog-v1.schema.json",
   "title": "High-school inorganic canonical record v1",
   "$defs": {
+    "source_key": {
+      "type": "string",
+      "pattern": "^src:[a-z0-9][a-z0-9-]*$"
+    },
     "base": {
       "type": "object",
       "required": ["id", "kind", "teaching_priority", "review_status", "sources"],
@@ -11,22 +15,71 @@
         "kind": {"type": "string"},
         "teaching_priority": {"enum": ["core", "common", "extended"]},
         "review_status": {"enum": ["seed", "reviewed", "published"]},
-        "sources": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
-        "verification_targets": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        "sources": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/source_key"},
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "verification_targets": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/source_key"},
+          "uniqueItems": true
+        }
       }
     },
     "composition": {
       "type": "object",
       "minProperties": 1,
-      "additionalProperties": {"type": "integer", "minimum": 1}
+      "patternProperties": {
+        "^[A-Z][a-z]?$": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "aliases": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
     },
     "participant": {
       "type": "object",
       "required": ["species_id", "coefficient", "phase"],
       "properties": {
-        "species_id": {"type": "string"},
+        "species_id": {
+          "type": "string",
+          "pattern": "^(?:substance|ion):[a-z0-9][a-z0-9-]*$"
+        },
         "coefficient": {"type": "integer", "minimum": 1},
         "phase": {"enum": ["s", "l", "g", "aq"]}
+      },
+      "additionalProperties": false
+    },
+    "ion_component": {
+      "type": "object",
+      "required": ["ion_id", "coefficient"],
+      "properties": {
+        "ion_id": {
+          "type": "string",
+          "pattern": "^ion:[a-z0-9][a-z0-9-]*$"
+        },
+        "coefficient": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "net_ionic": {
+      "type": "object",
+      "required": ["reactants", "products"],
+      "properties": {
+        "reactants": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/participant"}
+        },
+        "products": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/participant"}
+        }
       },
       "additionalProperties": false
     }
@@ -39,13 +92,23 @@
           "type": "object",
           "required": ["symbol", "atomic_number", "name_zh"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^element-scope:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "element_scope"},
             "symbol": {"type": "string", "pattern": "^[A-Z][a-z]?$"},
             "atomic_number": {"type": "integer", "minimum": 1, "maximum": 118},
-            "name_zh": {"type": "string", "minLength": 1}
+            "name_zh": {"type": "string", "minLength": 1},
+            "curriculum_groups": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "uniqueItems": true
+            }
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -54,16 +117,23 @@
           "type": "object",
           "required": ["name_zh", "name_en", "formula", "charge", "composition", "ion_type"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^ion:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "ion"},
-            "name_zh": {"type": "string"},
-            "name_en": {"type": "string"},
-            "formula": {"type": "string"},
+            "name_zh": {"type": "string", "minLength": 1},
+            "name_en": {"type": "string", "minLength": 1},
+            "formula": {"type": "string", "minLength": 1},
             "charge": {"type": "integer", "not": {"const": 0}},
             "composition": {"$ref": "#/$defs/composition"},
-            "ion_type": {"enum": ["monatomic", "polyatomic"]}
+            "ion_type": {"enum": ["monatomic", "polyatomic"]},
+            "aliases": {"$ref": "#/$defs/aliases"},
+            "notes": {"type": "string", "minLength": 1}
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -72,29 +142,54 @@
           "type": "object",
           "required": ["name_zh", "name_en", "formula", "composition", "category", "ambient_phase", "ions"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^substance:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "substance"},
-            "name_zh": {"type": "string"},
-            "name_en": {"type": "string"},
-            "formula": {"type": "string"},
+            "name_zh": {"type": "string", "minLength": 1},
+            "name_en": {"type": "string", "minLength": 1},
+            "formula": {"type": "string", "minLength": 1},
             "composition": {"$ref": "#/$defs/composition"},
-            "category": {"type": "string"},
+            "category": {
+              "enum": [
+                "simple_substance",
+                "salt",
+                "base",
+                "oxide",
+                "hydride",
+                "acid",
+                "peroxide",
+                "complex_salt",
+                "halide",
+                "sulfide",
+                "basic_salt",
+                "nitride"
+              ]
+            },
             "ambient_phase": {"enum": ["s", "l", "g", "aq"]},
-            "aqueous_behavior": {"type": ["string", "null"]},
+            "aqueous_behavior": {
+              "enum": [
+                null,
+                "strong_electrolyte",
+                "insoluble",
+                "weak_base",
+                "weak_electrolyte",
+                "sparingly_soluble",
+                "acid_equilibrium"
+              ]
+            },
             "ions": {
               "type": "array",
-              "items": {
-                "type": "object",
-                "required": ["ion_id", "coefficient"],
-                "properties": {
-                  "ion_id": {"type": "string"},
-                  "coefficient": {"type": "integer", "minimum": 1}
-                },
-                "additionalProperties": false
-              }
-            }
+              "items": {"$ref": "#/$defs/ion_component"},
+              "uniqueItems": true
+            },
+            "aliases": {"$ref": "#/$defs/aliases"},
+            "notes": {"type": "string", "minLength": 1}
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -103,18 +198,86 @@
           "type": "object",
           "required": ["name_zh", "reactants", "products", "reaction_types", "conditions", "phenomenon_ids", "reversible"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^reaction:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "reaction"},
-            "name_zh": {"type": "string"},
-            "reactants": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/participant"}},
-            "products": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/participant"}},
-            "reaction_types": {"type": "array", "minItems": 1, "items": {"type": "string"}},
-            "conditions": {"type": "array", "items": {"type": "string"}},
-            "phenomenon_ids": {"type": "array", "items": {"type": "string"}},
-            "net_ionic": {"type": ["object", "null"]},
-            "reversible": {"type": "boolean"}
+            "name_zh": {"type": "string", "minLength": 1},
+            "reactants": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/participant"}
+            },
+            "products": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/participant"}
+            },
+            "reaction_types": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "enum": [
+                  "precipitation",
+                  "double_displacement",
+                  "acid_base",
+                  "amphoteric",
+                  "redox",
+                  "industrial",
+                  "gas_evolution",
+                  "decomposition",
+                  "acid_carbonate",
+                  "combustion",
+                  "disproportionation",
+                  "acidic_oxide_base",
+                  "single_displacement",
+                  "gas_preparation",
+                  "neutralization",
+                  "metal_acid",
+                  "halogen_displacement",
+                  "weak_electrolyte_formation",
+                  "hydrolysis",
+                  "acidic_oxide_water",
+                  "stepwise_acid_base",
+                  "complex_formation",
+                  "equilibrium",
+                  "qualitative_test",
+                  "precipitate_dissolution",
+                  "peroxide",
+                  "oxidizing_acid",
+                  "hydration",
+                  "basic_oxide_water",
+                  "metallurgy"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "conditions": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "uniqueItems": true
+            },
+            "phenomenon_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^phenomenon:[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            },
+            "net_ionic": {
+              "anyOf": [
+                {"$ref": "#/$defs/net_ionic"},
+                {"type": "null"}
+              ]
+            },
+            "reversible": {"type": "boolean"},
+            "notes": {"type": "string", "minLength": 1}
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -123,14 +286,26 @@
           "type": "object",
           "required": ["name_zh", "category", "observation_zh", "related_reaction_ids"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^phenomenon:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "phenomenon"},
-            "name_zh": {"type": "string"},
-            "category": {"type": "string"},
-            "observation_zh": {"type": "string"},
-            "related_reaction_ids": {"type": "array", "items": {"type": "string"}}
+            "name_zh": {"type": "string", "minLength": 1},
+            "category": {"type": "string", "minLength": 1},
+            "observation_zh": {"type": "string", "minLength": 1},
+            "related_reaction_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^reaction:[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            }
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -139,16 +314,40 @@
           "type": "object",
           "required": ["name_zh", "purpose_zh", "reaction_ids", "delivery_mode", "safety_notes_zh", "expected_phenomenon_ids"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^experiment:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "experiment"},
-            "name_zh": {"type": "string"},
-            "purpose_zh": {"type": "string"},
-            "reaction_ids": {"type": "array", "items": {"type": "string"}},
+            "name_zh": {"type": "string", "minLength": 1},
+            "purpose_zh": {"type": "string", "minLength": 1},
+            "reaction_ids": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^reaction:[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            },
             "delivery_mode": {"enum": ["student", "teacher_demo"]},
-            "safety_notes_zh": {"type": "array", "items": {"type": "string"}},
-            "expected_phenomenon_ids": {"type": "array", "items": {"type": "string"}}
+            "safety_notes_zh": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "uniqueItems": true
+            },
+            "expected_phenomenon_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^phenomenon:[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            }
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -157,14 +356,38 @@
           "type": "object",
           "required": ["name_zh", "definition_zh", "related_reaction_ids", "related_species_ids"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^concept:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "concept"},
-            "name_zh": {"type": "string"},
-            "definition_zh": {"type": "string"},
-            "related_reaction_ids": {"type": "array", "items": {"type": "string"}},
-            "related_species_ids": {"type": "array", "items": {"type": "string"}}
+            "name_zh": {"type": "string", "minLength": 1},
+            "definition_zh": {"type": "string", "minLength": 1},
+            "related_reaction_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^reaction:[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            },
+            "related_species_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:substance|ion):[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            },
+            "tags": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "uniqueItems": true
+            }
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     {
       "allOf": [
@@ -173,13 +396,26 @@
           "type": "object",
           "required": ["name_zh", "description_zh", "related_concept_ids"],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^examtag:[a-z0-9][a-z0-9-]*$"
+            },
             "kind": {"const": "exam_tag"},
-            "name_zh": {"type": "string"},
-            "description_zh": {"type": "string"},
-            "related_concept_ids": {"type": "array", "items": {"type": "string"}}
+            "name_zh": {"type": "string", "minLength": 1},
+            "description_zh": {"type": "string", "minLength": 1},
+            "related_concept_ids": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^concept:[a-z0-9][a-z0-9-]*$"
+              },
+              "uniqueItems": true
+            }
           }
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     }
   ]
 }

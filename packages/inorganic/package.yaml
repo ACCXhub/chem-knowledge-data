@@ -1,6 +1,6 @@
 package: inorganic
-version: 0.1.0
-status: active
+version: 1.0.1
+status: ready_for_consolidation
 scope: high-school-inorganic-chemistry
 language: zh-CN
 
@@ -31,4 +31,8 @@ release_gate:
   - duplicate_ids_absent
   - formulas_and_charges_validated
   - reaction_mass_and_charge_checks_pass_where_applicable
+  - rule_projection_consistency_validated
+  - reaction_taxonomy_semantics_validated
+  - identity_and_search_collisions_absent
+  - core_curriculum_connectivity_validated
   - source_licenses_reviewed

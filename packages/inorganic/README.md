@@ -15,14 +15,14 @@
 | 类型 | 数量 |
 |---|---:|
 | 元素教学投影 | 48 |
-| 离子 / 原子团 | 57 |
+| 离子 / 原子团 | 58 |
 | 无机物质 | 194 |
-| 反应 | 151 |
+| 反应 | 152 |
 | 现象 | 63 |
 | 实验 | 31 |
 | 概念 | 64 |
 | 考点标签 | 32 |
-| **canonical records** | **640** |
+| **canonical records** | **642** |
 
 另外包含 7 组规则数据：
 
@@ -76,6 +76,6 @@ packages/inorganic/
 python packages/inorganic/validation/validate_v1.py
 ```
 
-v1 validator 覆盖：全局 ID、source key、跨实体引用、离子投影电荷/组成、反应原子与总电荷守恒、净离子守恒、phenomenon/experiment/concept/exam-tag 引用、rule/coverage 引用和 manifest 计数。
+v1.0.1 的 CI 还会依次执行 JSON Schema、独立公式/组成与引用审计、溶解性规则一致性、反应 taxonomy、identity/search collision、课程连通性，以及 PubChem 诊断交叉检查。外部名称解析结果只用于复核提示，不自动覆盖 canonical 数据。
 
 来源与许可边界见 `DATA_POLICY.md`、`sources/source_registry.json` 与 `sources/SOURCE_REVIEW.md`；应用接入见 `IMPORT_CONTRACT.md`。

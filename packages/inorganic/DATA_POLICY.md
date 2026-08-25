@@ -14,7 +14,7 @@ It also publishes derived teaching rule projections for Equation Lab, ionic-equa
 
 - `element_scope*.jsonl` stores curriculum-facing priority/coverage metadata keyed by symbol and atomic number. It is not a second periodic-table truth source.
 - `ions*.jsonl` owns common monatomic/polyatomic ion identities used by the high-school inorganic layer.
-- `substances*.jsonl` owns canonical inorganic species records and optional aqueous dissociation projections.
+- `substances*.jsonl` owns canonical inorganic species records and optional ionic-composition metadata.
 - `reactions*.jsonl` owns reaction identity, stoichiometric participants, conditions, reaction classes, optional net-ionic representation and phenomenon references.
 - `phenomena*.jsonl`, `experiments*.jsonl`, `concepts*.jsonl` and `exam_tags*.jsonl` are separate stable entities referenced by ID.
 - `rules/*.json` are deterministic consumer projections over canonical identities. They are not a second source of chemical species or reactions.
@@ -55,8 +55,9 @@ v1 canonical records are predominantly `reviewed`. Later ETL must preserve prove
 - Formula strings are machine-readable ASCII chemistry notation; UI typography (subscripts/superscripts) is a renderer concern.
 - Ionic charge is an integer field, not embedded as presentation markup.
 - Reaction phase is participant-level because phase depends on reaction context.
-- Substance `ions` represents the intended high-school aqueous dissociation projection when composition is unambiguous; it does not imply that solid material contains free solvated ions.
-- Weak electrolytes and insoluble species are not forcibly split in ionic-equation projection.
+- Substance `ions` is teaching-level ionic-composition metadata: it records canonical ion units and integer stoichiometry where that representation is useful. It does **not** itself assert an aqueous dissociation result and does not imply free solvated ions in a solid.
+- Ionic-equation splitting must combine participant phase, `aqueous_behavior`, `rules/electrolytes.json`, `rules/solubility.json`, and any reaction-specific acid/base equilibrium context.
+- Weak electrolytes, insoluble species and condition-dependent acid-equilibrium species are not forcibly split merely because ionic-composition metadata exists.
 - Variable-valence elements must return canonical candidates instead of a guessed oxidation state.
 - Numerical thermodynamic/equilibrium/electrochemical values require explicit conditions and field-level provenance before canonical publication.
 
@@ -68,4 +69,13 @@ v1 canonical records are predominantly `reviewed`. Later ETL must preserve prove
 
 ## Release validation
 
-A v1 release is valid only when `validation/validate_v1.py` succeeds against the committed tree. Validation covers identity uniqueness, provenance keys, reference integrity, ionic projection neutrality/composition, molecular and net-ionic conservation, rule references, curriculum references and manifest counts.
+v1.0.1 is release-ready only when the committed tree passes the repository validation workflow. The release gate combines:
+
+- canonical validator and exact manifest counts;
+- JSON Schema conformance for every canonical record;
+- independent formula/composition, charge, conservation and reference audits;
+- solubility-rule consistency;
+- reaction taxonomy semantics;
+- identity / alias / search collision checks;
+- curriculum connectivity checks;
+- diagnostic PubChem cross-checks whose ambiguous name-resolution results are reported for review rather than automatically written back.

@@ -28,6 +28,7 @@ DATA_FILES: dict[str, list[Path]] = {
         DATA / "v1" / "reactions.01.ext.jsonl",
         DATA / "v1" / "reactions.02.ext.jsonl",
         DATA / "v1" / "reactions.03.ext.jsonl",
+        DATA / "v1" / "reactions.04.ext.jsonl",
     ],
     "phenomenon": [DATA / "phenomena.jsonl", DATA / "v1" / "phenomena.ext.jsonl"],
     "experiment": [DATA / "experiments.jsonl", DATA / "v1" / "experiments.ext.jsonl"],
