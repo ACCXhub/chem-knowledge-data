@@ -16,10 +16,10 @@
   "source_count": 7,
   "topic_count": 24,
   "canonical_dependencies": {
-    "structure": "structure-foundation-1.0.0",
-    "inorganic": "read_only_ready_for_consolidation_or_audit_hold",
-    "organic": "read_only_complete_or_review_active",
-    "consolidated": "read_only_active"
+    "structure_registry": "structure-foundation-1.0.0",
+    "inorganic": "read_only",
+    "organic": "read_only",
+    "consolidated": "read_only"
   },
   "known_direct_structure_links": [
     "str_1e25d01e-be69-586c-bf74-43f223766882",
@@ -28,9 +28,9 @@
   ],
   "release_gate": "not_yet_published",
   "next": [
-    "run foundation validator",
-    "cross-check inorganic and organic review outputs after they relock",
+    "pass package validator and CI",
+    "cross-check upstream package states at release time",
     "resolve additional published structure links only where evidence exists",
-    "publish after reference, misconception, and upstream-state review"
+    "publish after reference and misconception review"
   ]
 }
