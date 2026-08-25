@@ -1,7 +1,7 @@
 coverage:
   package: organic
   level: senior_high_school_cn
-  scope_status: complete_v0_1
+  scope_status: review_v0_2
   source_refs:
     - moe-hs-chem-2020
     - moe-lab-guidance-2025
@@ -14,9 +14,17 @@ coverage:
         - molecular_formula_and_structural_formula
         - homologous_series
         - isomerism
+        - chain_isomerism
+        - position_isomerism
+        - functional_class_isomerism
+        - geometric_isomerism
         - simple_organic_nomenclature
         - functional_groups
         - structure_determination_intro
+        - mass_spectrometry
+        - infrared_spectroscopy
+        - proton_nmr
+        - structure_evidence_integration
       priority: core
 
     - id: org-scope:hydrocarbons
@@ -32,6 +40,9 @@ coverage:
         - org-substance:ethyne
         - org-substance:benzene
         - org-substance:toluene
+        - org-substance:but-1-ene
+        - org-substance:cis-but-2-ene
+        - org-substance:trans-but-2-ene
       required_reaction_classes:
         - substitution
         - addition
@@ -49,12 +60,21 @@ coverage:
         - ketone
         - carboxylic_acid
         - ester
+      required_topics:
+        - hydroxy_acidity_comparison
       required_reaction_classes:
         - substitution
         - elimination
         - oxidation
+        - acid_base
         - esterification
         - hydrolysis
+      priority: core
+
+    - id: org-scope:organic-synthesis
+      name_zh: 有机合成路线
+      required_topics:
+        - organic_synthesis_route_design
       priority: core
 
     - id: org-scope:biomolecules
@@ -73,6 +93,9 @@ coverage:
         - addition_polymerization
         - condensation_polymerization
         - monomer_repeat_unit_relation
+        - polymer_chain_architecture
+        - thermoplastic_thermosetting
+        - synthetic_organic_material_families
       priority: core
 
   experiment_coverage:
@@ -92,5 +115,6 @@ coverage:
     - phenol_formaldehyde_resin
 
 notes:
-  - This file defines collection coverage only; it is not a source of chemical identity facts.
-  - v0.1 curriculum requirements have package-local evidence in data/coverage_evidence.yaml; later expansion belongs to a new package version or consolidation work.
+  - This file defines measurable collection coverage; it is not a source of chemical identity facts.
+  - v0.2 raises completeness from representative topic labels to explicit evidence for isomerism, spectroscopy, synthesis-route reasoning, oxygen-containing-group property comparison and polymer structure-property relations.
+  - Chirality awareness is retained as an extended concept without making stereochemistry a mandatory core identity field; canonical stereochemistry remains owned by packages/structure.
