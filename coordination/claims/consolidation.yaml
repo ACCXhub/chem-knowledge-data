@@ -1,7 +1,10 @@
 package: consolidated
-status: active
+status: released
+release: consolidated-1.0.0
+state: READY_FOR_APP_IMPORT
 owner: chatgpt-web-consolidation
 started_at: 2026-08-24T20:50:00+08:00
+released_at: 2026-08-25T22:05:00+08:00
 paths:
   - packages/consolidated/**
   - coordination/claims/consolidation.yaml
@@ -24,8 +27,15 @@ inputs:
     version: structural-chemistry-v1.0.2
     state: ready_for_consolidation
     mode: read_only
+release_gate:
+  workflow_run: 32856769997
+  validation: passed
+  independent_audit: passed
+  deterministic_rebuild: zero_diff
+  blocking_findings: 0
+  review_findings: 0
 note: >-
-  Consolidation owns the consumer-ready integration package, its validation
-  workflow and this claim. Source packages remain immutable inputs. Cross-package
-  identity, reaction references, structure links, provenance, teaching/search
-  projection and release artifacts converge only under packages/consolidated/.
+  Consolidation owns the consumer-ready integration package and release workflow.
+  consolidated-1.0.0 is the stable READY_FOR_APP_IMPORT baseline. Source packages
+  remain immutable inputs for this release; later changes enter through a newly
+  pinned source snapshot and a new consolidated release revision.
