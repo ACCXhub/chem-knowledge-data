@@ -18,10 +18,13 @@ SUBSTANCE_FILES = [
     DATA / "v1" / "substances.03.ext.jsonl",
 ]
 
-EXPECTED_BY_BEHAVIOR = {
-    "strong_electrolyte": "soluble",
-    "insoluble": "insoluble",
-    "sparingly_soluble": "sparingly_soluble",
+# aqueous_behavior is a consumer projection for ionic-equation handling, not a pure
+# solubility field. A sparingly soluble strong electrolyte such as Ca(OH)2 may therefore
+# be strong_electrolyte while the solubility rule says sparingly_soluble.
+ALLOWED_RULE_RESULTS = {
+    "strong_electrolyte": {"soluble", "sparingly_soluble"},
+    "insoluble": {"insoluble"},
+    "sparingly_soluble": {"sparingly_soluble"},
 }
 
 
@@ -109,8 +112,6 @@ def predict(
         if not matches(match, cation, anion):
             continue
         result = apply_exceptions(rule, substance["id"], cation, rule["result"])
-        # Higher specificity wins. For equal specificity, later rules are preferred so
-        # a narrower anion-family rule can intentionally refine a broad cation-family rule.
         candidates.append((specificity(match), index, result, rule["id"]))
     if not candidates:
         return None
@@ -140,7 +141,7 @@ def main() -> None:
         prediction = predict(substance, cation, anion, rules)
         if prediction is None:
             outcomes["unknown"] += 1
-            if behavior in EXPECTED_BY_BEHAVIOR:
+            if behavior in ALLOWED_RULE_RESULTS:
                 unknown_relevant.append(
                     f"{substance['id']}: {cation} + {anion}; canonical={behavior}"
                 )
@@ -148,11 +149,11 @@ def main() -> None:
 
         result, rule_id = prediction
         outcomes[result] += 1
-        expected = EXPECTED_BY_BEHAVIOR.get(behavior)
-        if expected is not None and result != expected:
+        allowed = ALLOWED_RULE_RESULTS.get(behavior)
+        if allowed is not None and result not in allowed:
             errors.append(
-                f"{substance['id']}: canonical={behavior} expects {expected}, "
-                f"rule={rule_id} predicts {result} for {cation} + {anion}"
+                f"{substance['id']}: canonical={behavior} is incompatible with "
+                f"rule={rule_id} predicting {result} for {cation} + {anion}"
             )
 
     if unknown_relevant:
