@@ -1,0 +1,21 @@
+name: Validate structural chemistry package
+
+on:
+  push:
+    paths:
+      - "packages/structural_chemistry/**"
+      - ".github/workflows/validate-structural-chemistry.yml"
+  pull_request:
+    paths:
+      - "packages/structural_chemistry/**"
+      - ".github/workflows/validate-structural-chemistry.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python packages/structural_chemistry/validation/validate_dataset.py

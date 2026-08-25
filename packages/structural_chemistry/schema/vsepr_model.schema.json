@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Structural Chemistry VSEPR Model",
+  "type": "object",
+  "required": ["id","entity_type","ax_e_notation","electron_domains","bonded_atoms","lone_pairs_on_central","electron_geometry","molecular_geometry","source_refs","status"],
+  "properties": {
+    "id": {"type":"string","pattern":"^sc:vsepr:"},
+    "entity_type": {"const":"vsepr_model"},
+    "ax_e_notation": {"type":"string","pattern":"^AX[2-6](E[1-3])?$"},
+    "electron_domains": {"type":"integer","minimum":2,"maximum":6},
+    "bonded_atoms": {"type":"integer","minimum":2,"maximum":6},
+    "lone_pairs_on_central": {"type":"integer","minimum":0,"maximum":3},
+    "electron_geometry": {"type":"string"},
+    "molecular_geometry": {"type":"string"},
+    "ideal_or_relative_angles_deg": {"type":"array"},
+    "example_formulas": {"type":"array","items":{"type":"string"}},
+    "model_scope": {"type":"string"},
+    "teaching_priority": {"enum":["core","common","extended"]},
+    "source_refs": {"type":"array","items":{"type":"string"},"minItems":1,"uniqueItems":true},
+    "status": {"const":"published"}
+  },
+  "additionalProperties": false
+}

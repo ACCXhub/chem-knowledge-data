@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Structural Chemistry Atomic Configuration",
+  "type": "object",
+  "required": ["id","entity_type","atomic_number","symbol","ground_state_configuration","period","block","source_refs","status"],
+  "properties": {
+    "id": {"type":"string","pattern":"^sc:atomic-config:"},
+    "entity_type": {"const":"atomic_configuration"},
+    "atomic_number": {"type":"integer","minimum":1,"maximum":36},
+    "symbol": {"type":"string","minLength":1,"maxLength":2},
+    "ground_state_configuration": {"type":"string","minLength":3},
+    "period": {"type":"integer","minimum":1,"maximum":4},
+    "block": {"enum":["s","p","d"]},
+    "special_case": {"type":"boolean"},
+    "teaching_priority": {"enum":["core","common","extended"]},
+    "source_refs": {"type":"array","items":{"type":"string"},"minItems":1,"uniqueItems":true},
+    "status": {"const":"published"}
+  },
+  "additionalProperties": false
+}
