@@ -1,0 +1,6 @@
+version: 1
+merges: []
+
+# Only reviewed cross-package identity decisions belong here.
+# Each future merge keeps one already-issued consolidated ID as the survivor.
+# Formula/name equality alone is never sufficient evidence.

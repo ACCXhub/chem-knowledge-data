@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/reaction.schema.json",
+  "title": "Consolidated reaction",
+  "type": "object",
+  "$defs": {
+    "participant": {
+      "type": "object",
+      "required": ["role", "coefficient", "species_id", "source_species_ref"],
+      "properties": {
+        "role": {"enum": ["reactant", "product", "catalyst", "reagent"]},
+        "coefficient": {"type": ["integer", "number", "string"]},
+        "species_id": {"type": ["string", "null"]},
+        "source_species_ref": {"type": "string", "minLength": 1},
+        "formula_literal": {"type": ["string", "null"]},
+        "phase": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["id", "source_package", "source_id", "name_zh", "participants", "reaction_types", "conditions", "teaching_priority", "source_review_state", "integration_status", "provenance_refs"],
+  "properties": {
+    "id": {"type": "string", "minLength": 3},
+    "source_package": {"enum": ["inorganic", "organic"]},
+    "source_id": {"type": "string", "minLength": 1},
+    "name_zh": {"type": "string", "minLength": 1},
+    "participants": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/participant"}},
+    "reaction_types": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "conditions": {"type": "array", "items": {"type": "string"}},
+    "equation": {"type": ["string", "null"]},
+    "equation_status": {"type": ["string", "null"]},
+    "phenomenon_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "experiment_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "concept_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "net_ionic": {
+      "type": ["object", "null"],
+      "properties": {
+        "participants": {"type": "array", "items": {"$ref": "#/$defs/participant"}}
+      },
+      "required": ["participants"],
+      "additionalProperties": false
+    },
+    "reversible": {"type": ["boolean", "null"]},
+    "teaching_priority": {"enum": ["core", "common", "extended"]},
+    "source_review_state": {"type": "string", "minLength": 1},
+    "integration_status": {"enum": ["resolved", "review_required"]},
+    "provenance_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

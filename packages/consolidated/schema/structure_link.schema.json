@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/structure_link.schema.json",
+  "title": "Consolidated species to Structure Registry link",
+  "type": "object",
+  "required": ["species_id", "source_package", "source_id", "structure_id", "relation", "source_link_id", "evidence_refs"],
+  "properties": {
+    "species_id": {"type": "string", "minLength": 3},
+    "source_package": {"enum": ["inorganic", "organic"]},
+    "source_id": {"type": "string", "minLength": 1},
+    "structure_id": {"type": "string", "pattern": "^str_"},
+    "relation": {"type": "string", "minLength": 1},
+    "source_link_id": {"type": "string", "minLength": 1},
+    "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  },
+  "additionalProperties": false
+}

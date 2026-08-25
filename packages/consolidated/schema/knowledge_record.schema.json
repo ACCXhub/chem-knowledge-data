@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/knowledge_record.schema.json",
+  "title": "Consolidated non-species knowledge envelope",
+  "type": "object",
+  "required": ["id", "source_package", "source_type", "source_id", "display_name_zh", "provenance_refs", "payload"],
+  "properties": {
+    "id": {"type": "string", "minLength": 3},
+    "source_package": {"enum": ["inorganic", "organic", "structural_chemistry"]},
+    "source_type": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "display_name_zh": {"type": "string", "minLength": 1},
+    "teaching_priority": {"type": ["string", "null"]},
+    "provenance_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "payload": {"type": "object"}
+  },
+  "additionalProperties": false
+}
