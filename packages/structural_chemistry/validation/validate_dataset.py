@@ -32,6 +32,36 @@ REQUIRED_SCHEMAS = {
     "curriculum_scope.schema.json",
 }
 
+REQUIRED_CURRICULUM_IDS = {
+    "sc:curriculum:1.1",
+    "sc:curriculum:1.2",
+    "sc:curriculum:1.3",
+    "sc:curriculum:2.1",
+    "sc:curriculum:2.2",
+    "sc:curriculum:2.3",
+    "sc:curriculum:2.4",
+    "sc:curriculum:2.5",
+    "sc:curriculum:3.1",
+    "sc:curriculum:3.2",
+    "sc:curriculum:3.3",
+}
+
+REQUIRED_THEME3_CONCEPTS = {
+    "sc:concept:supramolecular_structure",
+    "sc:concept:multiscale_structure",
+    "sc:concept:atomic_spectroscopy",
+    "sc:concept:molecular_spectroscopy",
+    "sc:concept:xray_diffraction",
+    "sc:concept:structure_evidence",
+    "sc:concept:structure_guided_design",
+}
+
+REQUIRED_THEME3_EXAM_TAGS = {
+    "sc:exam-tag:multiscale_structure",
+    "sc:exam-tag:structure_methods",
+    "sc:exam-tag:structure_research_value",
+}
+
 
 def load_jsonl(path: Path) -> list[dict]:
     rows: list[dict] = []
@@ -80,6 +110,8 @@ def main() -> None:
     concepts = datasets["concepts"]
     concept_ids = {row["id"] for row in concepts}
     exam_ids = {row["id"] for row in datasets["exam_tags"]}
+    assert REQUIRED_THEME3_CONCEPTS <= concept_ids, "curriculum theme 3 concept coverage regressed"
+    assert REQUIRED_THEME3_EXAM_TAGS <= exam_ids, "curriculum theme 3 exam-tag coverage regressed"
 
     for row in datasets["relations"]:
         assert row["source_ref"] in concept_ids, f"{row['id']}: bad source_ref"
@@ -116,6 +148,7 @@ def main() -> None:
         assert row.get("identity_resolution"), f"{row['id']}: cross-package identity must be explicit"
 
     curriculum_ids = {row["id"] for row in curriculum}
+    assert curriculum_ids == REQUIRED_CURRICULUM_IDS, "curriculum scope must cover all three module themes"
     known_families = set(datasets) - {"curriculum_scope"}
     assert {row["scope_ref"] for row in coverage} == curriculum_ids, "coverage must include every curriculum scope exactly once"
     assert len(coverage) == len(curriculum_ids), "duplicate curriculum coverage entries"
@@ -130,7 +163,7 @@ def main() -> None:
     assert manifest["total_records"] == sum(actual.values()), "manifest total mismatch"
 
     print(f"structural_chemistry: {manifest['total_records']} records validated")
-    print("1..36 configurations, schema coverage, typed relations, interaction scopes and curriculum coverage passed")
+    print("1..36 configurations, schemas, typed relations, interaction scopes, and all three curriculum themes passed")
 
 
 if __name__ == "__main__":
