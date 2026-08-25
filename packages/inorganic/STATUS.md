@@ -1,10 +1,12 @@
 # Inorganic v1 status
 
-**State:** `VALIDATION_PENDING`
+**State:** `READY_FOR_CONSOLIDATION`
 
-**Branch:** `inorganic-v1-rebuild`
+**Release:** `1.0.0`
 
-## Release target
+**Owner boundary:** `packages/inorganic/`
+
+## Final release content
 
 - 48 element teaching projections
 - 57 ions / polyatomic groups
@@ -14,23 +16,29 @@
 - 31 experiments
 - 64 concepts
 - 32 exam tags
-- 640 canonical records total
-- 7 consumer rule sets
-- curriculum coverage map
+- **640 canonical records total**
+- 7 validated consumer rule sets
+- 10-domain curriculum coverage map
 - source/licensing review
-- v1 import contract and validation
+- v1 import contract + JSON Schema
+- dependency-free v1 chemistry/reference validator
 
-## Closure gate
+## Closure evidence
 
-This package becomes `READY_FOR_CONSOLIDATION` only after all of the following are true:
+The release candidate was validated in GitHub Actions on Python 3.13 with:
 
-- `validate_v1.py` succeeds on the committed branch;
-- GitHub Actions validation succeeds on the exact release commit;
-- manifest counts equal actual data counts;
-- all reaction and net-ionic representations satisfy atom/charge conservation;
-- all cross-record and rule/coverage references resolve;
-- source keys resolve through `source_registry.json`;
-- the v1 consumer/import contract is committed;
-- the release commit changes only the inorganic ownership boundary plus its validation workflow.
+- global ID uniqueness;
+- source / verification-target integrity;
+- ion charge and composition checks;
+- Substance ionic-projection neutrality and composition equality;
+- Reaction atom and total-charge conservation;
+- net-ionic atom and total-charge conservation;
+- cross-record references for phenomena, experiments, concepts and exam tags;
+- all stable references embedded in rule sets and curriculum coverage;
+- exact manifest counts: 640 records, 7 rule sets, 10 curriculum domains.
 
-The final closure commit will replace this state with `READY_FOR_CONSOLIDATION` after fresh CI evidence exists.
+The exact final release commit is required to pass the same workflow before merge.
+
+## Handoff
+
+`packages/consolidated/` and the application importer may now consume this package as a stable read-only source. Further changes to inorganic canonical identities should be treated as a new dataset revision with migration/provenance review rather than ad-hoc consumer patches.

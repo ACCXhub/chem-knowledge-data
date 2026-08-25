@@ -2,13 +2,15 @@
 
 高中无机化学 consumer-ready canonical data package。
 
-当前 v1 构建范围：
+**v1 state: `READY_FOR_CONSOLIDATION`**
+
+完整链路：
 
 `Element teaching projection → Ion / polyatomic group → Substance → Reaction → Phenomenon / Experiment → Concept → ExamTag`
 
 并附带 Equation Lab / Reaction Builder 可直接消费的规则层。
 
-## v1 release candidate
+## v1 dataset
 
 | 类型 | 数量 |
 |---|---:|
@@ -74,6 +76,6 @@ packages/inorganic/
 python packages/inorganic/validation/validate_v1.py
 ```
 
-v1 validator 覆盖：全局 ID、source key、跨实体引用、离子投影电荷/组成、反应原子与总电荷守恒、净离子守恒、双向 phenomenon 引用、experiment/concept/exam-tag 引用、rule/coverage 引用和 manifest 计数。
+v1 validator 覆盖：全局 ID、source key、跨实体引用、离子投影电荷/组成、反应原子与总电荷守恒、净离子守恒、phenomenon/experiment/concept/exam-tag 引用、rule/coverage 引用和 manifest 计数。
 
-来源与许可边界见 `DATA_POLICY.md`、`sources/source_registry.json` 与 `sources/SOURCE_REVIEW.md`。
+来源与许可边界见 `DATA_POLICY.md`、`sources/source_registry.json` 与 `sources/SOURCE_REVIEW.md`；应用接入见 `IMPORT_CONTRACT.md`。

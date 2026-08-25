@@ -1,7 +1,8 @@
 {
   "package": "inorganic",
-  "version": "1.0.0-rc1",
-  "status": "validation_pending",
+  "version": "1.0.0",
+  "status": "ready_for_consolidation",
+  "released_at": "2026-08-25",
   "record_counts": {
     "element_scope": 48,
     "ions": 57,
@@ -36,12 +37,13 @@
   "schema_file": "schema/catalog-v1.schema.json",
   "source_registry": "sources/source_registry.json",
   "source_review": "sources/SOURCE_REVIEW.md",
+  "import_contract": "IMPORT_CONTRACT.md",
   "validator": "validation/validate_v1.py",
   "notes": [
     "Stable dataset IDs are import keys, not application UUIDs.",
-    "Reaction is first-class and participants remain explicit.",
+    "Reaction is first-class and participants are explicit.",
     "Element authority remains in the main application's M02 element-data pipeline; this package stores teaching projections.",
     "Exam tags are teaching metadata, not exam-probability claims.",
-    "The final closure commit may change status/version metadata only after fresh CI succeeds."
+    "READY_FOR_CONSOLIDATION means the inorganic source package is stable for downstream read-only consumption; record-level review_status remains independent."
   ]
 }
