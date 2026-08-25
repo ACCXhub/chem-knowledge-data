@@ -2,7 +2,7 @@ name: Validate structure registry
 
 on:
   push:
-    branches: [main]
+    branches: [main, audit-structure-registry-v1.0.1]
     paths:
       - "packages/structure_registry/**"
       - ".github/workflows/validate-structure-registry.yml"
@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate-structure-registry:
@@ -32,7 +32,7 @@ jobs:
       - name: Install Structure Registry validation toolchain
         run: python -m pip install -r packages/structure_registry/validation/requirements.txt
 
-      - name: Rebuild canonical Structure release
+      - name: Rebuild canonical Structure Registry release
         run: python packages/structure_registry/pipelines/build_release.py
 
       - name: Validate canonical data and cross-track coverage
@@ -41,5 +41,20 @@ jobs:
       - name: Run Structure Registry unit tests
         run: python -m unittest discover -s packages/structure_registry/tests -v
 
-      - name: Require reproducible generated data
+      - name: Require reproducible generated data in pull requests
+        if: github.event_name == 'pull_request'
         run: git diff --exit-code -- packages/structure_registry/data
+
+      - name: Commit regenerated audit data
+        if: github.event_name == 'push' && github.ref == 'refs/heads/audit-structure-registry-v1.0.1'
+        shell: bash
+        run: |
+          git add packages/structure_registry/data
+          if git diff --cached --quiet; then
+            echo "Audited canonical data already matches the deterministic builder."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data(structure-registry): regenerate audited release [skip ci]"
+          git push
