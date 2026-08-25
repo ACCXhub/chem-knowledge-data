@@ -1,35 +1,40 @@
-# Structure validation standard
+# Structure 数据校验标准
 
-A canonical structure record is publishable only when checks applicable to its `structure_scope` pass.
+一条 canonical Structure record 只有在其 `structure_scope` 对应的必要检查全部通过后，才允许发布。
 
-## Required checks
+## 必须检查的项目
 
-1. JSON Schema validation against `schema/structure-record.schema.json`.
-2. Source-neutral deterministic `structure_id`.
-3. Formula/charge consistency where a machine structure representation exists.
-4. SMILES parse/sanitization when SMILES is present.
-5. Standard InChI must use `InChI=1S/`; stored InChIKey must be derivable from it.
-6. SMILES and Standard InChI must describe the same normalized discrete entity when both are present.
-7. Cross-source disagreements become `needs_review`; they never silently overwrite.
-8. RDKit-derived fields retain toolkit/version when persisted.
-9. Duplicate canonical IDs, duplicate InChI identities and conflicting external IDs fail validation.
-10. A formula-unit salt is not published as a molecule merely because a disconnected salt SMILES exists.
-11. Manifest record counts and canonical file SHA-256 values must match the checked-in release.
+1. 通过 `schema/structure-record.schema.json` 的 JSON Schema 校验。
+2. `structure_id` 必须来源中立且可确定性重建。
+3. 存在机器可用结构表示时，分子式与形式电荷必须一致。
+4. 存在 SMILES 时，必须通过 RDKit 解析与 sanitization。
+5. Standard InChI 必须使用 `InChI=1S/`；保存的 InChIKey 必须可以从它重新推导。
+6. 同时存在 SMILES 与 Standard InChI 时，两者必须描述同一个规范化后的离散实体。
+7. 跨来源出现实质性差异时必须进入 `needs_review`，不得静默覆盖。
+8. 持久化 RDKit 派生字段时必须记录 toolkit 与版本。
+9. 重复 canonical ID、重复 InChI identity、冲突 external ID 都必须让校验失败。
+10. 盐类 / 离子化合物不能仅因为存在 disconnected salt SMILES 就被发布成 molecule。
+11. 聚合物重复单元必须满足规定的 attachment point 规则。
+12. accepted link 的目标 Structure 必须存在、已发布且 scope 与 relation 相容。
+13. manifest 中的数量、记录数与 canonical 文件 SHA-256 必须和仓库发布数据一致。
+14. 当前冻结的 Organic / Inorganic 跨包目标必须全部由 accepted link 或显式 deferral 交代。
 
-## Scope rules
+## 各结构范围的规则
 
-- **molecule / ion**: at least one machine-usable discrete representation is required.
-- **formula_unit**: formula + charge are canonical; Standard InChI may identify a disconnected stoichiometric representation, but canonical molecular SMILES remains absent in the seed release.
-- **coordination_entity**: connectivity/charge need explicit supporting evidence.
-- **crystal**: requires crystallographic evidence; molecular SMILES is not a crystal representation.
-- **other**: requires review notes.
+- **`molecule` / `ion`**：至少需要一种机器可用的离散结构表示。
+- **`formula_unit`**：formula + charge 是核心机器语义；Standard InChI 可以标识化学式单元的组成身份，但 canonical molecular SMILES 保持为空，避免把晶格化学式误当分子。
+- **`polymer_repeat_unit`**：必须有明确重复连接方式和规定数量的 attachment point；它不是完整 polymer identity。
+- **`coordination_entity`**：连接关系与电荷必须有明确 metal–ligand 证据。
+- **`crystal`**：必须有晶体学证据；molecular SMILES 不能代表晶体结构。
+- **`other`**：必须提供人工 review 说明。
 
-## Command
+## 执行命令
 
 ```bash
 python packages/structure/validation/validate_dataset.py --strict
+python -m unittest discover -s packages/structure/tests -v
 ```
 
-Install `validation/requirements.txt` first if the environment does not already contain RDKit/jsonschema.
+如果环境中还没有 RDKit / jsonschema，先安装 `validation/requirements.txt`。
 
-Only `published + valid` records are stable for other workstreams.
+只有 `published + valid` 的记录可以供其他工作流稳定引用。
