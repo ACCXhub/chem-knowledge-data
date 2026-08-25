@@ -1,10 +1,10 @@
-# Structure 数据许可与署名说明
+# 化学结构管理数据许可与署名说明
 
-本包保存来源中立的结构事实记录，并为每条记录保留 provenance。
+Structure Registry 保存 source-neutral 的事实型化学结构记录及 provenance。
 
-- **ChEBI**：作为证据使用的内容受 **CC BY 4.0** 署名要求约束。
-- **Crystallography Open Database（COD）**：数据库数据按 **CC0** 分发；即使数据本身为 CC0，仍应在 provenance 中保留原始晶体学文献 / 作者信息。
-- **RDKit**：代码与工具采用 BSD-3-Clause，仅用于可复现的结构派生与校验。
-- **PubChem**：作为结构与标识符事实证据来源使用；canonical 数据集不复制其说明性 prose、图片或 depositor-specific expressive content。
+- ChEBI 作为 evidence 使用的材料遵循 **CC BY 4.0** 署名要求。
+- Crystallography Open Database 数据以 **CC0** 分发；即使 COD 数据本身为 CC0，provenance 中仍应保留原始晶体学作者 / 文献归属。
+- RDKit 代码 / 工具遵循 BSD-3-Clause，仅用于可重复的 derivation 与 validation。
+- PubChem 用作事实型 structure / identifier evidence source；canonical dataset 不复制其来源 prose、images 或 depositor-specific expressive content。
 
-每条 canonical record 都保留字段级或记录级来源信息。新增来源时，应同步更新 `sources/registry.json`，并在导入可再分发内容前核对该来源当前有效的许可与使用条款。
+每条 canonical record 保留相应 source provenance。新增来源时必须更新 `sources/registry.json`，并在导入可再分发内容前重新确认其当前许可条件。
