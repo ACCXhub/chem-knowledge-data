@@ -25,9 +25,21 @@
     ],
     "atomic_configurations": "Z=1..36",
     "vsepr": "AX2 through AX4E2 common high-school models",
-    "crystal_classes": ["ionic","molecular","covalent_network","metallic","mixed/transition concept"],
+    "crystal_classes": [
+      "ionic",
+      "molecular",
+      "covalent_network",
+      "metallic",
+      "mixed/transition concept"
+    ],
     "coordination": "simple representative coordination entities",
-    "structure_methods": ["atomic spectroscopy","molecular spectroscopy","X-ray diffraction","evidence-model distinction","evidence-driven model evolution"],
+    "structure_methods": [
+      "atomic spectroscopy",
+      "molecular spectroscopy",
+      "X-ray diffraction",
+      "evidence-model distinction",
+      "evidence-driven model evolution"
+    ],
     "multiscale_structure": "atom → molecule → supramolecular structure → aggregate state"
   },
   "canonical_boundary": {
@@ -41,6 +53,12 @@
       "coordination teaching examples",
       "structure-research curriculum projection"
     ],
-    "does_not_own": ["Structure canonical identity","Substance/Ion canonical identity","Reaction","Mechanism","user preference"]
+    "does_not_own": [
+      "Structure canonical identity",
+      "Substance/Ion canonical identity",
+      "Reaction",
+      "Mechanism",
+      "user preference"
+    ]
   }
 }
