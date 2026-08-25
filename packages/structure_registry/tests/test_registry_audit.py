@@ -12,7 +12,12 @@ REPO_ROOT = PACKAGE_ROOT.parents[1]
 VALIDATION = PACKAGE_ROOT / "validation"
 sys.path.insert(0, str(VALIDATION))
 
-from validate_dataset import validate_manifest, validate_structure_chemistry  # noqa: E402
+from validate_dataset import (  # noqa: E402
+    validate_deferral_integrity,
+    validate_link_integrity,
+    validate_manifest,
+    validate_structure_chemistry,
+)
 
 
 def read_json(path: Path) -> dict:
@@ -131,6 +136,23 @@ class StructureRegistryAuditTests(unittest.TestCase):
             any("manifest file set mismatch" in error for error in errors),
             msg=f"validator accepts an incomplete manifest file set: {errors}",
         )
+
+    def test_link_id_and_relation_target_scope_are_validated(self) -> None:
+        link = read_jsonl(PACKAGE_ROOT / "data" / "links" / "inorganic.jsonl")[0].copy()
+        scopes = {link["structure_id"]: "molecule"}
+        issues = validate_link_integrity(link, scopes)
+        self.assertTrue(any("target scope" in issue for issue in issues), msg=f"scope mismatch not detected: {issues}")
+
+        scopes[link["structure_id"]] = "ion"
+        link["link_id"] = "slink_00000000-0000-5000-8000-000000000000"
+        issues = validate_link_integrity(link, scopes)
+        self.assertTrue(any("deterministic" in issue for issue in issues), msg=f"forged link_id not detected: {issues}")
+
+    def test_deferral_id_is_recomputed(self) -> None:
+        row = read_jsonl(PACKAGE_ROOT / "data" / "deferrals" / "organic.jsonl")[0].copy()
+        row["deferral_id"] = "sdef_00000000-0000-5000-8000-000000000000"
+        issues = validate_deferral_integrity(row)
+        self.assertTrue(any("deterministic" in issue for issue in issues), msg=f"forged deferral_id not detected: {issues}")
 
 
 if __name__ == "__main__":
