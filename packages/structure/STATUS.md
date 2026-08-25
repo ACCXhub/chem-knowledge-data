@@ -1,6 +1,6 @@
 # Structure package status
 
-**Status:** VERIFIED_FOUNDATION_V1 — awaiting merge to main
+**Status:** COMPLETE_FOUNDATION_V1 / PUBLISHED / LOCKED
 
 **Owner:** Structure canonical owner
 
@@ -8,9 +8,9 @@
 
 **Release:** `structure-foundation-1.0.0`
 
-**Verified:** 2026-08-25
+**Published:** 2026-08-25
 
-## Completion definition met on working branch
+## Completion definition met
 
 The Structure foundation is complete against the stable source-package inputs available now:
 
@@ -24,7 +24,7 @@ The Structure foundation is complete against the stable source-package inputs av
 
 ## Fresh verification
 
-GitHub Actions run `32809697660` succeeded:
+Working-branch GitHub Actions run `32809697660` succeeded, and pull-request run `32809798607` independently rebuilt the release and passed the no-diff reproducibility gate before merge.
 
 ```text
 built 87 structures; inorganic links=23; organic links=46; organic deferrals=9
@@ -33,7 +33,7 @@ Ran 16 tests
 OK
 ```
 
-The workflow-generated release data are committed on `structure-foundation-v1` as `a0c2b4d`.
+PR #3 was squash-merged to `main` as `db02499d04475b3f710e7399b4e0a3dbaeea198e`. The canonical `main` manifest was re-read after merge and confirms dataset version `structure-foundation-1.0.0`, schema `1.2.0`, total `87`, Inorganic links `23`, Organic links `46`, and Organic deferrals `9`.
 
 ## Evidence-bound future additions
 
@@ -45,4 +45,4 @@ These are additive future releases, not missing foundation records:
 - full polymer molecular identities where chain length/end groups/tacticity are unspecified;
 - generic fructose/alanine stereochemical identities until the teaching/source identity is disambiguated.
 
-After merge and a main-tree manifest check, this status becomes `COMPLETE_FOUNDATION_V1 / PUBLISHED / LOCKED`. Other workstreams continue to treat `packages/structure/**` as read-only.
+Other workstreams must continue to treat `packages/structure/**` as read-only and consume published `structure_id` / link / deferral records through the documented integration seam.
