@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/source_registry.schema.json",
+  "title": "Organic Source Registry",
+  "type": "object",
+  "required": ["sources", "policy"],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "organization", "role", "use"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "name": {"type": "string", "minLength": 1},
+          "organization": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "url": {"type": "string", "format": "uri"},
+          "api": {"type": "string", "format": "uri"},
+          "license": {"type": "string", "minLength": 1},
+          "use": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "policy": {"type": "object", "minProperties": 1}
+  },
+  "additionalProperties": false
+}
