@@ -20,6 +20,10 @@ jobs:
           python-version: '3.13'
       - name: Validate inorganic v1
         run: python packages/inorganic/validation/validate_v1.py
+      - name: Install audit-only schema validator
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4.25,<5'
+      - name: Validate every canonical record against JSON Schema
+        run: python packages/inorganic/validation/audit_jsonschema_v1.py
       - name: PubChem substance cross-check
         run: python packages/inorganic/validation/audit_pubchem_v1.py
       - name: Semantic inorganic v1 audit
