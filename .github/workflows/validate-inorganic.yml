@@ -20,6 +20,8 @@ jobs:
           python-version: '3.13'
       - name: Validate inorganic v1
         run: python packages/inorganic/validation/validate_v1.py
+      - name: PubChem substance cross-check
+        run: python packages/inorganic/validation/audit_pubchem_v1.py
       - name: Semantic inorganic v1 audit
         run: python packages/inorganic/validation/audit_semantics_v1.py
       - name: Independent inorganic v1 audit
