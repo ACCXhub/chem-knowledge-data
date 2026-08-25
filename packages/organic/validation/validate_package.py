@@ -17,6 +17,19 @@ CURRICULUM_FILE = DATA_DIR / "curriculum_coverage.yaml"
 COVERAGE_EVIDENCE_FILE = DATA_DIR / "coverage_evidence.yaml"
 POLYMER_FORMULA_RE = re.compile(r"^\((.+)\)n$")
 
+VALID_ELEMENT_SYMBOLS = {
+    "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg",
+    "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr",
+    "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
+    "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
+    "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd",
+    "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf",
+    "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po",
+    "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm",
+    "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs",
+    "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og",
+}
+
 DATASET_SPECS = [
     ("substance", "core_substances.yaml", "records", "substance.schema.json"),
     ("substance", "extended_substances.yaml", "records", "substance.schema.json"),
@@ -65,6 +78,19 @@ def iter_strings(value: Any) -> Iterable[str]:
             yield from iter_strings(child)
 
 
+def add_schema_errors(
+    *,
+    document: Any,
+    schema_file: str,
+    context: str,
+    errors: list[str],
+) -> None:
+    validator = Draft202012Validator(load_json(SCHEMA_DIR / schema_file))
+    for issue in sorted(validator.iter_errors(document), key=lambda item: list(item.path)):
+        location = ".".join(str(part) for part in issue.path)
+        errors.append(f"{context}:{location}: {issue.message}")
+
+
 def parse_formula(formula: str) -> Counter[str] | None:
     """Parse the package's molecular-formula notation.
 
@@ -110,6 +136,8 @@ def parse_formula(formula: str) -> Counter[str] | None:
         if index < len(formula) and formula[index].islower() and formula[index].isascii():
             element += formula[index]
             index += 1
+        if element not in VALID_ELEMENT_SYMBOLS:
+            raise ValueError(f"unknown element symbol {element}")
         digit_start = index
         while index < len(formula) and formula[index].isdigit():
             index += 1
@@ -135,8 +163,7 @@ def validate_records(
     record_locations: dict[str, str],
     errors: list[str],
 ) -> None:
-    path = DATA_DIR / data_file
-    records = load_yaml(path).get(root_key, [])
+    records = load_yaml(DATA_DIR / data_file).get(root_key, [])
     if not isinstance(records, list):
         errors.append(f"{data_file}: {root_key} must be a list")
         return
@@ -266,6 +293,12 @@ def main() -> int:
     warnings: list[str] = []
 
     source_doc = load_yaml(SOURCES_FILE)
+    add_schema_errors(
+        document=source_doc,
+        schema_file="source_registry.schema.json",
+        context="sources/registry.yaml",
+        errors=errors,
+    )
     sources = source_doc.get("sources", [])
     source_ids: set[str] = set()
     for index, source in enumerate(sources):
@@ -407,7 +440,20 @@ def main() -> int:
     )
 
     curriculum = load_yaml(CURRICULUM_FILE)
-    evidence = load_yaml(COVERAGE_EVIDENCE_FILE).get("coverage_evidence", {})
+    add_schema_errors(
+        document=curriculum,
+        schema_file="curriculum_coverage.schema.json",
+        context="curriculum_coverage.yaml",
+        errors=errors,
+    )
+    evidence_doc = load_yaml(COVERAGE_EVIDENCE_FILE)
+    add_schema_errors(
+        document=evidence_doc,
+        schema_file="coverage_evidence.schema.json",
+        context="coverage_evidence.yaml",
+        errors=errors,
+    )
+    evidence = evidence_doc.get("coverage_evidence", {})
     requirements = collect_curriculum_requirements(curriculum)
     for section, required_items in requirements.items():
         provided = evidence.get(section, {})
