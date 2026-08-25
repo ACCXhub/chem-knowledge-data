@@ -84,10 +84,12 @@ structural_features:
     name_zh: 碳碳双键
     notation: C=C
     teaching_class: 烯烃
-    note: 作为不饱和结构特征记录，不与官能团概念强行等同。
+    curriculum_role: unsaturation_marker
+    note: 在高中教学中是烯烃的特征结构并承担类似官能团的分类作用；本包保持其为结构特征，SMARTS/结构识别规则由 packages/structure 统一负责。
 
   - id: org-feature:carbon-carbon-triple-bond
     name_zh: 碳碳三键
     notation: C≡C
     teaching_class: 炔烃
-    note: 作为不饱和结构特征记录，不与官能团概念强行等同。
+    curriculum_role: unsaturation_marker
+    note: 在高中教学中是炔烃的特征结构并承担类似官能团的分类作用；本包保持其为结构特征，SMARTS/结构识别规则由 packages/structure 统一负责。
