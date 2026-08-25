@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 import unittest
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PACKAGE_ROOT.parents[1]
+VALIDATION = PACKAGE_ROOT / "validation"
+sys.path.insert(0, str(VALIDATION))
+
+from validate_dataset import validate_structure_chemistry  # noqa: E402
 
 
 def read_json(path: Path) -> dict:
@@ -65,6 +70,30 @@ class StructureRegistryAuditTests(unittest.TestCase):
         self.assertFalse(
             (PACKAGE_ROOT / "pipelines" / "build_seed.py").exists(),
             msg="legacy build_seed.py can overwrite current canonical data/manifest; remove it from active pipelines",
+        )
+
+    def test_formula_unit_formula_is_verified_from_standard_inchi(self) -> None:
+        record = read_jsonl(PACKAGE_ROOT / "data" / "canonical" / "formula_units.jsonl")[0].copy()
+        record["molecular_formula"] = "X"
+        issues = validate_structure_chemistry(record)
+        self.assertTrue(
+            any("formula mismatch" in issue for issue in issues),
+            msg=f"formula-unit composition is not independently checked: {issues}",
+        )
+
+    def test_molecule_and_ion_scope_are_consistent_with_net_charge(self) -> None:
+        molecule = read_jsonl(PACKAGE_ROOT / "data" / "canonical" / "molecules.jsonl")[0].copy()
+        molecule["structure_scope"] = "ion"
+        self.assertTrue(
+            any("ion scope" in issue for issue in validate_structure_chemistry(molecule)),
+            msg="neutral structure can be mislabeled as ion without a chemistry error",
+        )
+
+        ion = read_jsonl(PACKAGE_ROOT / "data" / "canonical" / "ions.jsonl")[0].copy()
+        ion["structure_scope"] = "molecule"
+        self.assertTrue(
+            any("molecule scope" in issue for issue in validate_structure_chemistry(ion)),
+            msg="charged structure can be mislabeled as molecule without a chemistry error",
         )
 
 
