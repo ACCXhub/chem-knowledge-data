@@ -1,0 +1,33 @@
+version: 1
+purpose: historical_source_reference_bridge
+aliases:
+  - source_package: inorganic
+    legacy_id: ion:copper-2
+    current_id: ion:copper-ii
+    expected_formula: Cu
+    expected_charge: 2
+    pubchem_cid: 27099
+    evidence_refs:
+      - packages/structure_registry/sources/cross_track_targets.json
+      - packages/structure_registry/data/links/inorganic.jsonl
+      - packages/inorganic/data/ions.jsonl
+  - source_package: inorganic
+    legacy_id: ion:iron-2
+    current_id: ion:iron-ii
+    expected_formula: Fe
+    expected_charge: 2
+    pubchem_cid: 27284
+    evidence_refs:
+      - packages/structure_registry/sources/cross_track_targets.json
+      - packages/structure_registry/data/links/inorganic.jsonl
+      - packages/inorganic/data/ions.jsonl
+  - source_package: inorganic
+    legacy_id: ion:iron-3
+    current_id: ion:iron-iii
+    expected_formula: Fe
+    expected_charge: 3
+    pubchem_cid: 29936
+    evidence_refs:
+      - packages/structure_registry/sources/cross_track_targets.json
+      - packages/structure_registry/data/links/inorganic.jsonl
+      - packages/inorganic/data/ions.jsonl
