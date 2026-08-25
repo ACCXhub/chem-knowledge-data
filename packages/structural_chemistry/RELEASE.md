@@ -1,28 +1,24 @@
-# Release structural-chemistry-v1.0.1
+# Release structural-chemistry-v1.0.2
 
-高中结构化学数据包的课程范围完整性修订。
+高中结构化学数据包发布后质量审计修订。
 
 ## 本次修订
 
-`v1.0.0` 已建立原子结构、化学键、VSEPR/杂化、分子结构与极性、分子间作用力、晶体、配位与结构—性质关系的主干数据。本次复核发现教育部高中化学课程标准“物质结构与性质”的第三主题“研究物质结构的方法与价值”尚未形成独立 curriculum projection。
+`v1.0.1` 已补齐教育部高中化学课程标准“物质结构与性质”的三个主题。本次不再扩展课程范围，只修两项质量问题：
 
-`v1.0.1` 补齐：
+1. 将原子光谱、分子光谱、X射线衍射三个结构研究方法概念的术语交叉核对提升到 IUPAC Gold Book；
+2. 把课程标准中“物质结构认识随新的实验事实与研究技术不断发展”的要求落实为 `结构模型的演进` 概念，并建立 `结构证据 → 推动修正 → 结构模型演进` 的 typed relation。
 
-- 原子—分子—超分子—聚集态多尺度结构；
-- 超分子结构教学概念；
-- 原子光谱、分子光谱、X射线衍射等结构研究方法；
-- 实验事实/测量证据与结构模型的关系；
-- 结构—性质知识服务新物质、新材料设计的教学关系；
-- 对应 typed relations、exam tags、curriculum scope 与 coverage evidence。
+validator 同步锁定上述 IUPAC provenance 和证据驱动模型演进关系，避免后续回归。
 
 ## 发布规模
 
-- canonical records: **289**
-- concepts: **61**
-- relations: **69**
+- canonical records: **291**
+- concepts: **62**
+- relations: **70**
 - exam tags: **26**
 - curriculum scope nodes: **11**
 
 ## 边界
 
-本修订只完善高中结构化学教学知识与课程投影。`packages/structure_registry/` 仍是机器可用 Structure identity 与表示的 canonical owner；Substance/Ion/Reaction 等业务身份继续由其对应包负责。
+本修订只完善高中结构化学教学知识、来源质量和课程投影。`packages/structure_registry/` 仍是机器可用 Structure identity 与表示的 canonical owner；Substance/Ion/Reaction 等业务身份继续由对应包负责。

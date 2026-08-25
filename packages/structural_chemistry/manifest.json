@@ -1,21 +1,21 @@
 {
   "package": "structural_chemistry",
-  "release": "structural-chemistry-v1.0.1",
+  "release": "structural-chemistry-v1.0.2",
   "state": "READY_FOR_CONSOLIDATION",
   "records": {
     "atomic_configurations": 36,
-    "concepts": 61,
+    "concepts": 62,
     "vsepr_models": 13,
     "molecular_examples": 21,
     "bonding_examples": 18,
     "crystal_models": 14,
     "coordination_examples": 8,
-    "relations": 69,
+    "relations": 70,
     "structure_property_rules": 12,
     "exam_tags": 26,
     "curriculum_scope": 11
   },
-  "total_records": 289,
+  "total_records": 291,
   "coverage": {
     "curriculum_module": "物质结构与性质",
     "curriculum_themes": [
@@ -37,7 +37,8 @@
       "atomic spectroscopy",
       "molecular spectroscopy",
       "X-ray diffraction",
-      "evidence-model distinction"
+      "evidence-model distinction",
+      "evidence-driven model evolution"
     ],
     "multiscale_structure": "atom → molecule → supramolecular structure → aggregate state"
   },

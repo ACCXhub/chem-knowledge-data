@@ -33,17 +33,9 @@ REQUIRED_SCHEMAS = {
 }
 
 REQUIRED_CURRICULUM_IDS = {
-    "sc:curriculum:1.1",
-    "sc:curriculum:1.2",
-    "sc:curriculum:1.3",
-    "sc:curriculum:2.1",
-    "sc:curriculum:2.2",
-    "sc:curriculum:2.3",
-    "sc:curriculum:2.4",
-    "sc:curriculum:2.5",
-    "sc:curriculum:3.1",
-    "sc:curriculum:3.2",
-    "sc:curriculum:3.3",
+    "sc:curriculum:1.1", "sc:curriculum:1.2", "sc:curriculum:1.3",
+    "sc:curriculum:2.1", "sc:curriculum:2.2", "sc:curriculum:2.3", "sc:curriculum:2.4", "sc:curriculum:2.5",
+    "sc:curriculum:3.1", "sc:curriculum:3.2", "sc:curriculum:3.3",
 }
 
 REQUIRED_THEME3_CONCEPTS = {
@@ -54,12 +46,19 @@ REQUIRED_THEME3_CONCEPTS = {
     "sc:concept:xray_diffraction",
     "sc:concept:structure_evidence",
     "sc:concept:structure_guided_design",
+    "sc:concept:structure_model_evolution",
 }
 
 REQUIRED_THEME3_EXAM_TAGS = {
     "sc:exam-tag:multiscale_structure",
     "sc:exam-tag:structure_methods",
     "sc:exam-tag:structure_research_value",
+}
+
+IUPAC_METHOD_CONCEPTS = {
+    "sc:concept:atomic_spectroscopy",
+    "sc:concept:molecular_spectroscopy",
+    "sc:concept:xray_diffraction",
 }
 
 
@@ -108,14 +107,24 @@ def main() -> None:
     assert by_symbol["Cr"]["special_case"] is True and by_symbol["Cu"]["special_case"] is True
 
     concepts = datasets["concepts"]
-    concept_ids = {row["id"] for row in concepts}
+    by_concept_id = {row["id"]: row for row in concepts}
+    concept_ids = set(by_concept_id)
     exam_ids = {row["id"] for row in datasets["exam_tags"]}
     assert REQUIRED_THEME3_CONCEPTS <= concept_ids, "curriculum theme 3 concept coverage regressed"
     assert REQUIRED_THEME3_EXAM_TAGS <= exam_ids, "curriculum theme 3 exam-tag coverage regressed"
+    for concept_id in IUPAC_METHOD_CONCEPTS:
+        assert "iupac_gold_2025" in by_concept_id[concept_id]["source_refs"], f"{concept_id}: IUPAC terminology source required"
 
     for row in datasets["relations"]:
         assert row["source_ref"] in concept_ids, f"{row['id']}: bad source_ref"
         assert row["target_ref"] in concept_ids, f"{row['id']}: bad target_ref"
+
+    assert any(
+        row["source_ref"] == "sc:concept:structure_evidence"
+        and row["relation_type"] == "drives_revision_of"
+        and row["target_ref"] == "sc:concept:structure_model_evolution"
+        for row in datasets["relations"]
+    ), "evidence-driven structure-model evolution relation required"
 
     for row in datasets["exam_tags"]:
         missing = set(row["concept_refs"]) - concept_ids
@@ -163,7 +172,7 @@ def main() -> None:
     assert manifest["total_records"] == sum(actual.values()), "manifest total mismatch"
 
     print(f"structural_chemistry: {manifest['total_records']} records validated")
-    print("1..36 configurations, schemas, typed relations, interaction scopes, and all three curriculum themes passed")
+    print("1..36 configurations, schemas, typed relations, interaction scopes, method provenance, and all three curriculum themes passed")
 
 
 if __name__ == "__main__":
