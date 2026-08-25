@@ -1,8 +1,8 @@
-# 结构数据接入说明
+# 化学结构管理集成接口
 
-其他数据包只通过这里约定的稳定接口使用 Structure 数据。
+其他数据包只通过本文件约定的稳定 seam 使用 Structure Registry。
 
-## 读取入口
+## Read
 
 优先读取：
 
@@ -11,46 +11,42 @@
 - `data/links/inorganic.jsonl`
 - `data/links/organic.jsonl`
 - `data/deferrals/organic.jsonl`
-- `data/coverage.json`
 
-已接受的 link 是当前稳定的跨包映射。调用方不要根据 formula、SMILES 或 PubChem CID 自己重新计算 `structure_id`。
+accepted link 是当前跨包稳定映射。调用方不要按 formula、SMILES 或 PubChem CID 自己重新计算 `structure_id`。
 
-## 链接模型
+## Link model
 
 `structure-link.schema.json` 使用通用字段：
 
-- `entity_kind`：实体类型
-- `entity_ref`：调用方实体引用
-- `structure_id`：Structure 的规范结构 ID
-- `relation`：实体与结构之间的关系
+- `entity_kind`
+- `entity_ref`
+- `structure_id`
+- `relation`
 
-因此 Ion 不需要伪装成 Substance。
+因此 `Ion` 不需要伪装为 `Substance`。
 
-主要 `relation`：
+主要 relation：
 
-- `primary_structure`：主要结构
-- `ion_structure`：离子结构
-- `formula_unit`：化学式单元
-- `repeat_unit_structure`：聚合物重复单元结构
+- `primary_structure`
+- `ion_structure`
+- `formula_unit`
+- `repeat_unit_structure`
 
-`repeat_unit_structure` 只代表聚合物的重复单元抽象，不代表具有确定链长、端基和分子量的完整聚合物分子。
+`repeat_unit_structure` 只表示聚合物的 repeat-unit abstraction，不表示完整 polymer molecule。
 
-## 缺失或存在歧义的结构
+## Missing / ambiguous structure
 
-无法安全发布 canonical Structure 时，使用 `structure-deferral.schema.json` 记录显式延期状态。
+无法安全发布 canonical Structure 时使用 `structure-deferral.schema.json`。调用方应把 deferral 当作显式知识状态，而不是空字符串或临时假结构。
 
-调用方应把 deferral 当成一种真实知识状态，而不是用空字符串、占位值或临时假结构代替。
+典型原因：
 
-典型原因包括：
+- generic identity 未固定 stereochemistry
+- heterogeneous macromolecular material
+- full polymer chain identity 未固定
+- crystallographic / coordination evidence 不足
 
-- 通用实体没有固定立体化学（stereochemistry）；
-- 实体本身是异质大分子材料；
-- 完整聚合物链身份没有固定；
-- 晶体学 / 配位连接证据不足；
-- 多个来源存在尚未解决的结构冲突。
+## New requests
 
-## 新结构请求
+无机、有机、结构化学等其他 workstream 如新增实体且缺结构，应使用 `structure-request.schema.json` 在自己的工作区记录请求；Structure Registry owner 后续统一采纳。
 
-其他工作流新增实体但缺少 Structure 时，应按照 `structure-request.schema.json` 在自己的工作区记录请求，由 Structure owner 后续统一采纳。
-
-不要直接修改 `packages/structure/**`，也不要在调用方包内新建第二套 SMILES / InChI / Structure ID 真值。
+调用方不直接修改 `packages/structure_registry/**`，也不建立第二份 canonical Structure 数据。
