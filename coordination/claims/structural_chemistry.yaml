@@ -2,7 +2,7 @@ package: structural_chemistry
 status: complete
 owner: chatgpt-web-structural-chemistry
 started_at: 2026-08-25T13:02:00+08:00
-completed_at: 2026-08-25T20:38:00+08:00
+completed_at: 2026-08-25T20:49:00+08:00
 paths:
   - packages/structural_chemistry/**
   - coordination/claims/structural_chemistry.yaml
@@ -12,10 +12,9 @@ inputs:
   organic: read_only_complete
   structure_registry: read_only_published
   consolidated: read_only_active
-release: structural-chemistry-v1.0.1
+release: structural-chemistry-v1.0.2
 note: >-
-  本工作流完成高中“物质结构与性质/结构化学”知识数据 v1.0.1。完整覆盖课程标准三个主题，
-  包括原子结构与元素性质、微粒间相互作用与物质性质，以及研究物质结构的方法与价值；
-  第三主题补齐多尺度结构、超分子、原子/分子光谱、X射线衍射、结构证据与结构导向设计。
-  packages/structure_registry 继续负责 canonical structure_id 与可计算结构表示；本包只拥有结构化学教学知识与课程投影。
-  当前 release 作为 consolidation 只读输入。
+  高中“物质结构与性质/结构化学”知识数据完成 v1.0.2 发布后质量审计：完整覆盖课程标准三个主题，
+  共 291 条 canonical records；结构研究方法的术语来源提升到 IUPAC Gold Book，并显式建模实验事实与
+  研究技术推动结构模型持续修正的证据链。packages/structure_registry 继续负责 canonical structure_id
+  与可计算结构表示；本包只拥有结构化学教学知识与课程投影。当前 release 作为 consolidation 只读输入。
