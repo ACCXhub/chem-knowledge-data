@@ -1,0 +1,62 @@
+name: Validate structure package
+
+on:
+  push:
+    branches: [structure-foundation-v1]
+    paths:
+      - "packages/structure/**"
+      - ".github/workflows/validate-structure.yml"
+  pull_request:
+    paths:
+      - "packages/structure/**"
+      - ".github/workflows/validate-structure.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: packages/structure/validation/requirements.txt
+
+      - name: Install Structure validation toolchain
+        run: python -m pip install -r packages/structure/validation/requirements.txt
+
+      - name: Rebuild canonical Structure release
+        run: python packages/structure/pipelines/build_release.py
+
+      - name: Validate canonical data and cross-track coverage
+        run: python packages/structure/validation/validate_dataset.py --strict
+
+      - name: Run Structure unit tests
+        run: python -m unittest discover -s packages/structure/tests -v
+
+      - name: Require reproducible generated data in pull requests
+        if: github.event_name == 'pull_request'
+        run: git diff --exit-code -- packages/structure/data
+
+      - name: Publish regenerated data to the Structure working branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/structure-foundation-v1'
+        shell: bash
+        run: |
+          git add packages/structure/data
+          if git diff --cached --quiet; then
+            echo "Canonical data already matches the deterministic builder."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data(structure): regenerate foundation release [skip ci]"
+          git push
