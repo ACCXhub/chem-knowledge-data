@@ -4,7 +4,7 @@
 
 包路径：`packages/structure_registry/`
 
-本版本是 `structure-foundation-1.0.0` 在包重命名后的**契约与可追溯性修正版本**。现有 87 条 canonical Structure 的化学身份保持不变，不重新分配 `structure_id`，不改变已验证的 SMILES / InChI / InChIKey。
+本版本是 `structure-foundation-1.0.0` 在包重命名后的**契约、可追溯性与完整性修正版本**。现有 87 条 canonical Structure 的化学身份保持不变，不重新分配 `structure_id`，不改变已验证的 SMILES / InChI / InChIKey。
 
 Schema：
 
@@ -12,8 +12,6 @@ Schema：
 - `structure-link 1.2.0`
 - `structure-deferral 1.1.0`
 - `structure-request 1.2.0`
-
-本次 schema patch 主要修正 `structure_registry` 路径身份，并允许 `structural_chemistry` 作为正式 requester track。
 
 ## 已发布 canonical structures
 
@@ -48,33 +46,43 @@ Inorganic 23-ion seed snapshot：
 
 phosphate Structure 继续作为额外结构覆盖保留，虽然不在该 23-ion seed snapshot 中。
 
-## v1.0.1 审计修正
+## v1.0.1 独立审计修正
 
 - 包内 4 个 JSON Schema `$id` 全部切换到 `packages/structure_registry/schema/`。
 - `structure-request`、`structure-link`、`structure-deferral` 正式支持 `structural_chemistry` requester。
 - link / deferral 的 repo-relative evidence 从已删除的 `packages/structure/...` 修正为 `packages/structure_registry/...`。
-- strict validator 新增 schema identity 与 evidence-path existence 检查。
-- manifest dataset identity 改为 `chem-knowledge-data/structure_registry`。
-- 发布版本统一为 `structure-registry-foundation-1.0.1`。
-- 移除会覆盖当前 canonical data / manifest 的历史 `build_seed.py` 活动入口及对应 obsolete seed evidence。
-- 新增 `coordination/claims/structure_registry.yaml`，正式登记本包 ownership。
+- manifest dataset identity 改为 `chem-knowledge-data/structure_registry`，发布版本统一为 `structure-registry-foundation-1.0.1`。
+- 移除会覆盖当前 canonical data / manifest 的历史 `build_seed.py` 活动入口及 obsolete seed evidence。
+- `resolved` request 与 `resolved_structure_id` 建立状态一致性约束。
+- manifest 必须完整列出全部发布数据文件，不允许遗漏文件仍通过 strict validation。
+- formula unit 的组成与净电荷从 Standard InChI 反向核验。
+- molecule / ion scope 与净 formal charge 建立一致性校验。
+- link / deferral ID 按 frozen UUIDv5 规则重新计算并校验。
+- relation 与目标 Structure scope 对齐：`ion_structure → ion`、`formula_unit → formula_unit`、`repeat_unit_structure → polymer_repeat_unit`、`polymorph → crystal`。
+- 新增 `coordination/claims/structure_registry.yaml`，正式登记并在审计结束后恢复只读 ownership。
 
 ## 完整性门禁
 
-严格 validator 检查：
+严格 validator 与回归测试覆盖：
 
 - JSON Schema 与 schema `$id`
 - deterministic Structure / link / deferral IDs
 - duplicate Structure IDs、InChIKeys、external IDs
 - SMILES parse / sanitization
+- molecule / ion scope 与 formal charge consistency
 - formula 与 formal-charge consistency
 - Standard InChI / InChIKey consistency
+- formula-unit Standard InChI → composition / net-charge reverse verification
 - formula-unit no-fake-molecule rule
 - polymer repeat-unit attachment points 与 deterministic fallback identity
-- accepted-link target existence / scope
+- accepted-link target existence / relation-target scope
+- request state / resolved target consistency
 - repo-relative evidence path 存在性
 - frozen Organic / Inorganic coverage completeness
-- manifest dataset identity、counts、per-file record counts 与 SHA-256
+- manifest dataset identity、完整 file set、counts、per-file record counts 与 SHA-256
+- deterministic rebuild 后 generated data zero-diff
+
+最终审计 CI 运行 **27 tests**。
 
 ## 发布边界
 
