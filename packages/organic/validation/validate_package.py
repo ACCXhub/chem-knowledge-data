@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
+from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -13,6 +15,40 @@ SCHEMA_DIR = PACKAGE_ROOT / "schema"
 SOURCES_FILE = PACKAGE_ROOT / "sources" / "registry.yaml"
 CURRICULUM_FILE = DATA_DIR / "curriculum_coverage.yaml"
 COVERAGE_EVIDENCE_FILE = DATA_DIR / "coverage_evidence.yaml"
+POLYMER_FORMULA_RE = re.compile(r"^\((.+)\)n$")
+
+VALID_ELEMENT_SYMBOLS = {
+    "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg",
+    "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr",
+    "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
+    "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
+    "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd",
+    "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf",
+    "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po",
+    "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm",
+    "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs",
+    "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og",
+}
+
+DATASET_SPECS = [
+    ("substance", "core_substances.yaml", "records", "substance.schema.json"),
+    ("substance", "extended_substances.yaml", "records", "substance.schema.json"),
+    ("substance", "polymer_substances.yaml", "records", "substance.schema.json"),
+    ("substance", "lipid_substances.yaml", "records", "substance.schema.json"),
+    ("functional_group", "functional_groups.yaml", "functional_groups", "functional_group.schema.json"),
+    ("reaction", "reactions.yaml", "reactions", "reaction.schema.json"),
+    ("reaction", "property_reactions.yaml", "reactions", "reaction.schema.json"),
+    ("reaction", "polymer_reactions.yaml", "reactions", "reaction.schema.json"),
+    ("reaction", "lipid_reactions.yaml", "reactions", "reaction.schema.json"),
+    ("concept", "concepts.yaml", "concepts", "concept.schema.json"),
+    ("concept", "structure_concepts.yaml", "concepts", "concept.schema.json"),
+    ("concept", "biomolecule_concepts.yaml", "concepts", "concept.schema.json"),
+    ("concept", "applied_concepts.yaml", "concepts", "concept.schema.json"),
+    ("phenomenon", "phenomena.yaml", "phenomena", "phenomenon.schema.json"),
+    ("experiment", "experiments.yaml", "experiments", "experiment.schema.json"),
+    ("chemical_class", "classes.yaml", "classes", "chemical_class.schema.json"),
+    ("chemical_class", "biomolecule_classes.yaml", "classes", "chemical_class.schema.json"),
+]
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -42,76 +78,214 @@ def iter_strings(value: Any) -> Iterable[str]:
             yield from iter_strings(child)
 
 
-def validate_schema_records(
+def add_schema_errors(
     *,
-    kind: str,
-    path: Path,
-    root_key: str,
-    schema_path: Path,
-    source_ids: set[str],
-    records_by_kind: dict[str, list[dict[str, Any]]],
-    source_path_by_record_id: dict[str, Path],
+    document: Any,
+    schema_file: str,
+    context: str,
     errors: list[str],
 ) -> None:
-    doc = load_yaml(path)
-    records = doc.get(root_key, [])
+    validator = Draft202012Validator(load_json(SCHEMA_DIR / schema_file))
+    for issue in sorted(validator.iter_errors(document), key=lambda item: list(item.path)):
+        location = ".".join(str(part) for part in issue.path)
+        errors.append(f"{context}:{location}: {issue.message}")
+
+
+def parse_formula(formula: str) -> Counter[str] | None:
+    """Parse the package's molecular-formula notation.
+
+    Returns ``None`` for a valid symbolic repeat formula such as ``(C2H4)n``.
+    Charges, hydrate dots and ionic formula syntax belong to other packages and
+    are intentionally not accepted in the organic Substance formula field.
+    """
+
+    polymer_match = POLYMER_FORMULA_RE.fullmatch(formula)
+    if polymer_match:
+        inner = parse_formula(polymer_match.group(1))
+        if inner is None:
+            raise ValueError("nested symbolic repeat formula is not supported")
+        return None
+
+    stack: list[Counter[str]] = [Counter()]
+    index = 0
+    while index < len(formula):
+        char = formula[index]
+        if char == "(":
+            stack.append(Counter())
+            index += 1
+            continue
+        if char == ")":
+            if len(stack) == 1:
+                raise ValueError("unmatched closing parenthesis")
+            group = stack.pop()
+            index += 1
+            digit_start = index
+            while index < len(formula) and formula[index].isdigit():
+                index += 1
+            multiplier = int(formula[digit_start:index] or "1")
+            if multiplier < 1:
+                raise ValueError("formula multiplier must be positive")
+            for element, count in group.items():
+                stack[-1][element] += count * multiplier
+            continue
+        if not char.isupper() or not char.isascii():
+            raise ValueError(f"unexpected character {char!r}")
+
+        element = char
+        index += 1
+        if index < len(formula) and formula[index].islower() and formula[index].isascii():
+            element += formula[index]
+            index += 1
+        if element not in VALID_ELEMENT_SYMBOLS:
+            raise ValueError(f"unknown element symbol {element}")
+        digit_start = index
+        while index < len(formula) and formula[index].isdigit():
+            index += 1
+        count = int(formula[digit_start:index] or "1")
+        if count < 1:
+            raise ValueError("atom count must be positive")
+        stack[-1][element] += count
+
+    if len(stack) != 1:
+        raise ValueError("unmatched opening parenthesis")
+    if not stack[0]:
+        raise ValueError("formula contains no elements")
+    return stack[0]
+
+
+def validate_records(
+    kind: str,
+    data_file: str,
+    root_key: str,
+    schema_file: str,
+    source_ids: set[str],
+    records_by_kind: dict[str, list[dict[str, Any]]],
+    record_locations: dict[str, str],
+    errors: list[str],
+) -> None:
+    records = load_yaml(DATA_DIR / data_file).get(root_key, [])
     if not isinstance(records, list):
-        errors.append(f"{path}: {root_key} must be a list")
+        errors.append(f"{data_file}: {root_key} must be a list")
         return
 
-    validator = Draft202012Validator(load_json(schema_path))
+    validator = Draft202012Validator(load_json(SCHEMA_DIR / schema_file))
     records_by_kind.setdefault(kind, []).extend(records)
 
     for index, record in enumerate(records):
         if not isinstance(record, dict):
-            errors.append(f"{path}:{index}: record must be a mapping")
+            errors.append(f"{data_file}:{index}: record must be a mapping")
             continue
-
         record_id = record.get("id", f"<index:{index}>")
-        for validation_error in sorted(
-            validator.iter_errors(record), key=lambda item: list(item.path)
-        ):
-            location = ".".join(str(part) for part in validation_error.path)
-            errors.append(
-                f"{path}:{record_id}:{location}: {validation_error.message}"
-            )
-
+        for issue in sorted(validator.iter_errors(record), key=lambda item: list(item.path)):
+            location = ".".join(str(part) for part in issue.path)
+            errors.append(f"{data_file}:{record_id}:{location}: {issue.message}")
         if isinstance(record_id, str):
-            if record_id in source_path_by_record_id:
+            if record_id in record_locations:
                 errors.append(
-                    f"duplicate id {record_id}: "
-                    f"{source_path_by_record_id[record_id]} and {path}"
+                    f"duplicate id {record_id}: {record_locations[record_id]} and {data_file}"
                 )
             else:
-                source_path_by_record_id[record_id] = path
-
-        for provenance_ref in record.get("provenance_refs", []):
-            if provenance_ref not in source_ids:
-                errors.append(
-                    f"{path}:{record_id}: unknown provenance ref {provenance_ref}"
-                )
+                record_locations[record_id] = data_file
+        for source_ref in record.get("provenance_refs", []):
+            if source_ref not in source_ids:
+                errors.append(f"{data_file}:{record_id}: unknown provenance ref {source_ref}")
 
 
 def collect_curriculum_requirements(curriculum: dict[str, Any]) -> dict[str, set[str]]:
     coverage = curriculum.get("coverage", {})
-    blocks = coverage.get("knowledge_blocks", [])
-    required_topics: set[str] = set()
-    required_families: set[str] = set()
-    required_reaction_classes: set[str] = set()
-
-    for block in blocks:
+    topics: set[str] = set()
+    families: set[str] = set()
+    reaction_classes: set[str] = set()
+    for block in coverage.get("knowledge_blocks", []):
         if not isinstance(block, dict):
             continue
-        required_topics.update(block.get("required_topics", []))
-        required_families.update(block.get("required_families", []))
-        required_reaction_classes.update(block.get("required_reaction_classes", []))
-
+        topics.update(block.get("required_topics", []))
+        families.update(block.get("required_families", []))
+        reaction_classes.update(block.get("required_reaction_classes", []))
     return {
-        "topics": required_topics,
-        "families": required_families,
-        "reaction_classes": required_reaction_classes,
+        "topics": topics,
+        "families": families,
+        "reaction_classes": reaction_classes,
         "experiments": set(coverage.get("experiment_coverage", [])),
     }
+
+
+def validate_balanced_reactions(
+    reactions: list[dict[str, Any]],
+    formula_by_substance: dict[str, str],
+    errors: list[str],
+    warnings: list[str],
+) -> tuple[int, int]:
+    checked = 0
+    symbolic_skipped = 0
+    for reaction in reactions:
+        if reaction.get("equation_status") != "balanced_seed":
+            continue
+        reaction_id = reaction.get("id", "<unknown>")
+        if not reaction.get("equation"):
+            errors.append(f"reaction:{reaction_id}: balanced_seed requires equation text")
+
+        left: Counter[str] = Counter()
+        right: Counter[str] = Counter()
+        symbolic = False
+        participant_error = False
+
+        for participant in reaction.get("participants", []):
+            role = participant.get("role")
+            if role == "catalyst":
+                continue
+            coefficient = participant.get("coefficient")
+            if not isinstance(coefficient, int):
+                symbolic = True
+                break
+
+            substance_ref = participant.get("substance_ref")
+            if substance_ref:
+                formula = formula_by_substance.get(substance_ref)
+                if not formula:
+                    errors.append(f"reaction:{reaction_id}: missing formula for {substance_ref}")
+                    participant_error = True
+                    continue
+            else:
+                formula = participant.get("formula_literal")
+                if not formula:
+                    errors.append(
+                        f"reaction:{reaction_id}: external participant "
+                        f"{participant.get('external_species_key')} needs formula_literal "
+                        "for atom-balance validation"
+                    )
+                    participant_error = True
+                    continue
+
+            try:
+                atoms = parse_formula(formula)
+            except ValueError as exc:
+                errors.append(f"reaction:{reaction_id}: invalid formula {formula}: {exc}")
+                participant_error = True
+                continue
+            if atoms is None:
+                symbolic = True
+                break
+
+            destination = left if role == "reactant" else right
+            for element, count in atoms.items():
+                destination[element] += count * coefficient
+
+        if participant_error:
+            continue
+        if symbolic:
+            symbolic_skipped += 1
+            warnings.append(
+                f"reaction:{reaction_id}: atom-balance check skipped for symbolic polymer notation"
+            )
+            continue
+        checked += 1
+        if left != right:
+            errors.append(
+                f"reaction:{reaction_id}: atom balance mismatch "
+                f"reactants={dict(sorted(left.items()))} products={dict(sorted(right.items()))}"
+            )
+    return checked, symbolic_skipped
 
 
 def main() -> int:
@@ -119,76 +293,58 @@ def main() -> int:
     warnings: list[str] = []
 
     source_doc = load_yaml(SOURCES_FILE)
+    add_schema_errors(
+        document=source_doc,
+        schema_file="source_registry.schema.json",
+        context="sources/registry.yaml",
+        errors=errors,
+    )
     sources = source_doc.get("sources", [])
-    source_ids = {
-        source["id"]
-        for source in sources
-        if isinstance(source, dict) and isinstance(source.get("id"), str)
-    }
-
-    dataset_specs = [
-        ("substance", DATA_DIR / "core_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
-        ("substance", DATA_DIR / "extended_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
-        ("substance", DATA_DIR / "polymer_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
-        ("substance", DATA_DIR / "lipid_substances.yaml", "records", SCHEMA_DIR / "substance.schema.json"),
-        ("functional_group", DATA_DIR / "functional_groups.yaml", "functional_groups", SCHEMA_DIR / "functional_group.schema.json"),
-        ("reaction", DATA_DIR / "reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
-        ("reaction", DATA_DIR / "polymer_reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
-        ("reaction", DATA_DIR / "lipid_reactions.yaml", "reactions", SCHEMA_DIR / "reaction.schema.json"),
-        ("concept", DATA_DIR / "concepts.yaml", "concepts", SCHEMA_DIR / "concept.schema.json"),
-        ("concept", DATA_DIR / "structure_concepts.yaml", "concepts", SCHEMA_DIR / "concept.schema.json"),
-        ("concept", DATA_DIR / "biomolecule_concepts.yaml", "concepts", SCHEMA_DIR / "concept.schema.json"),
-        ("phenomenon", DATA_DIR / "phenomena.yaml", "phenomena", SCHEMA_DIR / "phenomenon.schema.json"),
-        ("experiment", DATA_DIR / "experiments.yaml", "experiments", SCHEMA_DIR / "experiment.schema.json"),
-        ("chemical_class", DATA_DIR / "classes.yaml", "classes", SCHEMA_DIR / "chemical_class.schema.json"),
-        ("chemical_class", DATA_DIR / "biomolecule_classes.yaml", "classes", SCHEMA_DIR / "chemical_class.schema.json"),
-    ]
+    source_ids: set[str] = set()
+    for index, source in enumerate(sources):
+        if not isinstance(source, dict) or not isinstance(source.get("id"), str):
+            errors.append(f"sources/registry.yaml:{index}: source requires string id")
+            continue
+        source_id = source["id"]
+        if source_id in source_ids:
+            errors.append(f"sources/registry.yaml: duplicate source id {source_id}")
+        source_ids.add(source_id)
 
     records_by_kind: dict[str, list[dict[str, Any]]] = {}
-    source_path_by_record_id: dict[str, Path] = {}
-
-    for kind, path, root_key, schema_path in dataset_specs:
-        validate_schema_records(
-            kind=kind,
-            path=path,
-            root_key=root_key,
-            schema_path=schema_path,
-            source_ids=source_ids,
-            records_by_kind=records_by_kind,
-            source_path_by_record_id=source_path_by_record_id,
-            errors=errors,
-        )
+    record_locations: dict[str, str] = {}
+    for spec in DATASET_SPECS:
+        validate_records(*spec, source_ids, records_by_kind, record_locations, errors)
 
     feature_doc = load_yaml(DATA_DIR / "functional_groups.yaml")
-    feature_records = feature_doc.get("structural_features", [])
-    feature_ids = {
-        record["id"]
-        for record in feature_records
-        if isinstance(record, dict) and isinstance(record.get("id"), str)
-    }
+    features = feature_doc.get("structural_features", [])
+    if not isinstance(features, list):
+        errors.append("functional_groups.yaml: structural_features must be a list")
+        features = []
+    feature_validator = Draft202012Validator(
+        load_json(SCHEMA_DIR / "structural_feature.schema.json")
+    )
+    feature_ids: set[str] = set()
+    for index, feature in enumerate(features):
+        if not isinstance(feature, dict):
+            errors.append(f"structural_feature:{index}: record must be a mapping")
+            continue
+        feature_id = feature.get("id", f"<index:{index}>")
+        for issue in sorted(feature_validator.iter_errors(feature), key=lambda item: list(item.path)):
+            location = ".".join(str(part) for part in issue.path)
+            errors.append(f"structural_feature:{feature_id}:{location}: {issue.message}")
+        if isinstance(feature_id, str):
+            if feature_id in feature_ids or feature_id in record_locations:
+                errors.append(f"duplicate id {feature_id}")
+            feature_ids.add(feature_id)
 
     id_sets = {
-        "org-substance:": {
-            record["id"] for record in records_by_kind.get("substance", [])
-        },
-        "org-fg:": {
-            record["id"] for record in records_by_kind.get("functional_group", [])
-        },
-        "org-reaction:": {
-            record["id"] for record in records_by_kind.get("reaction", [])
-        },
-        "org-concept:": {
-            record["id"] for record in records_by_kind.get("concept", [])
-        },
-        "org-phenomenon:": {
-            record["id"] for record in records_by_kind.get("phenomenon", [])
-        },
-        "org-experiment:": {
-            record["id"] for record in records_by_kind.get("experiment", [])
-        },
-        "org-class:": {
-            record["id"] for record in records_by_kind.get("chemical_class", [])
-        },
+        "org-substance:": {record["id"] for record in records_by_kind.get("substance", [])},
+        "org-fg:": {record["id"] for record in records_by_kind.get("functional_group", [])},
+        "org-reaction:": {record["id"] for record in records_by_kind.get("reaction", [])},
+        "org-concept:": {record["id"] for record in records_by_kind.get("concept", [])},
+        "org-phenomenon:": {record["id"] for record in records_by_kind.get("phenomenon", [])},
+        "org-experiment:": {record["id"] for record in records_by_kind.get("experiment", [])},
+        "org-class:": {record["id"] for record in records_by_kind.get("chemical_class", [])},
         "org-feature:": feature_ids,
     }
 
@@ -196,21 +352,20 @@ def main() -> int:
         for string_value in iter_strings(value):
             for prefix, known_ids in id_sets.items():
                 if string_value.startswith(prefix) and string_value not in known_ids:
-                    errors.append(
-                        f"{context}: unresolved local reference {string_value}"
-                    )
+                    errors.append(f"{context}: unresolved local reference {string_value}")
                     break
 
     for kind, records in records_by_kind.items():
         for record in records:
             validate_local_refs(f"{kind}:{record.get('id', '<unknown>')}", record)
 
-    crossref_doc = load_yaml(DATA_DIR / "identity_crossrefs.yaml")
-    crossrefs = crossref_doc.get("crossrefs", [])
+    crossrefs = load_yaml(DATA_DIR / "identity_crossrefs.yaml").get("crossrefs", [])
     crossref_validator = Draft202012Validator(
         load_json(SCHEMA_DIR / "identity_crossref.schema.json")
     )
-    seen_crossref_substances: set[str] = set()
+    crossref_substances: set[str] = set()
+    pubchem_owners: dict[int, str] = {}
+    chebi_owners: dict[str, str] = {}
     for index, crossref in enumerate(crossrefs):
         label = (
             crossref.get("substance_ref", f"<index:{index}>")
@@ -220,53 +375,92 @@ def main() -> int:
         if not isinstance(crossref, dict):
             errors.append(f"identity_crossrefs:{label}: record must be a mapping")
             continue
-        for validation_error in sorted(
-            crossref_validator.iter_errors(crossref), key=lambda item: list(item.path)
-        ):
-            location = ".".join(str(part) for part in validation_error.path)
-            errors.append(
-                f"identity_crossrefs:{label}:{location}: {validation_error.message}"
-            )
+        for issue in sorted(crossref_validator.iter_errors(crossref), key=lambda item: list(item.path)):
+            location = ".".join(str(part) for part in issue.path)
+            errors.append(f"identity_crossrefs:{label}:{location}: {issue.message}")
         substance_ref = crossref.get("substance_ref")
         if substance_ref not in id_sets["org-substance:"]:
-            errors.append(
-                f"identity_crossrefs:{label}: unresolved local reference {substance_ref}"
-            )
-        if substance_ref in seen_crossref_substances:
-            errors.append(
-                f"identity_crossrefs:{label}: duplicate crossref for substance"
-            )
+            errors.append(f"identity_crossrefs:{label}: unresolved substance {substance_ref}")
+        if substance_ref in crossref_substances:
+            errors.append(f"identity_crossrefs:{label}: duplicate crossref for substance")
         if isinstance(substance_ref, str):
-            seen_crossref_substances.add(substance_ref)
-        for provenance_ref in crossref.get("provenance_refs", []):
-            if provenance_ref not in source_ids:
+            crossref_substances.add(substance_ref)
+
+        pubchem_cid = crossref.get("pubchem_cid")
+        if isinstance(pubchem_cid, int):
+            previous = pubchem_owners.get(pubchem_cid)
+            if previous and previous != substance_ref:
                 errors.append(
-                    f"identity_crossrefs:{label}: unknown provenance ref {provenance_ref}"
+                    f"identity_crossrefs: PubChem CID {pubchem_cid} belongs to both "
+                    f"{previous} and {substance_ref}"
                 )
+            pubchem_owners[pubchem_cid] = substance_ref
+        chebi_id = crossref.get("chebi_id")
+        if isinstance(chebi_id, str):
+            previous = chebi_owners.get(chebi_id)
+            if previous and previous != substance_ref:
+                errors.append(
+                    f"identity_crossrefs: {chebi_id} belongs to both {previous} and {substance_ref}"
+                )
+            chebi_owners[chebi_id] = substance_ref
+        for source_ref in crossref.get("provenance_refs", []):
+            if source_ref not in source_ids:
+                errors.append(f"identity_crossrefs:{label}: unknown provenance ref {source_ref}")
 
     substance_records = records_by_kind.get("substance", [])
     formula_index: dict[str, list[str]] = {}
+    formula_by_substance: dict[str, str] = {}
     for record in substance_records:
-        formula_index.setdefault(record["formula"], []).append(record["id"])
+        record_id = record["id"]
+        formula = record["formula"]
+        formula_index.setdefault(formula, []).append(record_id)
+        formula_by_substance[record_id] = formula
+        try:
+            parse_formula(formula)
+        except ValueError as exc:
+            errors.append(f"substance:{record_id}: invalid formula {formula}: {exc}")
+        if "external_ids" in record:
+            errors.append(
+                f"substance:{record_id}: external_ids must live only in identity_crossrefs.yaml"
+            )
+        if record.get("verification_status") == "source_crosschecked" and record_id not in crossref_substances:
+            errors.append(
+                f"substance:{record_id}: source_crosschecked requires identity_crossrefs entry"
+            )
+
     for formula, ids in sorted(formula_index.items()):
         if len(ids) > 1:
             warnings.append(
                 f"shared formula {formula}: {', '.join(ids)} "
-                "(allowed; verify these are distinct identities)"
+                "(allowed; formula is not chemical identity)"
             )
 
+    balance_checked, symbolic_skipped = validate_balanced_reactions(
+        records_by_kind.get("reaction", []), formula_by_substance, errors, warnings
+    )
+
     curriculum = load_yaml(CURRICULUM_FILE)
+    add_schema_errors(
+        document=curriculum,
+        schema_file="curriculum_coverage.schema.json",
+        context="curriculum_coverage.yaml",
+        errors=errors,
+    )
     evidence_doc = load_yaml(COVERAGE_EVIDENCE_FILE)
+    add_schema_errors(
+        document=evidence_doc,
+        schema_file="coverage_evidence.schema.json",
+        context="coverage_evidence.yaml",
+        errors=errors,
+    )
     evidence = evidence_doc.get("coverage_evidence", {})
     requirements = collect_curriculum_requirements(curriculum)
-
     for section, required_items in requirements.items():
         provided = evidence.get(section, {})
         if not isinstance(provided, dict):
             errors.append(f"coverage_evidence:{section}: must be a mapping")
             continue
-        missing = sorted(required_items - set(provided))
-        for item in missing:
+        for item in sorted(required_items - set(provided)):
             errors.append(f"coverage_evidence:{section}: missing required item {item}")
         for item in sorted(required_items):
             entry = provided.get(item)
@@ -274,9 +468,7 @@ def main() -> int:
                 errors.append(f"coverage_evidence:{section}:{item}: must be a mapping")
                 continue
             if entry.get("status") != "covered":
-                errors.append(
-                    f"coverage_evidence:{section}:{item}: status must be covered"
-                )
+                errors.append(f"coverage_evidence:{section}:{item}: status must be covered")
             refs = entry.get("refs", [])
             if not isinstance(refs, list) or not refs:
                 errors.append(
@@ -285,8 +477,7 @@ def main() -> int:
             else:
                 validate_local_refs(f"coverage_evidence:{section}:{item}", refs)
 
-    curriculum_source_refs = curriculum.get("coverage", {}).get("source_refs", [])
-    for source_ref in curriculum_source_refs:
+    for source_ref in curriculum.get("coverage", {}).get("source_refs", []):
         if source_ref not in source_ids:
             errors.append(f"curriculum_coverage: unknown source ref {source_ref}")
 
@@ -309,6 +500,10 @@ def main() -> int:
         + ", ".join(
             f"{section}={len(items)}" for section, items in sorted(requirements.items())
         )
+    )
+    print(
+        f"chemistry_balance: checked={balance_checked}, "
+        f"symbolic_skipped={symbolic_skipped}"
     )
     for warning in warnings:
         print(f"WARN: {warning}")

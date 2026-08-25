@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/structural_feature.schema.json",
+  "title": "Organic Structural Feature Record",
+  "type": "object",
+  "required": ["id", "name_zh", "notation", "teaching_class", "curriculum_role"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^org-feature:[a-z0-9][a-z0-9-]*$"},
+    "name_zh": {"type": "string", "minLength": 1},
+    "notation": {"type": "string", "minLength": 1},
+    "teaching_class": {"type": "string", "minLength": 1},
+    "curriculum_role": {
+      "type": "string",
+      "enum": ["characteristic_structure", "unsaturation_marker"]
+    },
+    "note": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

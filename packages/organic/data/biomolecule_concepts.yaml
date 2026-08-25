@@ -19,6 +19,16 @@ concepts:
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
 
+  - id: org-concept:amino-acid-amphoteric-character
+    name_zh: 氨基酸的两性特点
+    category: biomolecule
+    summary_zh: 氨基酸同时具有可表现碱性的氨基和可表现酸性的羧基，因此高中范围内可从结构理解其两性反应特点；具体离子形态和平衡由题目条件决定。
+    prerequisite_refs: [org-concept:amino-acid-general-structure, org-concept:amino-acid-properties]
+    related_substance_refs: [org-substance:glycine, org-substance:alanine]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
   - id: org-concept:peptide-bond-and-polypeptide
     name_zh: 肽键与多肽形成
     category: biomolecule
@@ -38,6 +48,16 @@ concepts:
     teaching_priority: core
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020, moe-lab-guidance-2025]
+
+  - id: org-concept:protein-hydrolysis
+    name_zh: 蛋白质和多肽的水解
+    category: biomolecule
+    summary_zh: 多肽和蛋白质在适当条件下可逐步水解，最终与氨基酸单元建立联系；复杂蛋白质不被简化成一个固定分子式的单一化合物。
+    prerequisite_refs: [org-concept:peptide-bond-and-polypeptide, org-concept:protein-composition-structure-properties]
+    related_substance_refs: [org-substance:glycine, org-substance:alanine]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
 
   - id: org-concept:protein-salting-out-and-denaturation
     name_zh: 蛋白质的盐析与变性
@@ -92,7 +112,7 @@ concepts:
   - id: org-concept:nucleic-acid-overview
     name_zh: 核酸概览
     category: biomolecule
-    summary_zh: 作为高中有机与生命化学衔接节点记录核酸的组成与结构复杂性，不在 seed 阶段把核酸伪装成单一固定分子式的物质实体。
+    summary_zh: 作为高中有机与生命化学衔接节点记录核酸的组成与结构复杂性，不把核酸伪装成单一固定分子式的物质实体。
     prerequisite_refs: []
     related_substance_refs: []
     teaching_priority: common

@@ -61,10 +61,10 @@ experiments:
 
   - id: org-experiment:ethanol-properties
     name_zh: 乙醇和乙酸的主要性质
-    purpose_zh: 认识乙醇氧化、消去和乙酸相关典型转化，并联系羟基、羧基的性质。
-    reaction_refs: [org-reaction:ethanol-catalytic-oxidation, org-reaction:ethanol-dehydration-to-ethene, org-reaction:acetic-acid-ethanol-esterification]
-    phenomenon_refs: []
-    concept_refs: [org-concept:oxidation-of-organic-compounds, org-concept:esterification]
+    purpose_zh: 认识乙醇、苯酚与羧酸中含氧基团所处环境造成的性质差异，并覆盖乙醇氧化、乙酸酸性及酯化等典型转化。
+    reaction_refs: [org-reaction:ethanol-sodium, org-reaction:ethanol-catalytic-oxidation, org-reaction:ethanol-dehydration-to-ethene, org-reaction:acetic-acid-bicarbonate, org-reaction:acetic-acid-ethanol-esterification]
+    phenomenon_refs: [org-phenomenon:ethanol-sodium-gas-evolution, org-phenomenon:acetic-acid-bicarbonate-gas-evolution]
+    concept_refs: [org-concept:oxidation-of-organic-compounds, org-concept:esterification, org-concept:hydroxy-compound-acidity-comparison]
     procedure_scope: observation_only
     safety_level: controlled
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -73,10 +73,10 @@ experiments:
 
   - id: org-experiment:phenol-properties
     name_zh: 苯酚性质与检验
-    purpose_zh: 认识苯酚的典型反应以及基团之间的相互影响。
-    reaction_refs: [org-reaction:phenol-bromination]
+    purpose_zh: 认识苯酚的弱酸性、与溴水的典型反应以及基团之间的相互影响。
+    reaction_refs: [org-reaction:phenol-sodium-hydroxide, org-reaction:phenol-bromination]
     phenomenon_refs: [org-phenomenon:phenol-bromine-white-precipitate]
-    concept_refs: [org-concept:phenol-test, org-concept:functional-group-influence]
+    concept_refs: [org-concept:phenol-test, org-concept:functional-group-influence, org-concept:hydroxy-compound-acidity-comparison]
     procedure_scope: observation_only
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；真实实验遵循学校实验室规范。]
@@ -87,7 +87,7 @@ experiments:
     name_zh: 醛基性质与检验
     purpose_zh: 认识醛基的还原性及典型检验现象。
     reaction_refs: [org-reaction:acetaldehyde-oxidation-to-acetic-acid]
-    phenomenon_refs: [org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-copper-oxide-precipitate]
+    phenomenon_refs: [org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-cuprous-oxide-precipitate]
     concept_refs: [org-concept:aldehyde-group-test, org-concept:oxidation-of-organic-compounds]
     procedure_scope: observation_only
     safety_level: controlled
@@ -98,7 +98,7 @@ experiments:
   - id: org-experiment:ethyl-acetate-preparation
     name_zh: 乙酸乙酯的制备与性质
     purpose_zh: 联系酯化、水解、酯的性质及有机物转化关系。
-    reaction_refs: [org-reaction:acetic-acid-ethanol-esterification, org-reaction:ethyl-acetate-acid-hydrolysis]
+    reaction_refs: [org-reaction:acetic-acid-ethanol-esterification, org-reaction:ethyl-acetate-acid-hydrolysis, org-reaction:ethyl-acetate-alkaline-hydrolysis]
     phenomenon_refs: [org-phenomenon:ethyl-acetate-fruity-odor]
     concept_refs: [org-concept:esterification, org-concept:ester-hydrolysis]
     procedure_scope: observation_only
@@ -111,7 +111,7 @@ experiments:
     name_zh: 常见有机官能团与结构特征的定性观察
     purpose_zh: 汇总不饱和结构、酚羟基、醛基等高中常见结构特征的代表性实验现象，并强调现象的非唯一性和条件依赖性。
     reaction_refs: [org-reaction:ethene-bromine-addition, org-reaction:phenol-bromination]
-    phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene, org-phenomenon:bromine-solution-decolorization-by-alkyne, org-phenomenon:phenol-bromine-white-precipitate, org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-copper-oxide-precipitate, org-phenomenon:protein-color-reaction]
+    phenomenon_refs: [org-phenomenon:bromine-solution-decolorization-by-alkene, org-phenomenon:bromine-solution-decolorization-by-alkyne, org-phenomenon:phenol-bromine-white-precipitate, org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-cuprous-oxide-precipitate]
     concept_refs: [org-concept:functional-group, org-concept:unsaturation-test, org-concept:phenol-test, org-concept:aldehyde-group-test]
     procedure_scope: conceptual
     safety_level: controlled
@@ -121,9 +121,9 @@ experiments:
 
   - id: org-experiment:carbohydrate-properties
     name_zh: 糖类性质实验
-    purpose_zh: 认识糖类水解、淀粉显色及葡萄糖相关性质。
+    purpose_zh: 认识葡萄糖还原性、糖类水解、淀粉显色及发酵等高中常见性质。
     reaction_refs: [org-reaction:sucrose-hydrolysis, org-reaction:starch-hydrolysis, org-reaction:cellulose-hydrolysis, org-reaction:glucose-fermentation]
-    phenomenon_refs: [org-phenomenon:starch-iodine-blue, org-phenomenon:fermentation-gas-evolution]
+    phenomenon_refs: [org-phenomenon:aldehyde-silver-mirror, org-phenomenon:aldehyde-cuprous-oxide-precipitate, org-phenomenon:starch-iodine-blue, org-phenomenon:fermentation-gas-evolution]
     concept_refs: [org-concept:carbohydrate-hydrolysis, org-concept:carbohydrate-reactions]
     procedure_scope: observation_only
     safety_level: routine
@@ -160,7 +160,7 @@ experiments:
     purpose_zh: 联系缩聚反应与合成高分子材料。
     reaction_refs: [org-reaction:phenol-formaldehyde-condensation]
     phenomenon_refs: []
-    concept_refs: [org-concept:condensation-polymerization]
+    concept_refs: [org-concept:condensation-polymerization, org-concept:polymer-chain-architecture, org-concept:thermoplastic-and-thermosetting]
     procedure_scope: conceptual
     safety_level: teacher_only
     safety_notes_zh: [仅记录知识关系；本数据包不提供具体制备操作。]

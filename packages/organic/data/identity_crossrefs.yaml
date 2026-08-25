@@ -285,3 +285,52 @@ crossrefs:
     verification_status: source_crosschecked
     provenance_refs: [pubchem]
     notes: PubChem confirms sodium stearate identity and formula C18H35NaO2.
+
+  - substance_ref: org-substance:but-1-ene
+    pubchem_cid: 7844
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms but-1-ene/1-butene identity and molecular formula C4H8.
+
+  - substance_ref: org-substance:cis-but-2-ene
+    pubchem_cid: 5287573
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms cis-(Z)-but-2-ene identity and molecular formula C4H8.
+
+  - substance_ref: org-substance:trans-but-2-ene
+    pubchem_cid: 62695
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms trans-(E)-but-2-ene identity and molecular formula C4H8.
+
+  - substance_ref: org-substance:methyl-formate
+    pubchem_cid: 7865
+    chebi_id: CHEBI:25248
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, chebi]
+    notes: PubChem confirms methyl formate/methyl methanoate identity and formula C2H4O2; the exposed ChEBI cross-reference is retained.
+
+  - substance_ref: org-substance:sodium-acetate
+    pubchem_cid: 517045
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms anhydrous sodium acetate identity and formula C2H3NaO2.
+
+  - substance_ref: org-substance:sodium-ethoxide
+    pubchem_cid: 2723922
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms sodium ethoxide/sodium ethanolate identity and formula C2H5NaO.
+
+  - substance_ref: org-substance:sodium-phenoxide
+    pubchem_cid: 4445035
+    chebi_id: null
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem]
+    notes: PubChem confirms sodium phenolate identity and formula C6H5NaO; this avoids a separate hydrate/mixture record.

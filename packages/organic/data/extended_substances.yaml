@@ -142,3 +142,87 @@ records:
     teaching_priority: common
     verification_status: seed
     provenance_refs: [manual-seed-2026-08]
+
+  - id: org-substance:but-1-ene
+    name_zh: 1-丁烯
+    name_en: but-1-ene
+    formula: C4H8
+    category: alkene
+    aliases: [1-butene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]
+
+  - id: org-substance:cis-but-2-ene
+    name_zh: 顺-2-丁烯
+    name_en: cis-but-2-ene
+    formula: C4H8
+    category: alkene
+    aliases: [(Z)-but-2-ene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]
+
+  - id: org-substance:trans-but-2-ene
+    name_zh: 反-2-丁烯
+    name_en: trans-but-2-ene
+    formula: C4H8
+    category: alkene
+    aliases: [(E)-but-2-ene]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]
+
+  - id: org-substance:methyl-formate
+    name_zh: 甲酸甲酯
+    name_en: methyl formate
+    formula: C2H4O2
+    category: ester
+    aliases: [methyl methanoate]
+    functional_group_refs: [org-fg:ester]
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]
+
+  - id: org-substance:sodium-acetate
+    name_zh: 乙酸钠
+    name_en: sodium acetate
+    formula: C2H3NaO2
+    category: carboxylate_salt
+    aliases: [sodium ethanoate]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]
+
+  - id: org-substance:sodium-ethoxide
+    name_zh: 乙醇钠
+    name_en: sodium ethoxide
+    formula: C2H5NaO
+    category: organic_salt
+    aliases: [sodium ethanolate]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]
+
+  - id: org-substance:sodium-phenoxide
+    name_zh: 苯酚钠
+    name_en: sodium phenoxide
+    formula: C6H5NaO
+    category: organic_salt
+    aliases: [sodium phenolate]
+    functional_group_refs: []
+    structure_ref: null
+    teaching_priority: common
+    verification_status: source_crosschecked
+    provenance_refs: [pubchem, manual-seed-2026-08]

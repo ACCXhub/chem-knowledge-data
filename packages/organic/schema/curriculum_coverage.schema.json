@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chem-knowledge-data/organic/curriculum_coverage.schema.json",
+  "title": "Organic Curriculum Coverage",
+  "type": "object",
+  "required": ["coverage", "notes"],
+  "properties": {
+    "coverage": {
+      "type": "object",
+      "required": ["package", "level", "scope_status", "source_refs", "knowledge_blocks", "experiment_coverage"],
+      "properties": {
+        "package": {"const": "organic"},
+        "level": {"const": "senior_high_school_cn"},
+        "scope_status": {"type": "string", "minLength": 1},
+        "source_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "knowledge_blocks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "name_zh", "priority"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^org-scope:[a-z0-9][a-z0-9-]*$"},
+              "name_zh": {"type": "string", "minLength": 1},
+              "required_topics": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+              "required_families": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+              "required_reaction_classes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+              "representative_substance_refs": {"type": "array", "items": {"type": "string", "pattern": "^org-substance:[a-z0-9][a-z0-9-]*$"}, "uniqueItems": true},
+              "priority": {"type": "string", "enum": ["core", "common", "extended"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "experiment_coverage": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

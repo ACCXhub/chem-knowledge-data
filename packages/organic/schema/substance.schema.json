@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.invalid/chem-knowledge-data/organic/substance.schema.json",
-  "title": "Organic Substance Seed Record",
+  "title": "Organic Substance Record",
   "type": "object",
   "required": [
     "id",
@@ -36,6 +36,7 @@
         "ketone",
         "carboxylic_acid",
         "carboxylate_salt",
+        "organic_salt",
         "ester",
         "carbohydrate",
         "amino_acid",
@@ -60,14 +61,6 @@
     "structure_ref": {
       "type": ["string", "null"],
       "description": "Cross-package structure link placeholder; canonical structure data belongs to packages/structure."
-    },
-    "external_ids": {
-      "type": "object",
-      "properties": {
-        "chebi": {"type": ["string", "null"]},
-        "pubchem_cid": {"type": ["integer", "null"], "minimum": 1}
-      },
-      "additionalProperties": true
     },
     "teaching_priority": {
       "type": "string",

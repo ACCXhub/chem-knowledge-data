@@ -1,8 +1,8 @@
 package: organic
-version: 0.1.0
+version: 0.2.0
 scope: senior_high_school_cn
 status: complete
-completed_at: 2026-08-24
+completed_at: "2026-08-25"
 owners:
   data: packages/organic/**
   canonical_structure: packages/structure/**
@@ -13,36 +13,45 @@ entrypoints:
   sources: sources/registry.yaml
   validator: validation/validate_package.py
   identity_validator: validation/validate_identity_coverage.py
+  manifest_validator: validation/validate_manifest.py
+  relation_validator: validation/validate_relations.py
 quality:
   provenance_required: true
   formula_is_not_identity: true
+  formula_element_symbols_validated: true
+  ordinary_balanced_reactions_atom_checked: true
   mechanism_inference: false
   canonical_structure_deferred: true
+  external_identity_single_owner: data/identity_crossrefs.yaml
   identity_policy: source_crossref_or_explicit_deferral
+  metadata_schema_validation: true
+  reciprocal_reaction_experiment_phenomenon_links: true
 validation:
   workflow: .github/workflows/validate-organic.yml
-  run_id: 32715190827
-  conclusion: success
   python: "3.13"
   counts:
-    substances: 50
+    substances: 57
     functional_groups: 10
     structural_features: 2
     chemical_classes: 25
-    reactions: 27
-    concepts: 35
-    phenomena: 14
+    reactions: 31
+    concepts: 52
+    phenomena: 16
     experiments: 14
-    identity_crossrefs: 41
+    identity_crossrefs: 48
     identity_deferrals: 9
-    curriculum_topics: 10
+    curriculum_topics: 30
     curriculum_families: 16
-    curriculum_reaction_classes: 7
+    curriculum_reaction_classes: 8
     curriculum_experiment_groups: 14
 completion_gate:
   curriculum_coverage: passed
+  schema_integrity: passed
   local_reference_integrity: passed
+  relation_graph_integrity: passed
   provenance_integrity: passed
+  formula_integrity: passed
+  reaction_atom_balance: passed_for_non_symbolic_balanced_seed
   identity_coverage: passed
-  github_actions: passed
+  github_actions: required_green
 next_phase: consolidation

@@ -1,0 +1,50 @@
+concepts:
+  - id: org-concept:organic-synthesis-route-design
+    name_zh: 有机合成路线设计与优化
+    category: method
+    summary_zh: 根据目标分子的碳骨架和官能团，结合已知有机转化、反应条件、选择性和信息题给出的新反应，逆向或正向设计可行路线，并比较步骤数与关键转化的合理性。
+    prerequisite_refs: [org-concept:organic-conversion-network, org-concept:functional-group, org-concept:structure-evidence-integration]
+    related_substance_refs: [org-substance:ethene, org-substance:bromoethane, org-substance:ethanol, org-substance:acetaldehyde, org-substance:acetic-acid, org-substance:ethyl-acetate]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:hydroxy-compound-acidity-comparison
+    name_zh: 醇、酚与羧酸中羟基性质的比较
+    category: structure
+    summary_zh: 含有-OH并不意味着化学性质相同；乙醇、苯酚和乙酸中羟基所处结构环境不同，酸性和典型反应能力存在明显差异，应从基团相互影响理解而不是机械套用“都有羟基”。
+    prerequisite_refs: [org-concept:functional-group, org-concept:functional-group-influence]
+    related_substance_refs: [org-substance:ethanol, org-substance:phenol, org-substance:acetic-acid]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:polymer-chain-architecture
+    name_zh: 高分子的链结构与网络结构
+    category: polymer
+    summary_zh: 高分子可因链的连接和交联方式表现为线型、支链或网状等结构特征；结构层级与材料性质相关，不能只依据重复单元经验式判断宏观性能。
+    prerequisite_refs: [org-concept:monomer-repeat-unit, org-concept:polymer-and-macromolecule]
+    related_substance_refs: [org-substance:polyethylene, org-substance:polyvinyl-chloride, org-substance:polyethylene-terephthalate]
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:thermoplastic-and-thermosetting
+    name_zh: 热塑性与热固性材料
+    category: polymer
+    summary_zh: 聚合物链结构与交联程度会影响受热行为；高中范围内用热塑性与热固性作为结构—性质联系，不把某一商品材料的行为简单推广为所有同类高分子。
+    prerequisite_refs: [org-concept:polymer-chain-architecture]
+    related_substance_refs: [org-substance:polyethylene, org-substance:polyvinyl-chloride]
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:synthetic-organic-material-families
+    name_zh: 塑料、合成纤维与合成橡胶概览
+    category: polymer
+    summary_zh: 以塑料、合成纤维和合成橡胶作为高中合成有机高分子材料的主要应用类别，重点建立单体、聚合方式、结构和材料用途之间的关系，而不是把商品名称当作单一化学物质。
+    prerequisite_refs: [org-concept:addition-polymerization, org-concept:condensation-polymerization, org-concept:polymer-chain-architecture]
+    related_substance_refs: [org-substance:polyethylene, org-substance:polyvinyl-chloride, org-substance:polystyrene, org-substance:polyethylene-terephthalate]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]

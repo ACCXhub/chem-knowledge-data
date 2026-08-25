@@ -12,6 +12,18 @@ coverage_evidence:
     isomerism:
       status: covered
       refs: [org-concept:isomerism]
+    chain_isomerism:
+      status: covered
+      refs: [org-concept:chain-isomerism, org-substance:n-butane, org-substance:isobutane]
+    position_isomerism:
+      status: covered
+      refs: [org-concept:position-isomerism, org-substance:but-1-ene, org-substance:cis-but-2-ene]
+    functional_class_isomerism:
+      status: covered
+      refs: [org-concept:functional-class-isomerism, org-substance:acetic-acid, org-substance:methyl-formate]
+    geometric_isomerism:
+      status: covered
+      refs: [org-concept:geometric-isomerism, org-substance:cis-but-2-ene, org-substance:trans-but-2-ene]
     simple_organic_nomenclature:
       status: covered
       refs: [org-concept:organic-nomenclature]
@@ -20,7 +32,46 @@ coverage_evidence:
       refs: [org-concept:functional-group]
     structure_determination_intro:
       status: covered
-      refs: [org-concept:structure-determination-intro]
+      refs: [org-concept:structure-determination-intro, org-concept:structure-evidence-integration]
+    mass_spectrometry:
+      status: covered
+      refs: [org-concept:mass-spectrometry-intro]
+    infrared_spectroscopy:
+      status: covered
+      refs: [org-concept:infrared-spectroscopy-intro]
+    proton_nmr:
+      status: covered
+      refs: [org-concept:proton-nmr-intro]
+    structure_evidence_integration:
+      status: covered
+      refs: [org-concept:structure-evidence-integration]
+    hydroxy_acidity_comparison:
+      status: covered
+      refs: [org-concept:hydroxy-compound-acidity-comparison, org-reaction:ethanol-sodium, org-reaction:phenol-sodium-hydroxide, org-reaction:acetic-acid-bicarbonate]
+    organic_synthesis_route_design:
+      status: covered
+      refs: [org-concept:organic-synthesis-route-design, org-concept:organic-conversion-network]
+    carbohydrate_reactions:
+      status: covered
+      refs: [org-concept:carbohydrate-reactions, org-concept:carbohydrate-hydrolysis, org-experiment:carbohydrate-properties]
+    amino_acid_amphoteric_character:
+      status: covered
+      refs: [org-concept:amino-acid-amphoteric-character, org-substance:glycine, org-substance:alanine]
+    peptide_bond_and_polypeptide:
+      status: covered
+      refs: [org-concept:peptide-bond-and-polypeptide]
+    protein_hydrolysis:
+      status: covered
+      refs: [org-concept:protein-hydrolysis]
+    protein_properties:
+      status: covered
+      refs: [org-concept:protein-composition-structure-properties, org-concept:protein-salting-out-and-denaturation, org-concept:protein-color-reaction, org-experiment:protein-properties]
+    lipid_hydrolysis_saponification:
+      status: covered
+      refs: [org-concept:lipid-hydrolysis-saponification, org-reaction:triolein-saponification, org-reaction:tristearin-saponification]
+    nucleic_acid_overview:
+      status: covered
+      refs: [org-concept:nucleic-acid-overview]
     addition_polymerization:
       status: covered
       refs: [org-concept:addition-polymerization, org-reaction:ethene-polymerization]
@@ -30,6 +81,15 @@ coverage_evidence:
     monomer_repeat_unit_relation:
       status: covered
       refs: [org-concept:monomer-repeat-unit]
+    polymer_chain_architecture:
+      status: covered
+      refs: [org-concept:polymer-chain-architecture]
+    thermoplastic_thermosetting:
+      status: covered
+      refs: [org-concept:thermoplastic-and-thermosetting, org-experiment:phenol-formaldehyde-resin]
+    synthetic_organic_material_families:
+      status: covered
+      refs: [org-concept:synthetic-organic-material-families]
 
   families:
     alkane:
@@ -37,7 +97,7 @@ coverage_evidence:
       refs: [org-class:alkane, org-substance:methane]
     alkene:
       status: covered
-      refs: [org-class:alkene, org-substance:ethene]
+      refs: [org-class:alkene, org-substance:ethene, org-substance:but-1-ene, org-substance:cis-but-2-ene, org-substance:trans-but-2-ene]
     alkyne:
       status: covered
       refs: [org-class:alkyne, org-substance:ethyne]
@@ -64,7 +124,7 @@ coverage_evidence:
       refs: [org-class:carboxylic-acid, org-substance:acetic-acid]
     ester:
       status: covered
-      refs: [org-class:ester, org-substance:ethyl-acetate]
+      refs: [org-class:ester, org-substance:ethyl-acetate, org-substance:methyl-formate]
     carbohydrate:
       status: covered
       refs: [org-class:carbohydrate, org-substance:glucose, org-substance:sucrose, org-substance:starch, org-substance:cellulose]
@@ -97,6 +157,9 @@ coverage_evidence:
     elimination:
       status: covered
       refs: [org-concept:elimination-reaction, org-reaction:bromoethane-elimination, org-reaction:ethanol-dehydration-to-ethene]
+    acid_base:
+      status: covered
+      refs: [org-reaction:phenol-sodium-hydroxide, org-reaction:acetic-acid-bicarbonate, org-concept:hydroxy-compound-acidity-comparison]
     esterification:
       status: covered
       refs: [org-concept:esterification, org-reaction:acetic-acid-ethanol-esterification]
@@ -122,10 +185,10 @@ coverage_evidence:
       refs: [org-experiment:haloalkane-properties]
     ethanol_and_acetic_acid_properties:
       status: covered
-      refs: [org-experiment:ethanol-properties]
+      refs: [org-experiment:ethanol-properties, org-reaction:ethanol-sodium, org-reaction:acetic-acid-bicarbonate]
     phenol_properties:
       status: covered
-      refs: [org-experiment:phenol-properties]
+      refs: [org-experiment:phenol-properties, org-reaction:phenol-sodium-hydroxide]
     aldehyde_properties:
       status: covered
       refs: [org-experiment:aldehyde-properties]
@@ -150,7 +213,8 @@ coverage_evidence:
 
 policy:
   meaning_of_covered: >-
-    At least one package-local entity or relation explicitly represents the curriculum item.
-    It does not imply exhaustive coverage of all examples or canonical structure data.
+    At least one package-local entity or relation explicitly represents the curriculum item,
+    and every required key is checked by validation. It does not imply enumeration of every
+    possible compound or ownership of canonical molecular structure data.
   structure_details_deferred_to: packages/structure
   cross_package_species_resolution_deferred_to: consolidation
