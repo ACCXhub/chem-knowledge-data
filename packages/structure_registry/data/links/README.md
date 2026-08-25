@@ -1,7 +1,12 @@
-# Accepted Substance ↔ Structure links
+# 已接受的实体 ↔ Structure 链接
 
-This directory is intentionally empty in the first Structure release.
+本目录保存其他知识包实体与 Structure Registry 中 canonical `structure_id` 的稳定映射。
 
-The Inorganic and Organic workstreams have not yet published a shared canonical Substance-ID contract in this data repository, so Structure does not invent substance IDs.
+当前正式文件：
 
-Other tracks should place requests in their own package using `../../schema/structure-request.schema.json`. After canonical Substance IDs are stable, Structure can publish accepted links here using `structure-link.schema.json`.
+- `inorganic.jsonl`
+- `organic.jsonl`
+
+调用方应使用这些 accepted links，而不是根据 formula、SMILES 或外部数据库 ID 自行重建 `structure_id`。
+
+新增实体缺少结构时，在调用方自己的工作区按 `../../schema/structure-request.schema.json` 提交 request，由 Structure Registry owner 统一处理并发布新的 accepted link。
