@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ACCXhub/chem-knowledge-data/packages/consolidated/schema/crosswalk.schema.json",
+  "title": "Source to consolidated identity crosswalk",
+  "type": "object",
+  "required": [
+    "source_package",
+    "source_entity_type",
+    "source_id",
+    "mapping_status",
+    "resolution_method",
+    "evidence_refs"
+  ],
+  "properties": {
+    "source_package": {"enum": ["inorganic", "organic"]},
+    "source_entity_type": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "consolidated_id": {"type": ["string", "null"]},
+    "mapping_status": {"enum": ["resolved", "unresolved", "deferred"]},
+    "resolution_method": {
+      "enum": [
+        "explicit_crossref",
+        "authoritative_external_id",
+        "published_inchikey",
+        "reviewed_formula_charge_scope",
+        "reviewed_manual",
+        "unresolved"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "notes": {"type": ["string", "null"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"mapping_status": {"const": "resolved"}}},
+      "then": {
+        "required": ["consolidated_id"],
+        "properties": {"consolidated_id": {"type": "string", "minLength": 3}}
+      }
+    },
+    {
+      "if": {"properties": {"mapping_status": {"enum": ["unresolved", "deferred"]}}},
+      "then": {"properties": {"consolidated_id": {"type": "null"}}}
+    }
+  ],
+  "additionalProperties": false
+}
