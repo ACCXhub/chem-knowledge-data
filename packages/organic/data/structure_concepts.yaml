@@ -18,3 +18,103 @@ concepts:
     teaching_priority: core
     verification_status: seed
     provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:chain-isomerism
+    name_zh: 碳骨架异构
+    category: structure
+    summary_zh: 分子式相同而碳骨架连接方式不同可形成不同化合物；正丁烷与异丁烷是高中常用的简单例子。
+    prerequisite_refs: [org-concept:isomerism, org-concept:carbon-skeleton-and-bonding]
+    related_substance_refs: [org-substance:n-butane, org-substance:isobutane]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:position-isomerism
+    name_zh: 位置异构
+    category: structure
+    summary_zh: 在相同碳骨架和相同类别中，不饱和键或取代基、官能团所处位置不同可形成不同结构；1-丁烯与2-丁烯可用于建立这一关系。
+    prerequisite_refs: [org-concept:isomerism]
+    related_substance_refs: [org-substance:but-1-ene, org-substance:cis-but-2-ene, org-substance:trans-but-2-ene]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:functional-class-isomerism
+    name_zh: 不同官能团类别的同分异构
+    category: structure
+    summary_zh: 相同分子式可能对应不同官能团类别，例如乙酸与甲酸甲酯均为C2H4O2但分别属于羧酸和酯，因此分子式不能替代结构身份。
+    prerequisite_refs: [org-concept:isomerism, org-concept:functional-group]
+    related_substance_refs: [org-substance:acetic-acid, org-substance:methyl-formate]
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:geometric-isomerism
+    name_zh: 顺反异构与几何异构
+    category: structure
+    summary_zh: 碳碳双键限制旋转并满足相应取代条件时可能形成不同空间排列；顺-2-丁烯与反-2-丁烯作为代表实体分别记录，不能按分子式合并。
+    prerequisite_refs: [org-concept:isomerism, org-concept:carbon-skeleton-and-bonding]
+    related_substance_refs: [org-substance:cis-but-2-ene, org-substance:trans-but-2-ene]
+    teaching_priority: common
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:chirality-awareness
+    name_zh: 手性与手性碳原子概览
+    category: structure
+    summary_zh: 作为有机结构多样性的拓展认识手性及手性碳原子；本数据层不把未明确立体构型的“丙氨酸”等通用名称强行映射为单一对映体。
+    prerequisite_refs: [org-concept:isomerism]
+    related_substance_refs: [org-substance:alanine]
+    teaching_priority: extended
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:elemental-composition-and-molecular-formula
+    name_zh: 有机物元素组成与分子式确定
+    category: method
+    summary_zh: 结构确定首先区分元素组成、经验式、相对分子质量与分子式等层次，并综合实验或仪器信息确定分子组成。
+    prerequisite_refs: [org-concept:molecular-and-structural-formulas]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:mass-spectrometry-intro
+    name_zh: 质谱在有机结构分析中的作用
+    category: method
+    summary_zh: 高中范围内认识质谱可提供分子质量等结构分析线索；具体峰归属必须与题目给出的谱图和其他证据综合判断。
+    prerequisite_refs: [org-concept:elemental-composition-and-molecular-formula]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:infrared-spectroscopy-intro
+    name_zh: 红外光谱在有机结构分析中的作用
+    category: method
+    summary_zh: 高中范围内认识不同化学键或官能团可在红外光谱中提供特征吸收信息，并将其作为官能团判断的证据之一。
+    prerequisite_refs: [org-concept:functional-group]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:proton-nmr-intro
+    name_zh: 核磁共振氢谱在有机结构分析中的作用
+    category: method
+    summary_zh: 高中范围内利用氢原子所处化学环境、信号组数及题目提供的相对信息辅助判断结构，不将单一谱学线索脱离其他证据机械定结构。
+    prerequisite_refs: [org-concept:molecular-and-structural-formulas]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
+
+  - id: org-concept:structure-evidence-integration
+    name_zh: 有机结构确定的多证据综合
+    category: method
+    summary_zh: 将化学性质、分子式、质谱、红外光谱和核磁共振氢谱等证据按约束逐步组合，排除不符合条件的候选结构，再形成可核验的结构结论。
+    prerequisite_refs: [org-concept:elemental-composition-and-molecular-formula, org-concept:mass-spectrometry-intro, org-concept:infrared-spectroscopy-intro, org-concept:proton-nmr-intro]
+    related_substance_refs: []
+    teaching_priority: core
+    verification_status: seed
+    provenance_refs: [manual-seed-2026-08, moe-hs-chem-2020]
