@@ -10,6 +10,8 @@
 
 **Published:** 2026-08-25
 
+**Audited main integration:** `d8a0d62c4b408c62836de108841afa6e54dcf1b5`
+
 ## 当前稳定内容
 
 Structure Registry foundation 保持 **87** 条 canonical Structure：46 molecules、24 ions、12 formula units、5 polymer repeat units。
