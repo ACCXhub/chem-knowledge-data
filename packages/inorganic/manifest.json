@@ -1,0 +1,49 @@
+{
+  "package": "inorganic",
+  "version": "1.0.0",
+  "status": "ready_for_consolidation",
+  "released_at": "2026-08-25",
+  "record_counts": {
+    "element_scope": 48,
+    "ions": 57,
+    "substances": 194,
+    "reactions": 151,
+    "phenomena": 63,
+    "experiments": 31,
+    "concepts": 64,
+    "exam_tags": 32
+  },
+  "total_records": 640,
+  "canonical_files": {
+    "element_scope": ["data/element_scope.jsonl", "data/v1/element_scope.ext.jsonl"],
+    "ions": ["data/ions.jsonl", "data/v1/ions.ext.jsonl"],
+    "substances": ["data/substances.jsonl", "data/v1/substances.01.ext.jsonl", "data/v1/substances.02.ext.jsonl", "data/v1/substances.03.ext.jsonl"],
+    "reactions": ["data/reactions.jsonl", "data/v1/reactions.01.ext.jsonl", "data/v1/reactions.02.ext.jsonl", "data/v1/reactions.03.ext.jsonl"],
+    "phenomena": ["data/phenomena.jsonl", "data/v1/phenomena.ext.jsonl"],
+    "experiments": ["data/experiments.jsonl", "data/v1/experiments.ext.jsonl"],
+    "concepts": ["data/concepts.jsonl", "data/v1/concepts.ext.jsonl"],
+    "exam_tags": ["data/v1/exam_tags.jsonl"]
+  },
+  "rule_files": [
+    "rules/solubility.json",
+    "rules/electrolytes.json",
+    "rules/oxidation_states.json",
+    "rules/metal_activity.json",
+    "rules/flame_tests.json",
+    "rules/qualitative_tests.json",
+    "rules/equation_composer.json"
+  ],
+  "curriculum_file": "curriculum/coverage.json",
+  "schema_file": "schema/catalog-v1.schema.json",
+  "source_registry": "sources/source_registry.json",
+  "source_review": "sources/SOURCE_REVIEW.md",
+  "import_contract": "IMPORT_CONTRACT.md",
+  "validator": "validation/validate_v1.py",
+  "notes": [
+    "Stable dataset IDs are import keys, not application UUIDs.",
+    "Reaction is first-class and participants are explicit.",
+    "Element authority remains in the main application's M02 element-data pipeline; this package stores teaching projections.",
+    "Exam tags are teaching metadata, not exam-probability claims.",
+    "READY_FOR_CONSOLIDATION means the inorganic source package is stable for downstream read-only consumption; record-level review_status remains independent."
+  ]
+}

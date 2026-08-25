@@ -1,0 +1,22 @@
+{
+  "rule_set": "inorganic_solubility_hs_v1",
+  "version": "1.0.0",
+  "scope": "高中水溶液常见离子反应的教学级溶解性判断；用于候选生成和方程式提示，不替代温度依赖溶解度数据。",
+  "priority": ["exact_override", "cation_or_anion_family", "default_unknown"],
+  "rules": [
+    {"id":"sol:nitrate","match":{"anion":"ion:nitrate"},"result":"soluble","summary_zh":"常见硝酸盐可溶。"},
+    {"id":"sol:alkali","match":{"cation_any":["ion:lithium","ion:sodium","ion:potassium"]},"result":"soluble","summary_zh":"高中常见碱金属盐通常可溶。"},
+    {"id":"sol:ammonium","match":{"cation":"ion:ammonium"},"result":"soluble","summary_zh":"常见铵盐可溶。"},
+    {"id":"sol:chloride","match":{"anion":"ion:chloride"},"result":"soluble","exceptions":[{"substance_id":"substance:silver-chloride","result":"insoluble"},{"substance_id":"substance:lead-chloride","result":"sparingly_soluble"}],"summary_zh":"多数氯化物可溶，AgCl 难溶，PbCl2 微溶。"},
+    {"id":"sol:bromide-iodide","match":{"anion_any":["ion:bromide","ion:iodide"]},"result":"soluble","exceptions":[{"substance_id":"substance:silver-bromide","result":"insoluble"},{"substance_id":"substance:silver-iodide","result":"insoluble"},{"substance_id":"substance:lead-iodide","result":"insoluble"}],"summary_zh":"多数溴化物、碘化物可溶，银盐及部分铅盐为典型难溶例外。"},
+    {"id":"sol:sulfate","match":{"anion":"ion:sulfate"},"result":"soluble","exceptions":[{"substance_id":"substance:barium-sulfate","result":"insoluble"},{"substance_id":"substance:lead-sulfate","result":"insoluble"},{"substance_id":"substance:calcium-sulfate","result":"sparingly_soluble"},{"substance_id":"substance:strontium-sulfate","result":"insoluble"}],"summary_zh":"多数硫酸盐可溶，BaSO4、PbSO4 等难溶，CaSO4 微溶。"},
+    {"id":"sol:carbonate","match":{"anion":"ion:carbonate"},"result":"insoluble","exceptions_by_cation":[{"cation_any":["ion:lithium","ion:sodium","ion:potassium","ion:ammonium"],"result":"soluble"}],"summary_zh":"多数碳酸盐难溶，碱金属和铵盐为常见可溶例外。"},
+    {"id":"sol:phosphate","match":{"anion":"ion:phosphate"},"result":"insoluble","exceptions_by_cation":[{"cation_any":["ion:sodium","ion:potassium","ion:ammonium"],"result":"soluble"}],"summary_zh":"多数磷酸盐难溶，常见碱金属和铵盐可溶。"},
+    {"id":"sol:sulfite","match":{"anion":"ion:sulfite"},"result":"insoluble","exceptions_by_cation":[{"cation_any":["ion:sodium","ion:potassium","ion:ammonium"],"result":"soluble"}],"summary_zh":"多数亚硫酸盐难溶，常见碱金属和铵盐可溶。"},
+    {"id":"sol:silicate","match":{"anion":"ion:silicate"},"result":"insoluble","exceptions_by_cation":[{"cation_any":["ion:sodium","ion:potassium"],"result":"soluble"}],"summary_zh":"多数硅酸盐难溶，常见碱金属硅酸盐可溶。"},
+    {"id":"sol:hydroxide","match":{"anion":"ion:hydroxide"},"result":"insoluble","exceptions":[{"substance_id":"substance:sodium-hydroxide","result":"soluble"},{"substance_id":"substance:potassium-hydroxide","result":"soluble"},{"substance_id":"substance:barium-hydroxide","result":"soluble"},{"substance_id":"substance:calcium-hydroxide","result":"sparingly_soluble"}],"summary_zh":"多数金属氢氧化物难溶；NaOH、KOH、Ba(OH)2 可溶，Ca(OH)2 微溶。"},
+    {"id":"sol:sulfide","match":{"anion":"ion:sulfide"},"result":"insoluble","exceptions_by_cation":[{"cation_any":["ion:sodium","ion:potassium","ion:ammonium"],"result":"soluble"}],"summary_zh":"高中常见过渡金属硫化物多难溶，碱金属和铵盐可溶。"}
+  ],
+  "unknown_policy": "unknown",
+  "sources": ["src:editorial-hs-inorganic-v1","src:moe-hs-chem-2020"]
+}

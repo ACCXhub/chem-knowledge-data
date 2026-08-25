@@ -1,0 +1,21 @@
+{
+  "rule_set": "qualitative_tests_hs_v1",
+  "version": "1.0.0",
+  "scope": "高中常见无机离子/气体定性识别的知识提示层；记录现象与 canonical reaction/experiment 引用，不提供危险试剂的独立操作配方。",
+  "tests": [
+    {"target":"ion:chloride","evidence":["phenomenon:agcl-precipitate"],"reaction_ids":["reaction:agno3-nacl"],"experiment_ids":["experiment:chloride-precipitation"],"summary_zh":"形成白色 AgCl 沉淀是氯离子的典型沉淀证据之一；实际分析需考虑其他卤离子和干扰。"},
+    {"target":"ion:bromide","evidence":["phenomenon:agbr-precipitate"],"reaction_ids":["reaction:agno3-kbr"],"experiment_ids":["experiment:silver-halide-test"],"summary_zh":"形成浅黄色 AgBr 沉淀。"},
+    {"target":"ion:iodide","evidence":["phenomenon:agi-precipitate","phenomenon:halogen-displacement-iodine"],"reaction_ids":["reaction:agno3-ki","reaction:chlorine-ki"],"experiment_ids":["experiment:silver-halide-test","experiment:halogen-displacement-series"],"summary_zh":"形成黄色 AgI 沉淀；也可结合氧化生成 I2 的特征颜色进行判断。"},
+    {"target":"ion:sulfate","evidence":["phenomenon:baso4-precipitate"],"reaction_ids":["reaction:bacl2-na2so4"],"experiment_ids":["experiment:sulfate-precipitation"],"summary_zh":"形成白色 BaSO4 沉淀是硫酸根的重要证据；规范分析需排除会与 Ba2+ 形成沉淀的其他离子。"},
+    {"target":"ion:carbonate","evidence":["phenomenon:carbonate-acid-bubbles","phenomenon:limewater-turbid"],"reaction_ids":["reaction:calcium-carbonate-hcl","reaction:co2-limewater"],"experiment_ids":["experiment:caco3-co2","experiment:co2-limewater"],"summary_zh":"酸化放出 CO2，再用其典型性质确认，可作为碳酸根体系的证据链。"},
+    {"target":"ion:ammonium","evidence":["phenomenon:ammonia-gas"],"reaction_ids":["reaction:nh4cl-naoh"],"experiment_ids":["experiment:ammonium-test"],"summary_zh":"铵盐与强碱作用生成 NH3，可结合湿润指示试纸的碱性响应判断。"},
+    {"target":"ion:iron-ii","evidence":["phenomenon:feoh2-green","phenomenon:feoh2-oxidation"],"reaction_ids":["reaction:fecl2-naoh","reaction:feoh2-oxidation"],"experiment_ids":["experiment:fe2-hydroxide-oxidation"],"summary_zh":"生成浅绿色 Fe(OH)2 并在空气中逐渐氧化变为红褐色，是高中常见现象链。"},
+    {"target":"ion:iron-iii","evidence":["phenomenon:feoh3-brown","phenomenon:fe3-scn-red"],"reaction_ids":["reaction:fecl3-naoh","reaction:fecl3-kscn"],"experiment_ids":["experiment:fe3-thiocyanate-test"],"summary_zh":"Fe3+ 可形成红褐色 Fe(OH)3；与 SCN- 的特征红色显色可作为另一证据。"},
+    {"target":"ion:copper-ii","evidence":["phenomenon:cuoh2-blue"],"reaction_ids":["reaction:cuso4-naoh"],"experiment_ids":[],"summary_zh":"Cu2+ 与 OH- 形成蓝色 Cu(OH)2 沉淀。"},
+    {"target":"substance:oxygen","evidence":["phenomenon:oxygen-generation"],"reaction_ids":["reaction:h2o2-decomposition","reaction:kclo3-thermal"],"experiment_ids":["experiment:h2o2-oxygen"],"summary_zh":"氧气可使带火星木条复燃；该现象属于气体性质证据。"},
+    {"target":"substance:carbon-dioxide","evidence":["phenomenon:limewater-turbid"],"reaction_ids":["reaction:co2-limewater"],"experiment_ids":["experiment:co2-limewater"],"summary_zh":"CO2 通入适量澄清石灰水形成 CaCO3 白色沉淀；过量 CO2 可使沉淀继续溶解。"},
+    {"target":"substance:ammonia","evidence":["phenomenon:ammonia-gas"],"reaction_ids":["reaction:nh4cl-naoh"],"experiment_ids":["experiment:ammonium-test"],"summary_zh":"NH3 为有刺激性气味的碱性气体；教学实验应避免直接嗅闻。"}
+  ],
+  "consumer_policy": "Treat test results as evidence with context/interference notes, not as unconditional one-step identity assertions.",
+  "sources": ["src:editorial-hs-inorganic-v1","src:moe-hs-chem-2020"]
+}
