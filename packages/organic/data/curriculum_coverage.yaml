@@ -85,6 +85,14 @@ coverage:
         - protein
         - lipid
         - nucleic_acid
+      required_topics:
+        - carbohydrate_reactions
+        - amino_acid_amphoteric_character
+        - peptide_bond_and_polypeptide
+        - protein_hydrolysis
+        - protein_properties
+        - lipid_hydrolysis_saponification
+        - nucleic_acid_overview
       priority: core
 
     - id: org-scope:synthetic-polymers
@@ -116,5 +124,5 @@ coverage:
 
 notes:
   - This file defines measurable collection coverage; it is not a source of chemical identity facts.
-  - v0.2 raises completeness from representative topic labels to explicit evidence for isomerism, spectroscopy, synthesis-route reasoning, oxygen-containing-group property comparison and polymer structure-property relations.
+  - v0.2 raises completeness from representative topic labels to explicit evidence for isomerism, spectroscopy, synthesis-route reasoning, oxygen-containing-group property comparison, biomolecule chemistry and polymer structure-property relations.
   - Chirality awareness is retained as an extended concept without making stereochemistry a mandatory core identity field; canonical stereochemistry remains owned by packages/structure.
