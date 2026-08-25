@@ -1,7 +1,7 @@
-"""Validate the complete Structure foundation release.
+"""Validate the complete Structure Registry foundation release.
 
 Usage:
-    python packages/structure/validation/validate_dataset.py --strict
+    python packages/structure_registry/validation/validate_dataset.py --strict
 """
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ from collections import defaultdict
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = PACKAGE_ROOT.parents[1]
 PIPELINES = PACKAGE_ROOT / "pipelines"
 sys.path.insert(0, str(PIPELINES))
 
@@ -49,6 +50,9 @@ EXPECTED_COUNTS = {
     "formula_unit": 12,
     "polymer_repeat_unit": 5,
 }
+EXPECTED_DATASET = "chem-knowledge-data/structure_registry"
+EXPECTED_DATASET_VERSION = "structure-registry-foundation-1.0.1"
+EXPECTED_SCHEMA_ID_PREFIX = "https://github.com/ACCXhub/chem-knowledge-data/packages/structure_registry/schema/"
 
 
 def read_json(path: Path) -> dict:
@@ -71,6 +75,20 @@ def read_jsonl(path: Path) -> list[tuple[int, dict]]:
 def schema_validator(name: str) -> Draft202012Validator:
     schema = read_json(PACKAGE_ROOT / "schema" / name)
     return Draft202012Validator(schema, format_checker=FormatChecker())
+
+
+def validate_schema_identity(name: str, errors: list[str]) -> None:
+    schema = read_json(PACKAGE_ROOT / "schema" / name)
+    expected = EXPECTED_SCHEMA_ID_PREFIX + name
+    if schema.get("$id") != expected:
+        errors.append(f"schema $id mismatch for {name}: {schema.get('$id')!r} != {expected!r}")
+
+
+def validate_evidence_paths(record: dict, loc: str, errors: list[str]) -> None:
+    for evidence in record.get("evidence", []):
+        if evidence.startswith(("packages/", "coordination/", ".github/")):
+            if not (REPO_ROOT / evidence).exists():
+                errors.append(f"{loc}: evidence path does not exist: {evidence}")
 
 
 def validate_structure_chemistry(record: dict) -> list[str]:
@@ -173,6 +191,14 @@ def main() -> int:
 
     errors: list[str] = []
     warnings: list[str] = []
+    for name in (
+        "structure-record.schema.json",
+        "structure-link.schema.json",
+        "structure-deferral.schema.json",
+        "structure-request.schema.json",
+    ):
+        validate_schema_identity(name, errors)
+
     structure_schema = schema_validator("structure-record.schema.json")
     link_schema = schema_validator("structure-link.schema.json")
     deferral_schema = schema_validator("structure-deferral.schema.json")
@@ -263,6 +289,7 @@ def main() -> int:
                 errors.append(f"{loc}: link points to unknown structure_id {record['structure_id']}")
             if record["status"] != "accepted":
                 errors.append(f"{loc}: release link must be accepted")
+            validate_evidence_paths(record, loc, errors)
             links_by_track[expected_track].append(record)
 
     deferrals_by_track: dict[str, list[dict]] = defaultdict(list)
@@ -287,6 +314,7 @@ def main() -> int:
             for sid in record["available_abstraction_structure_ids"]:
                 if sid not in structure_ids:
                     errors.append(f"{loc}: deferral references unknown abstraction structure {sid}")
+            validate_evidence_paths(record, loc, errors)
             deferrals_by_track[expected_track].append(record)
 
     targets = read_json(PACKAGE_ROOT / "sources" / "cross_track_targets.json")
@@ -329,6 +357,8 @@ def main() -> int:
         errors.append("data/coverage.json is missing")
     else:
         coverage = read_json(coverage_path)
+        if coverage.get("dataset_version") != EXPECTED_DATASET_VERSION:
+            errors.append(f"unexpected coverage dataset_version {coverage.get('dataset_version')!r}")
         if coverage.get("inorganic") != {
             "target_entities": 23,
             "accepted_links": 23,
@@ -359,7 +389,9 @@ def main() -> int:
     else:
         manifest = read_json(manifest_path)
         validate_manifest(manifest, dict(counts), errors)
-        if manifest.get("dataset_version") != "structure-foundation-1.0.0":
+        if manifest.get("dataset") != EXPECTED_DATASET:
+            errors.append(f"unexpected dataset {manifest.get('dataset')!r}")
+        if manifest.get("dataset_version") != EXPECTED_DATASET_VERSION:
             errors.append(f"unexpected dataset_version {manifest.get('dataset_version')!r}")
         if manifest.get("cross_track") != {
             "inorganic_accepted_links": 23,
