@@ -25,7 +25,7 @@
 
 ## Closure evidence
 
-The release candidate was validated in GitHub Actions on Python 3.13 with:
+The exact v1 branch head and the merged `main` release were validated by GitHub Actions on Python 3.13. Validation covers:
 
 - global ID uniqueness;
 - source / verification-target integrity;
@@ -37,8 +37,8 @@ The release candidate was validated in GitHub Actions on Python 3.13 with:
 - all stable references embedded in rule sets and curriculum coverage;
 - exact manifest counts: 640 records, 7 rule sets, 10 curriculum domains.
 
-The exact final release commit is required to pass the same workflow before merge.
+Merged release commit: `80bb64b959850d48f7f588b82ad4fa51344e98f0`.
 
 ## Handoff
 
-`packages/consolidated/` and the application importer may now consume this package as a stable read-only source. Further changes to inorganic canonical identities should be treated as a new dataset revision with migration/provenance review rather than ad-hoc consumer patches.
+`packages/consolidated/` and the application importer may consume this package as a stable read-only source. Further changes to inorganic canonical identities should be treated as a new dataset revision with migration/provenance review rather than ad-hoc consumer patches.
