@@ -1,48 +1,66 @@
 # Consolidated status
 
-**State:** `ACTIVE / INPUTS-READY / BUILDING-FIRST-CONSUMER-RELEASE`
+**State:** `READY_FOR_APP_IMPORT`
+
+**Release:** `consolidated-1.0.0`
 
 **Owner:** `chatgpt-web-consolidation`
 
-## 已确认输入
+**Audited:** 2026-08-25
 
-- Inorganic v1.0.1：`READY_FOR_CONSOLIDATION`，642 canonical records。
-- Organic v0.2.0：完整性复核完成，57 substances / 31 reactions 等稳定输入。
-- Structure Registry：`structure-registry-foundation-1.0.1`，87 published Structure；accepted links 为 consolidation 的唯一 Structure 关联来源。
-- Structural Chemistry：`structural-chemistry-v1.0.2`，291 canonical records，`READY_FOR_CONSOLIDATION`。
+## Frozen inputs
 
-## 当前 Delta
+- Inorganic v1.0.1 — `READY_FOR_CONSOLIDATION`, 642 canonical records.
+- Organic v0.2.0 — 57 substances / 31 reactions and reviewed supporting knowledge.
+- Structure Registry `structure-registry-foundation-1.0.1` — 87 published Structures and 69 accepted cross-track links.
+- Structural Chemistry `structural-chemistry-v1.0.2` — 291 canonical records, `READY_FOR_CONSOLIDATION`.
 
-此前 consolidation 仍按“等待无机 + Organic v0.1 + packages/structure”设计。仓库已发生三个关键变化：
+`SOURCE_INPUTS.json` pins the release commits. The independent release audit also hashes every source file actually consumed from those commits, so a same-version content rewrite cannot enter the release silently.
 
-1. 无机已经完成 v1.0.1；
-2. Organic 已完成 v0.2.0；
-3. 原 Structure 包已拆为 `structure_registry` 与 `structural_chemistry`。
+## Release contents
 
-当前工作因此转入首个真实 consumer release 的生成与验证，不再停留在 contract-only 阶段。
+- 309 consumer species;
+- 309 source crosswalks;
+- 69 accepted Structure links;
+- 183 reactions;
+- 309 teaching/search/Equation Lab projections;
+- 637 non-species knowledge records;
+- 13 informational findings;
+- 0 review findings;
+- 0 blocking findings.
 
-## 当前 Deliverables
+## Audit closure
 
-- source snapshot/version pin；
-- consumer species + source crosswalk；
-- accepted Structure link projection；
-- Reaction participant 跨包解析；
-- teaching/search/Equation Lab Palette projection；
-- non-species knowledge envelope/index；
-- rules/curriculum consumer bundle；
-- unresolved findings；
-- deterministic manifest/hash；
-- consolidated validation workflow。
+The first consumer release passed all release gates on GitHub Actions run `32856769997`.
 
-## 发布门禁
+Independent checks covered:
 
-首个 release 只有在以下条件全部满足后才进入 `READY_FOR_APP_IMPORT`：
+- 71 source files frozen against the declared source release commits;
+- all 69 accepted Structure Registry links reconciled into the consumer release, including the reviewed historical `copper-2 / iron-2 / iron-3` source-ID rebound to current inorganic IDs;
+- 174 ordinary reactions rechecked for mapped atom/charge conservation;
+- 13 net-ionic equations independently rechecked for atom/charge conservation;
+- 37 organic formula literals checked against mapped species composition;
+- 194 rule references checked against published species/reaction/experiment/phenomenon IDs;
+- complete Reaction → Concept / Experiment / Phenomenon references;
+- complete 309-record teaching projection with contiguous Palette ranks and no runtime user preference data;
+- manifest counts and SHA-256 hashes reconciled with generated files;
+- a second full build/finalize/validate/audit cycle produced byte-for-byte zero diff.
 
-- 所有发布 species 均可回溯到源记录；
-- Reaction 必需 participant 全部解析到 consolidated species；
-- Structure link 仅指向已发布 `structure_registry` 记录；
-- crosswalk 无一源 ID 多目标冲突；
-- formula/name 相似项不会被静默自动合并；
-- teaching/search projection 不含用户运行时偏好；
-- generated manifest 的 counts/hash 与文件实际内容一致；
-- validator 零 blocking error。
+Final validator result: **passed / 0 errors / 0 warnings / 0 blocking / 0 review**.
+
+## Canonical consumer entry points
+
+- `generated/manifest.json` — release identity, state, counts and file hashes;
+- `generated/species.jsonl` — unified species catalog;
+- `generated/crosswalk.jsonl` — source → consumer identity mapping;
+- `generated/structure_links.jsonl` — accepted Structure associations;
+- `generated/reactions.jsonl` — resolved reactions;
+- `generated/teaching_projection.jsonl` — search/Palette/equation-mode projection;
+- `generated/knowledge_records.jsonl` — non-species knowledge envelopes;
+- `generated/rules/` and `generated/curriculum/` — reviewed rules and curriculum projections;
+- `generated/unresolved_findings.jsonl` — explicit non-blocking integration findings;
+- `generated/validation_report.json` — machine validation result.
+
+## Next boundary
+
+`consolidated-1.0.0` is now the stable application-import baseline. The four source packages remain read-only inputs for this release. Future source revisions enter through a new pinned source snapshot and a new consolidated release revision rather than mutating this published baseline in place.
