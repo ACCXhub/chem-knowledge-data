@@ -12,12 +12,8 @@ REPO_ROOT = PACKAGE_ROOT.parents[1]
 VALIDATION = PACKAGE_ROOT / "validation"
 sys.path.insert(0, str(VALIDATION))
 
-from validate_dataset import (  # noqa: E402
-    validate_deferral_integrity,
-    validate_link_integrity,
-    validate_manifest,
-    validate_structure_chemistry,
-)
+import validate_dataset as dataset_validator  # noqa: E402
+from validate_dataset import validate_manifest, validate_structure_chemistry  # noqa: E402
 
 
 def read_json(path: Path) -> dict:
@@ -138,6 +134,9 @@ class StructureRegistryAuditTests(unittest.TestCase):
         )
 
     def test_link_id_and_relation_target_scope_are_validated(self) -> None:
+        validate_link_integrity = getattr(dataset_validator, "validate_link_integrity", None)
+        self.assertIsNotNone(validate_link_integrity, "validator is missing link integrity checks")
+
         link = read_jsonl(PACKAGE_ROOT / "data" / "links" / "inorganic.jsonl")[0].copy()
         scopes = {link["structure_id"]: "molecule"}
         issues = validate_link_integrity(link, scopes)
@@ -149,6 +148,9 @@ class StructureRegistryAuditTests(unittest.TestCase):
         self.assertTrue(any("deterministic" in issue for issue in issues), msg=f"forged link_id not detected: {issues}")
 
     def test_deferral_id_is_recomputed(self) -> None:
+        validate_deferral_integrity = getattr(dataset_validator, "validate_deferral_integrity", None)
+        self.assertIsNotNone(validate_deferral_integrity, "validator is missing deferral integrity checks")
+
         row = read_jsonl(PACKAGE_ROOT / "data" / "deferrals" / "organic.jsonl")[0].copy()
         row["deferral_id"] = "sdef_00000000-0000-5000-8000-000000000000"
         issues = validate_deferral_integrity(row)
