@@ -51,6 +51,27 @@ coverage_evidence:
     organic_synthesis_route_design:
       status: covered
       refs: [org-concept:organic-synthesis-route-design, org-concept:organic-conversion-network]
+    carbohydrate_reactions:
+      status: covered
+      refs: [org-concept:carbohydrate-reactions, org-concept:carbohydrate-hydrolysis, org-experiment:carbohydrate-properties]
+    amino_acid_amphoteric_character:
+      status: covered
+      refs: [org-concept:amino-acid-amphoteric-character, org-substance:glycine, org-substance:alanine]
+    peptide_bond_and_polypeptide:
+      status: covered
+      refs: [org-concept:peptide-bond-and-polypeptide]
+    protein_hydrolysis:
+      status: covered
+      refs: [org-concept:protein-hydrolysis]
+    protein_properties:
+      status: covered
+      refs: [org-concept:protein-composition-structure-properties, org-concept:protein-salting-out-and-denaturation, org-concept:protein-color-reaction, org-experiment:protein-properties]
+    lipid_hydrolysis_saponification:
+      status: covered
+      refs: [org-concept:lipid-hydrolysis-saponification, org-reaction:triolein-saponification, org-reaction:tristearin-saponification]
+    nucleic_acid_overview:
+      status: covered
+      refs: [org-concept:nucleic-acid-overview]
     addition_polymerization:
       status: covered
       refs: [org-concept:addition-polymerization, org-reaction:ethene-polymerization]
