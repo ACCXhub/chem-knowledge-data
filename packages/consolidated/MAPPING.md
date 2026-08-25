@@ -2,6 +2,8 @@
 
 本文件记录当前四个源包到 consumer release 的具体映射。源包 schema 保持不变；统一发生在 generated artifacts 中。
 
+当前稳定发布：`consolidated-1.0.0`。
+
 ## 1. Species
 
 | Consumer field | Inorganic | Organic | Structure Registry | Rule |
@@ -19,7 +21,7 @@
 | verification | `review_status` | `verification_status` | `validation.*` | source state 与 integration state 分开 |
 | provenance | `sources` | `provenance_refs` | `provenance[]` | 加 package namespace 后聚合 |
 | external IDs | 暂无统一 canonical 字段 | `identity_crossrefs.yaml` | `external_ids[]` | 归一为 namespace/value |
-| structure link | accepted `links/inorganic.jsonl` | accepted `links/organic.jsonl` | owns target | 直接复用 accepted link |
+| structure link | accepted `links/inorganic.jsonl` | accepted `links/organic.jsonl` | owns target | 复用 accepted link；历史 source ID 迁移只走 reviewed bridge |
 
 ## 2. Consumer ID 与 crosswalk
 
@@ -34,12 +36,20 @@
 
 ## 3. Structure links
 
-只读取：
+输入只来自：
 
 - `packages/structure_registry/data/links/inorganic.jsonl`
 - `packages/structure_registry/data/links/organic.jsonl`
 
-仅 `status=accepted` 进入 consumer `structure_links.jsonl`。目标必须存在于 published canonical Structure 文件。
+仅 `status=accepted` 可进入 consumer `structure_links.jsonl`，且 target 必须是 published Structure。
+
+若 accepted link 的 `entity_ref` 属于 Structure Registry 冻结输入中的历史 source ID，而当前冻结业务包已经完成稳定 ID 迁移，允许在 reviewed historical bridge 下映射到当前 source ID。v1.0.0 有且仅有三条该类桥接：
+
+- `ion:copper-2` → `ion:copper-ii`
+- `ion:iron-2` → `ion:iron-ii`
+- `ion:iron-3` → `ion:iron-iii`
+
+桥接通过相同 Structure target、对应 formal charge/价态、formula/composition 与原 cross-track evidence 核验，原 `source_link_id` 保留。因此 v1.0.0 对 Structure Registry 的 **69/69 accepted links** 完整对账，没有静默跳过 accepted link。
 
 Organic v0.2 中仍残留的历史说明字符串 `packages/structure` 被视为旧 owner 名称，不作为有效 target path；当前 canonical owner 始终是 `packages/structure_registry/`。
 
@@ -98,9 +108,11 @@ Organic substance → `organic`。
 
 任何必需 participant 无法解析时写入 `unresolved_findings.jsonl`，该 Reaction 不进入 ready-for-import gate。
 
+发布审计进一步在映射完成后复核可数值反应的元素与总电荷守恒；net ionic 独立复核。Symbolic polymer、transformation-only 与明确 non-discrete material 场景单独分类，不强行套普通 fixed-coefficient 守恒器。
+
 ## 6. Non-species knowledge
 
-首个 release 不把不同领域强行压成一个业务 schema，而是使用统一 envelope：
+不同领域不强行压成一个业务 schema，而是使用统一 envelope：
 
 ```text
 consumer_id
@@ -119,14 +131,17 @@ payload
 
 - Inorganic 7 个 rule sets 复制到 consumer release 的 `rules/`，保持原 JSON 语义；其中 `equation_composer.json` 是 Equation Lab 候选/组合基础。
 - Inorganic curriculum coverage、Organic curriculum coverage、Structural Chemistry curriculum coverage 统一打包到 `curriculum/`，但保留 source package namespace。
+- 发布审计验证 rule 中的 species / reaction / experiment / phenomenon 引用均能解析到冻结源包的 published records。
 
-## 8. 当前 reviewed gaps
+## 8. Findings policy
 
-以下项目允许进入 unresolved report，但不会被自动“修掉”：
+以下项目允许进入 informational/review finding，但不会被自动“修掉”：
 
 - formula/name 相同但缺少强 identity evidence 的跨包 duplicate candidate；
 - Structure Registry 明确 deferral 的 organic entity；
-- 未来源包新增而当前 consumer schema 尚未映射的新字段；
-- source provenance 之间出现互相矛盾的值。
+- 新源包字段尚未进入 consumer mapping；
+- source provenance 出现互相矛盾的值。
 
-必需 Reaction participant 未解析、Structure target 不存在、crosswalk 冲突属于 blocking error。
+必需 Reaction participant 未解析、accepted Structure target 不存在、accepted link 无法解释、crosswalk 冲突、source freeze 漂移、守恒失败或引用悬空属于 blocking error。
+
+`consolidated-1.0.0` 最终为 13 informational findings、0 review findings、0 blocking findings。
