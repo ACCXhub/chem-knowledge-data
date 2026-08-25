@@ -5,7 +5,7 @@
   "released_at": "2026-08-25",
   "record_counts": {
     "element_scope": 48,
-    "ions": 57,
+    "ions": 58,
     "substances": 194,
     "reactions": 152,
     "phenomena": 63,
@@ -13,7 +13,7 @@
     "concepts": 64,
     "exam_tags": 32
   },
-  "total_records": 641,
+  "total_records": 642,
   "canonical_files": {
     "element_scope": [
       "data/element_scope.jsonl",
@@ -73,6 +73,7 @@
     "Element authority remains in the main application's M02 element-data pipeline; this package stores teaching projections.",
     "Exam tags are teaching metadata, not exam-probability claims.",
     "READY_FOR_CONSOLIDATION means the inorganic source package is stable for downstream read-only consumption; record-level review_status remains independent.",
-    "v1.0.1 audit candidate adds independent schema/semantic/formula audits and targeted chemistry corrections before final consolidation release."
+    "v1.0.1 audit candidate adds independent schema/semantic/formula audits and targeted chemistry corrections before final consolidation release.",
+    "The Fe3+ / SCN- color test uses an explicitly marked [FeSCN]2+ teaching complex ion rather than treating Fe(SCN)3 as the unique aqueous species."
   ]
 }
