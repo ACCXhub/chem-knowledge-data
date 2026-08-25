@@ -18,7 +18,7 @@ REPO_ROOT = PACKAGE_ROOT.parents[1]
 PIPELINES = PACKAGE_ROOT / "pipelines"
 sys.path.insert(0, str(PIPELINES))
 
-from ids import structure_id_from_inchi  # noqa: E402
+from ids import deferral_id, link_id, structure_id_from_inchi  # noqa: E402
 from non_discrete import normalize_repeat_unit  # noqa: E402
 from normalize_rdkit import hill_formula_no_charge  # noqa: E402
 
@@ -54,6 +54,12 @@ EXPECTED_COUNTS = {
 EXPECTED_DATASET = "chem-knowledge-data/structure_registry"
 EXPECTED_DATASET_VERSION = "structure-registry-foundation-1.0.1"
 EXPECTED_SCHEMA_ID_PREFIX = "https://github.com/ACCXhub/chem-knowledge-data/packages/structure_registry/schema/"
+RELATION_TARGET_SCOPES: dict[str, set[str]] = {
+    "ion_structure": {"ion"},
+    "formula_unit": {"formula_unit"},
+    "repeat_unit_structure": {"polymer_repeat_unit"},
+    "polymorph": {"crystal"},
+}
 
 
 def read_json(path: Path) -> dict:
@@ -90,6 +96,42 @@ def validate_evidence_paths(record: dict, loc: str, errors: list[str]) -> None:
         if evidence.startswith(("packages/", "coordination/", ".github/")):
             if not (REPO_ROOT / evidence).exists():
                 errors.append(f"{loc}: evidence path does not exist: {evidence}")
+
+
+def validate_link_integrity(record: dict, structure_scopes: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    expected_link_id = link_id(
+        requester_track=record["requester_track"],
+        entity_ref=record["entity_ref"],
+        structure_id=record["structure_id"],
+        relation=record["relation"],
+    )
+    if record["link_id"] != expected_link_id:
+        errors.append(
+            f"link_id is not deterministic: stored {record['link_id']!r}, expected {expected_link_id!r}"
+        )
+
+    target_scope = structure_scopes.get(record["structure_id"])
+    allowed_scopes = RELATION_TARGET_SCOPES.get(record["relation"])
+    if target_scope is not None and allowed_scopes is not None and target_scope not in allowed_scopes:
+        errors.append(
+            f"relation {record['relation']!r} target scope mismatch: "
+            f"got {target_scope!r}, expected one of {sorted(allowed_scopes)!r}"
+        )
+    return errors
+
+
+def validate_deferral_integrity(record: dict) -> list[str]:
+    expected_deferral_id = deferral_id(
+        requester_track=record["requester_track"],
+        entity_ref=record["entity_ref"],
+        reason=record["reason"],
+    )
+    if record["deferral_id"] != expected_deferral_id:
+        return [
+            f"deferral_id is not deterministic: stored {record['deferral_id']!r}, expected {expected_deferral_id!r}"
+        ]
+    return []
 
 
 def validate_structure_chemistry(record: dict) -> list[str]:
@@ -235,6 +277,7 @@ def main() -> int:
     known_source_ids = {row["source_id"] for row in registry["sources"]}
 
     structure_ids: dict[str, str] = {}
+    structure_scopes: dict[str, str] = {}
     inchikeys: dict[str, str] = {}
     external_ids: dict[tuple[str, str], str] = {}
     counts: dict[str, int] = defaultdict(int)
@@ -260,6 +303,7 @@ def main() -> int:
                 errors.append(f"{loc}: duplicate structure_id; first seen at {structure_ids[sid]}")
             else:
                 structure_ids[sid] = loc
+                structure_scopes[sid] = record["structure_scope"]
 
             key = record.get("standard_inchikey")
             if key:
@@ -317,6 +361,8 @@ def main() -> int:
                 errors.append(f"{loc}: link points to unknown structure_id {record['structure_id']}")
             if record["status"] != "accepted":
                 errors.append(f"{loc}: release link must be accepted")
+            for issue in validate_link_integrity(record, structure_scopes):
+                errors.append(f"{loc}: integrity: {issue}")
             validate_evidence_paths(record, loc, errors)
             links_by_track[expected_track].append(record)
 
@@ -342,6 +388,8 @@ def main() -> int:
             for sid in record["available_abstraction_structure_ids"]:
                 if sid not in structure_ids:
                     errors.append(f"{loc}: deferral references unknown abstraction structure {sid}")
+            for issue in validate_deferral_integrity(record):
+                errors.append(f"{loc}: integrity: {issue}")
             validate_evidence_paths(record, loc, errors)
             deferrals_by_track[expected_track].append(record)
 
