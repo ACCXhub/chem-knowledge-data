@@ -3,171 +3,57 @@
     "id": "sc:curriculum:1.1",
     "theme": "原子结构与元素的性质",
     "topic": "核外电子运动状态",
-    "requirements": [
-      "能量状态量子化",
-      "能级与电子跃迁",
-      "用原子轨道和电子云模型描述电子状态"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "requirements": ["能量状态量子化","能级与电子跃迁","用原子轨道和电子云模型描述电子状态"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:1.2",
-    "theme": "原子结构与元素的性质",
-    "topic": "核外电子排布规律",
-    "requirements": [
-      "能级高低顺序",
-      "构造原理",
-      "能量最低原理",
-      "泡利不相容原理",
-      "洪特规则",
-      "1—36号元素基态电子排布"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:1.2","theme": "原子结构与元素的性质","topic": "核外电子排布规律",
+    "requirements": ["能级高低顺序","构造原理","能量最低原理","泡利不相容原理","洪特规则","1—36号元素基态电子排布"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:1.3",
-    "theme": "原子结构与元素的性质",
-    "topic": "电子排布与元素周期律",
-    "requirements": [
-      "原子半径周期变化",
-      "第一电离能周期变化",
-      "电负性周期变化",
-      "周期表分区与价电子排布",
-      "结构—性质推理"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:1.3","theme": "原子结构与元素的性质","topic": "电子排布与元素周期律",
+    "requirements": ["原子半径周期变化","第一电离能周期变化","电负性周期变化","周期表分区与价电子排布","结构—性质推理"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:2.1",
-    "theme": "微粒间相互作用与物质性质",
-    "topic": "微粒间相互作用",
-    "requirements": [
-      "离子键",
-      "共价键",
-      "配位键",
-      "金属键",
-      "范德华力",
-      "氢键",
-      "结构与性质关系"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:2.1","theme": "微粒间相互作用与物质性质","topic": "微粒间相互作用",
+    "requirements": ["离子键","共价键","配位键","金属键","范德华力","氢键","结构与性质关系"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:2.2",
-    "theme": "微粒间相互作用与物质性质",
-    "topic": "共价键本质和特征",
-    "requirements": [
-      "轨道重叠",
-      "σ键",
-      "π键",
-      "极性与非极性共价键",
-      "键能",
-      "键长",
-      "键角"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:2.2","theme": "微粒间相互作用与物质性质","topic": "共价键本质和特征",
+    "requirements": ["轨道重叠","σ键","π键","极性与非极性共价键","键能","键长","键角"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:2.3",
-    "theme": "微粒间相互作用与物质性质",
-    "topic": "分子的空间结构",
-    "requirements": [
-      "用模型预测常见分子空间结构",
-      "分子极性与键极性/空间结构关系",
-      "手性入门"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:2.3","theme": "微粒间相互作用与物质性质","topic": "分子的空间结构",
+    "requirements": ["用模型预测常见分子空间结构","分子极性与键极性/空间结构关系","手性入门"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:2.4",
-    "theme": "微粒间相互作用与物质性质",
-    "topic": "晶体和聚集状态",
-    "requirements": [
-      "晶体周期性排列",
-      "简单晶胞",
-      "分子/共价/离子/金属晶体",
-      "过渡与混合型晶体概念",
-      "聚集状态影响性质"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:2.4","theme": "微粒间相互作用与物质性质","topic": "晶体和聚集状态",
+    "requirements": ["晶体周期性排列","简单晶胞","分子/共价/离子/金属晶体","过渡与混合型晶体概念","聚集状态影响性质"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:2.5",
-    "theme": "微粒间相互作用与物质性质",
-    "topic": "实验与模型活动",
-    "requirements": [
-      "简单配合物制备",
-      "典型金属/离子晶体模型",
-      "金刚石与石墨结构比较",
-      "结构模型可视化"
-    ],
-    "priority": "common",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:2.5","theme": "微粒间相互作用与物质性质","topic": "实验与模型活动",
+    "requirements": ["简单配合物制备","典型金属/离子晶体模型","金刚石与石墨结构比较","结构模型可视化"],
+    "priority": "common","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:3.1",
-    "theme": "研究物质结构的方法与价值",
-    "topic": "物质结构的多尺度认识",
-    "requirements": [
-      "从原子、分子、超分子到聚集态认识物质结构的尺度层次",
-      "理解不同尺度结构共同影响物质性质",
-      "认识超分子结构与非共价相互作用的联系"
-    ],
-    "priority": "common",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:3.1","theme": "研究物质结构的方法与价值","topic": "物质结构的多尺度认识",
+    "requirements": ["从原子、分子、超分子到聚集态认识物质结构的尺度层次","理解不同尺度结构共同影响物质性质","认识超分子结构与非共价相互作用的联系"],
+    "priority": "common","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:3.2",
-    "theme": "研究物质结构的方法与价值",
-    "topic": "物质结构的实验研究方法",
-    "requirements": [
-      "认识原子光谱可为原子能级和电子跃迁提供实验信息",
-      "认识分子光谱可为分子结构模型提供实验约束",
-      "认识X射线衍射是研究晶体结构的重要方法",
-      "理解结构模型应接受实验事实和测量证据检验"
-    ],
-    "priority": "core",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:3.2","theme": "研究物质结构的方法与价值","topic": "物质结构的实验研究方法",
+    "requirements": ["认识原子光谱可为原子能级和电子跃迁提供实验信息","认识分子光谱可为分子结构模型提供实验约束","认识X射线衍射是研究晶体结构的重要方法","理解结构模型应接受实验事实和测量证据检验","认识新的实验事实和研究技术会推动结构模型持续修正与发展"],
+    "priority": "core","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   },
   {
-    "id": "sc:curriculum:3.3",
-    "theme": "研究物质结构的方法与价值",
-    "topic": "物质结构研究的价值",
-    "requirements": [
-      "用结构—性质关系解释结构研究的科学价值",
-      "认识结构信息可服务于新物质和新材料的设计",
-      "区分实验事实、结构模型和基于模型的预测"
-    ],
-    "priority": "common",
-    "entity_type": "curriculum_scope",
-    "source_refs": ["moe_hs_chem_2020"],
-    "status": "published"
+    "id": "sc:curriculum:3.3","theme": "研究物质结构的方法与价值","topic": "物质结构研究的价值",
+    "requirements": ["用结构—性质关系解释结构研究的科学价值","认识结构信息可服务于新物质和新材料的设计","区分实验事实、结构模型和基于模型的预测"],
+    "priority": "common","entity_type": "curriculum_scope","source_refs": ["moe_hs_chem_2020"],"status": "published"
   }
 ]
