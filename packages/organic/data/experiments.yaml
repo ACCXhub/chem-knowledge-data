@@ -98,7 +98,7 @@ experiments:
   - id: org-experiment:ethyl-acetate-preparation
     name_zh: 乙酸乙酯的制备与性质
     purpose_zh: 联系酯化、水解、酯的性质及有机物转化关系。
-    reaction_refs: [org-reaction:acetic-acid-ethanol-esterification, org-reaction:ethyl-acetate-acid-hydrolysis]
+    reaction_refs: [org-reaction:acetic-acid-ethanol-esterification, org-reaction:ethyl-acetate-acid-hydrolysis, org-reaction:ethyl-acetate-alkaline-hydrolysis]
     phenomenon_refs: [org-phenomenon:ethyl-acetate-fruity-odor]
     concept_refs: [org-concept:esterification, org-concept:ester-hydrolysis]
     procedure_scope: observation_only
