@@ -1,0 +1,21 @@
+package: structure_registry
+status: complete
+owner: chatgpt-web-structure-registry
+started_at: 2026-08-25T13:28:00+08:00
+completed_at: 2026-08-25T20:22:00+08:00
+paths:
+  - packages/structure_registry/**
+  - .github/workflows/validate-structure-registry.yml
+  - coordination/claims/structure_registry.yaml
+write_policy: read_only_until_new_structure_release
+release: structure-registry-foundation-1.0.1
+consumers:
+  - inorganic
+  - organic
+  - structural_chemistry
+  - consolidation
+note: >-
+  本工作流完成机器可用化学结构身份与表示的独立重审，并发布
+  structure-registry-foundation-1.0.1。高中“结构化学/物质结构与性质”继续由
+  packages/structural_chemistry/** 独立拥有。现有 structure_id / SMILES / InChI /
+  InChIKey 身份保持稳定；后续新增结构通过新的 structure request / evidence 触发增量发布。

@@ -1,7 +1,7 @@
-"""Validate the complete Structure foundation release.
+"""Validate the complete Structure Registry foundation release.
 
 Usage:
-    python packages/structure/validation/validate_dataset.py --strict
+    python packages/structure_registry/validation/validate_dataset.py --strict
 """
 
 from __future__ import annotations
@@ -14,10 +14,11 @@ from collections import defaultdict
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = PACKAGE_ROOT.parents[1]
 PIPELINES = PACKAGE_ROOT / "pipelines"
 sys.path.insert(0, str(PIPELINES))
 
-from ids import structure_id_from_inchi  # noqa: E402
+from ids import deferral_id, link_id, structure_id_from_inchi  # noqa: E402
 from non_discrete import normalize_repeat_unit  # noqa: E402
 from normalize_rdkit import hill_formula_no_charge  # noqa: E402
 
@@ -43,11 +44,21 @@ LINK_FILES = {
     "links/organic.jsonl": "organic",
 }
 DEFERRAL_FILES = {"deferrals/organic.jsonl": "organic"}
+EXPECTED_MANIFEST_FILES = set(STRUCTURE_FILES) | set(LINK_FILES) | set(DEFERRAL_FILES) | {"coverage.json"}
 EXPECTED_COUNTS = {
     "molecule": 46,
     "ion": 24,
     "formula_unit": 12,
     "polymer_repeat_unit": 5,
+}
+EXPECTED_DATASET = "chem-knowledge-data/structure_registry"
+EXPECTED_DATASET_VERSION = "structure-registry-foundation-1.0.1"
+EXPECTED_SCHEMA_ID_PREFIX = "https://github.com/ACCXhub/chem-knowledge-data/packages/structure_registry/schema/"
+RELATION_TARGET_SCOPES: dict[str, set[str]] = {
+    "ion_structure": {"ion"},
+    "formula_unit": {"formula_unit"},
+    "repeat_unit_structure": {"polymer_repeat_unit"},
+    "polymorph": {"crystal"},
 }
 
 
@@ -71,6 +82,56 @@ def read_jsonl(path: Path) -> list[tuple[int, dict]]:
 def schema_validator(name: str) -> Draft202012Validator:
     schema = read_json(PACKAGE_ROOT / "schema" / name)
     return Draft202012Validator(schema, format_checker=FormatChecker())
+
+
+def validate_schema_identity(name: str, errors: list[str]) -> None:
+    schema = read_json(PACKAGE_ROOT / "schema" / name)
+    expected = EXPECTED_SCHEMA_ID_PREFIX + name
+    if schema.get("$id") != expected:
+        errors.append(f"schema $id mismatch for {name}: {schema.get('$id')!r} != {expected!r}")
+
+
+def validate_evidence_paths(record: dict, loc: str, errors: list[str]) -> None:
+    for evidence in record.get("evidence", []):
+        if evidence.startswith(("packages/", "coordination/", ".github/")):
+            if not (REPO_ROOT / evidence).exists():
+                errors.append(f"{loc}: evidence path does not exist: {evidence}")
+
+
+def validate_link_integrity(record: dict, structure_scopes: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    expected_link_id = link_id(
+        requester_track=record["requester_track"],
+        entity_ref=record["entity_ref"],
+        structure_id=record["structure_id"],
+        relation=record["relation"],
+    )
+    if record["link_id"] != expected_link_id:
+        errors.append(
+            f"link_id is not deterministic: stored {record['link_id']!r}, expected {expected_link_id!r}"
+        )
+
+    target_scope = structure_scopes.get(record["structure_id"])
+    allowed_scopes = RELATION_TARGET_SCOPES.get(record["relation"])
+    if target_scope is not None and allowed_scopes is not None and target_scope not in allowed_scopes:
+        errors.append(
+            f"relation {record['relation']!r} target scope mismatch: "
+            f"got {target_scope!r}, expected one of {sorted(allowed_scopes)!r}"
+        )
+    return errors
+
+
+def validate_deferral_integrity(record: dict) -> list[str]:
+    expected_deferral_id = deferral_id(
+        requester_track=record["requester_track"],
+        entity_ref=record["entity_ref"],
+        reason=record["reason"],
+    )
+    if record["deferral_id"] != expected_deferral_id:
+        return [
+            f"deferral_id is not deterministic: stored {record['deferral_id']!r}, expected {expected_deferral_id!r}"
+        ]
+    return []
 
 
 def validate_structure_chemistry(record: dict) -> list[str]:
@@ -102,6 +163,10 @@ def validate_structure_chemistry(record: dict) -> list[str]:
             errors.append(f"formula mismatch: stored {record.get('molecular_formula')!r}, derived {formula!r}")
         if charge != record.get("formal_charge"):
             errors.append(f"charge mismatch: stored {record.get('formal_charge')!r}, derived {charge!r}")
+        if scope == "molecule" and charge != 0:
+            errors.append(f"molecule scope requires zero net formal charge; derived {charge}")
+        if scope == "ion" and charge == 0:
+            errors.append("ion scope requires nonzero net formal charge")
         if standard_inchi:
             derived_inchi = inchi.MolToInchi(mol)
             if derived_inchi != standard_inchi:
@@ -114,6 +179,21 @@ def validate_structure_chemistry(record: dict) -> list[str]:
             errors.append("formula_unit must not publish salt SMILES as a molecular representation")
         if not standard_inchi or not standard_inchikey:
             errors.append("formula_unit release requires pinned Standard InChI/InChIKey evidence")
+        else:
+            inchi_mol = inchi.MolFromInchi(standard_inchi, sanitize=True, removeHs=False)
+            if inchi_mol is None:
+                errors.append("formula_unit Standard InChI cannot be parsed by RDKit")
+            else:
+                formula = hill_formula_no_charge(inchi_mol)
+                charge = sum(atom.GetFormalCharge() for atom in inchi_mol.GetAtoms())
+                if formula != record.get("molecular_formula"):
+                    errors.append(
+                        f"formula mismatch: stored {record.get('molecular_formula')!r}, derived from Standard InChI {formula!r}"
+                    )
+                if charge != record.get("formal_charge"):
+                    errors.append(
+                        f"formula-unit charge mismatch: stored {record.get('formal_charge')!r}, derived from Standard InChI {charge!r}"
+                    )
         if record.get("formal_charge") != 0:
             errors.append("published neutral formula-unit record must have formal_charge=0")
 
@@ -148,6 +228,14 @@ def validate_manifest(manifest: dict, counts: dict[str, int], errors: list[str])
     if manifest_counts.get("total") != total:
         errors.append(f"manifest total mismatch: {manifest_counts.get('total')!r} != {total}")
 
+    actual_files = set(manifest.get("files", {}))
+    if actual_files != EXPECTED_MANIFEST_FILES:
+        errors.append(
+            "manifest file set mismatch: "
+            f"missing={sorted(EXPECTED_MANIFEST_FILES - actual_files)}, "
+            f"extra={sorted(actual_files - EXPECTED_MANIFEST_FILES)}"
+        )
+
     for relative, metadata in manifest.get("files", {}).items():
         path = PACKAGE_ROOT / "data" / relative
         if not path.exists():
@@ -173,6 +261,14 @@ def main() -> int:
 
     errors: list[str] = []
     warnings: list[str] = []
+    for name in (
+        "structure-record.schema.json",
+        "structure-link.schema.json",
+        "structure-deferral.schema.json",
+        "structure-request.schema.json",
+    ):
+        validate_schema_identity(name, errors)
+
     structure_schema = schema_validator("structure-record.schema.json")
     link_schema = schema_validator("structure-link.schema.json")
     deferral_schema = schema_validator("structure-deferral.schema.json")
@@ -181,6 +277,7 @@ def main() -> int:
     known_source_ids = {row["source_id"] for row in registry["sources"]}
 
     structure_ids: dict[str, str] = {}
+    structure_scopes: dict[str, str] = {}
     inchikeys: dict[str, str] = {}
     external_ids: dict[tuple[str, str], str] = {}
     counts: dict[str, int] = defaultdict(int)
@@ -206,6 +303,7 @@ def main() -> int:
                 errors.append(f"{loc}: duplicate structure_id; first seen at {structure_ids[sid]}")
             else:
                 structure_ids[sid] = loc
+                structure_scopes[sid] = record["structure_scope"]
 
             key = record.get("standard_inchikey")
             if key:
@@ -263,6 +361,9 @@ def main() -> int:
                 errors.append(f"{loc}: link points to unknown structure_id {record['structure_id']}")
             if record["status"] != "accepted":
                 errors.append(f"{loc}: release link must be accepted")
+            for issue in validate_link_integrity(record, structure_scopes):
+                errors.append(f"{loc}: integrity: {issue}")
+            validate_evidence_paths(record, loc, errors)
             links_by_track[expected_track].append(record)
 
     deferrals_by_track: dict[str, list[dict]] = defaultdict(list)
@@ -287,6 +388,9 @@ def main() -> int:
             for sid in record["available_abstraction_structure_ids"]:
                 if sid not in structure_ids:
                     errors.append(f"{loc}: deferral references unknown abstraction structure {sid}")
+            for issue in validate_deferral_integrity(record):
+                errors.append(f"{loc}: integrity: {issue}")
+            validate_evidence_paths(record, loc, errors)
             deferrals_by_track[expected_track].append(record)
 
     targets = read_json(PACKAGE_ROOT / "sources" / "cross_track_targets.json")
@@ -329,6 +433,8 @@ def main() -> int:
         errors.append("data/coverage.json is missing")
     else:
         coverage = read_json(coverage_path)
+        if coverage.get("dataset_version") != EXPECTED_DATASET_VERSION:
+            errors.append(f"unexpected coverage dataset_version {coverage.get('dataset_version')!r}")
         if coverage.get("inorganic") != {
             "target_entities": 23,
             "accepted_links": 23,
@@ -359,7 +465,9 @@ def main() -> int:
     else:
         manifest = read_json(manifest_path)
         validate_manifest(manifest, dict(counts), errors)
-        if manifest.get("dataset_version") != "structure-foundation-1.0.0":
+        if manifest.get("dataset") != EXPECTED_DATASET:
+            errors.append(f"unexpected dataset {manifest.get('dataset')!r}")
+        if manifest.get("dataset_version") != EXPECTED_DATASET_VERSION:
             errors.append(f"unexpected dataset_version {manifest.get('dataset_version')!r}")
         if manifest.get("cross_track") != {
             "inorganic_accepted_links": 23,

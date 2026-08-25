@@ -1,4 +1,4 @@
-"""Build the consumer-ready Structure foundation release from pinned evidence.
+"""Build the consumer-ready Structure Registry foundation release from pinned evidence.
 
 The builder is deterministic: all timestamps are pinned, source evidence is
 versioned in-repository, and every dataset-owned identifier is UUIDv5-based.
@@ -22,9 +22,9 @@ from non_discrete import normalize_formula_unit, normalize_repeat_unit  # noqa: 
 from normalize_rdkit import normalize_smiles  # noqa: E402
 
 SCHEMA_VERSION = "1.2.0"
-LINK_SCHEMA_VERSION = "1.1.0"
-DEFERRAL_SCHEMA_VERSION = "1.0.0"
-DATASET_VERSION = "structure-foundation-1.0.0"
+LINK_SCHEMA_VERSION = "1.2.0"
+DEFERRAL_SCHEMA_VERSION = "1.1.0"
+DATASET_VERSION = "structure-registry-foundation-1.0.1"
 GENERATED_AT = "2026-08-25T04:28:00Z"
 
 
@@ -225,7 +225,7 @@ def make_link(track: str, target: dict, structure_id: str) -> dict:
         "structure_id": structure_id,
         "relation": target["relation"],
         "status": "accepted",
-        "evidence": ["packages/structure/sources/cross_track_targets.json"],
+        "evidence": ["packages/structure_registry/sources/cross_track_targets.json"],
         "notes": None,
     }
 
@@ -245,7 +245,7 @@ def make_deferral(target: dict, repeat_id_by_key: dict[str, str]) -> dict:
         "status": "open",
         "available_abstraction_structure_ids": available,
         "evidence": [
-            "packages/structure/sources/cross_track_targets.json",
+            "packages/structure_registry/sources/cross_track_targets.json",
             "packages/organic/data/identity_deferrals.yaml",
         ],
         "notes": target.get("notes"),
@@ -361,7 +361,7 @@ def main() -> int:
     }
     counts["total"] = sum(counts.values())
     manifest = {
-        "dataset": "chem-knowledge-data/structure",
+        "dataset": "chem-knowledge-data/structure_registry",
         "dataset_version": DATASET_VERSION,
         "schema_version": SCHEMA_VERSION,
         "generated_at": GENERATED_AT,
@@ -374,7 +374,7 @@ def main() -> int:
             "organic_deferrals": len(organic_deferrals),
         },
         "files": file_meta,
-        "publication_rule": "Only validation.status=valid and validation.review_status=published is a stable Structure record.",
+        "publication_rule": "Only validation.status=valid and validation.review_status=published is a stable Structure Registry record.",
     }
     write_json("manifest.json", manifest)
 

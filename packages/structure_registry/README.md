@@ -4,7 +4,7 @@
 
 这里管理的是 SMILES、InChI、InChIKey、`structure_id`、离子 / 分子 / 化学式单元 / 聚合物重复单元等可计算结构数据。它与高中课程中的**结构化学（Structural Chemistry）**严格分开：后者位于 `packages/structural_chemistry/`，负责原子结构、化学键、VSEPR、杂化、晶体类型及结构—性质教学知识。
 
-当前发布版本：**`structure-foundation-1.0.0`**。
+当前发布版本：**`structure-registry-foundation-1.0.1`**。
 
 ## 本包负责
 
@@ -35,8 +35,13 @@
 - 12 个化学式单元（formula unit）
 - 5 个聚合物重复单元（polymer repeat unit）
 - 共 87 条 canonical Structure
-- Organic v0.1：50 / 50 个 Substance 全部由正式 link 或显式 deferral 覆盖
-- Inorganic 当前离子 seed：23 / 23 全部有 accepted ion-structure link
+
+跨包覆盖数字是**冻结输入快照**，不是其他包当前审核状态的实时声明：
+
+- Organic v0.1 快照：50 / 50 个 Substance 由正式 link 或显式 deferral 覆盖
+- Inorganic 23-ion seed 快照：23 / 23 有 accepted ion-structure link
+
+其他包进入复核或后续版本时，本包不会把旧覆盖数字冒充“实时最新状态”；新的稳定实体通过 structure request / 新 evidence 进入下一次增量发布。
 
 5 个 polymer repeat unit 是教学级结构抽象，不代表具有固定链长、端基、分子量或 tacticity 的完整聚合物分子。
 
@@ -47,6 +52,7 @@
 - `schema/structure-record.schema.json`
 - `schema/structure-link.schema.json`
 - `schema/structure-deferral.schema.json`
+- `schema/structure-request.schema.json`
 - `sources/`：来源策略与固定 evidence
 - `data/canonical/*.jsonl`
 - `data/links/*.jsonl`
@@ -64,7 +70,7 @@ python packages/structure_registry/validation/validate_dataset.py --strict
 python -m unittest discover -s packages/structure_registry/tests -v
 ```
 
-`build_seed.py` 仅作为历史兼容入口保留；当前正式构建入口是 `build_release.py`。
+当前唯一正式构建入口是 `build_release.py`。历史 seed 构建器已移出活动包，避免误覆盖当前 canonical release。
 
 ## 并行协作规则
 

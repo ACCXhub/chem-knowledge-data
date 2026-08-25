@@ -32,7 +32,7 @@ jobs:
       - name: Install Structure Registry validation toolchain
         run: python -m pip install -r packages/structure_registry/validation/requirements.txt
 
-      - name: Rebuild canonical Structure release
+      - name: Rebuild canonical Structure Registry release
         run: python packages/structure_registry/pipelines/build_release.py
 
       - name: Validate canonical data and cross-track coverage

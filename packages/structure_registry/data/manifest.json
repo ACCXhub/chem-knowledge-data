@@ -14,8 +14,8 @@
     "organic_accepted_links": 46,
     "organic_deferrals": 9
   },
-  "dataset": "chem-knowledge-data/structure",
-  "dataset_version": "structure-foundation-1.0.0",
+  "dataset": "chem-knowledge-data/structure_registry",
+  "dataset_version": "structure-registry-foundation-1.0.1",
   "files": {
     "canonical/formula_units.jsonl": {
       "records": 12,
@@ -35,24 +35,24 @@
     },
     "coverage.json": {
       "records": null,
-      "sha256": "ece0e4fff11f7d80b186069a7f9811afca210277d840dab50dd726e5ea840e3c"
+      "sha256": "3abd4ff9d4d8631c4608a9ec47eac925ad2d7bb1c20e74d1a465a84475a12f84"
     },
     "deferrals/organic.jsonl": {
       "records": 9,
-      "sha256": "2c8e20ced130247b6233bc6d447275e9a3e6a23b9a0b4e9efd2c4f410814e825"
+      "sha256": "c8aa452b570a5a93836730e1a9e2e6f0f904152f15f2a2094d78ec57a01c6a18"
     },
     "links/inorganic.jsonl": {
       "records": 23,
-      "sha256": "172cff013b0d698f8ebf0af36e2a1f830b749028722e90dd08c56dc1a6e61dc3"
+      "sha256": "7ac82f63e3b5c0ef4060fc82a01784ed4776c0cf8efea773e539d8d51c18ecdc"
     },
     "links/organic.jsonl": {
       "records": 46,
-      "sha256": "2004f1e44c58d6c08497bd01422227c0cb3e9ea2e1d6b8a848a8716aa2e5fa41"
+      "sha256": "a8c2e3cc2fc718e6c86978d4cda57493870f2d7fc834aeab0ca1274590fa45e9"
     }
   },
   "formula_convention": "hill_no_charge",
   "generated_at": "2026-08-25T04:28:00Z",
   "identity_namespace_uuid": "c9d2c469-8557-5661-ae35-950cde95e61f",
-  "publication_rule": "Only validation.status=valid and validation.review_status=published is a stable Structure record.",
+  "publication_rule": "Only validation.status=valid and validation.review_status=published is a stable Structure Registry record.",
   "schema_version": "1.2.0"
 }
