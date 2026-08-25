@@ -1,7 +1,7 @@
 {
   "package": "inorganic",
-  "version": "1.0.1-rc1",
-  "status": "audit_candidate",
+  "version": "1.0.1",
+  "status": "ready_for_consolidation",
   "released_at": "2026-08-25",
   "record_counts": {
     "element_scope": 48,
@@ -73,7 +73,7 @@
     "Element authority remains in the main application's M02 element-data pipeline; this package stores teaching projections.",
     "Exam tags are teaching metadata, not exam-probability claims.",
     "READY_FOR_CONSOLIDATION means the inorganic source package is stable for downstream read-only consumption; record-level review_status remains independent.",
-    "v1.0.1 audit candidate adds independent schema/semantic/formula audits and targeted chemistry corrections before final consolidation release.",
+    "v1.0.1 completed independent schema, formula/composition, chemistry semantics, solubility-rule, reaction-taxonomy, identity/search, curriculum-connectivity and PubChem diagnostic cross-checks.",
     "The Fe3+ / SCN- color test uses an explicitly marked [FeSCN]2+ teaching complex ion rather than treating Fe(SCN)3 as the unique aqueous species."
   ]
 }
