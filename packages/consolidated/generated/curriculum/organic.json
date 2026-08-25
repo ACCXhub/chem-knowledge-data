@@ -1,0 +1,150 @@
+{
+  "coverage": {
+    "experiment_coverage": [
+      "methane_properties",
+      "ethene_properties",
+      "ethyne_properties",
+      "benzene_and_homologue_properties",
+      "haloalkane_properties",
+      "ethanol_and_acetic_acid_properties",
+      "phenol_properties",
+      "aldehyde_properties",
+      "ethyl_acetate_preparation_and_properties",
+      "functional_group_tests",
+      "carbohydrate_properties",
+      "lipid_properties",
+      "protein_properties",
+      "phenol_formaldehyde_resin"
+    ],
+    "knowledge_blocks": [
+      {
+        "id": "org-scope:composition-and-structure",
+        "name_zh": "有机化合物的组成与结构",
+        "priority": "core",
+        "required_topics": [
+          "carbon_bonding_and_skeleton",
+          "molecular_formula_and_structural_formula",
+          "homologous_series",
+          "isomerism",
+          "chain_isomerism",
+          "position_isomerism",
+          "functional_class_isomerism",
+          "geometric_isomerism",
+          "simple_organic_nomenclature",
+          "functional_groups",
+          "structure_determination_intro",
+          "mass_spectrometry",
+          "infrared_spectroscopy",
+          "proton_nmr",
+          "structure_evidence_integration"
+        ]
+      },
+      {
+        "id": "org-scope:hydrocarbons",
+        "name_zh": "烃",
+        "priority": "core",
+        "representative_substance_refs": [
+          "org-substance:methane",
+          "org-substance:ethene",
+          "org-substance:ethyne",
+          "org-substance:benzene",
+          "org-substance:toluene",
+          "org-substance:but-1-ene",
+          "org-substance:cis-but-2-ene",
+          "org-substance:trans-but-2-ene"
+        ],
+        "required_families": [
+          "alkane",
+          "alkene",
+          "alkyne",
+          "aromatic_hydrocarbon"
+        ],
+        "required_reaction_classes": [
+          "substitution",
+          "addition",
+          "oxidation",
+          "polymerization"
+        ]
+      },
+      {
+        "id": "org-scope:hydrocarbon-derivatives",
+        "name_zh": "烃的衍生物",
+        "priority": "core",
+        "required_families": [
+          "haloalkane",
+          "alcohol",
+          "phenol",
+          "aldehyde",
+          "ketone",
+          "carboxylic_acid",
+          "ester"
+        ],
+        "required_reaction_classes": [
+          "substitution",
+          "elimination",
+          "oxidation",
+          "acid_base",
+          "esterification",
+          "hydrolysis"
+        ],
+        "required_topics": [
+          "hydroxy_acidity_comparison"
+        ]
+      },
+      {
+        "id": "org-scope:organic-synthesis",
+        "name_zh": "有机合成路线",
+        "priority": "core",
+        "required_topics": [
+          "organic_synthesis_route_design"
+        ]
+      },
+      {
+        "id": "org-scope:biomolecules",
+        "name_zh": "生物大分子与重要有机物",
+        "priority": "core",
+        "required_families": [
+          "carbohydrate",
+          "amino_acid",
+          "protein",
+          "lipid",
+          "nucleic_acid"
+        ],
+        "required_topics": [
+          "carbohydrate_reactions",
+          "amino_acid_amphoteric_character",
+          "peptide_bond_and_polypeptide",
+          "protein_hydrolysis",
+          "protein_properties",
+          "lipid_hydrolysis_saponification",
+          "nucleic_acid_overview"
+        ]
+      },
+      {
+        "id": "org-scope:synthetic-polymers",
+        "name_zh": "合成高分子",
+        "priority": "core",
+        "required_topics": [
+          "addition_polymerization",
+          "condensation_polymerization",
+          "monomer_repeat_unit_relation",
+          "polymer_chain_architecture",
+          "thermoplastic_thermosetting",
+          "synthetic_organic_material_families"
+        ]
+      }
+    ],
+    "level": "senior_high_school_cn",
+    "package": "organic",
+    "scope_status": "complete_v0_2",
+    "source_refs": [
+      "moe-hs-chem-2020",
+      "moe-lab-guidance-2025"
+    ]
+  },
+  "notes": [
+    "This file defines measurable collection coverage; it is not a source of chemical identity facts.",
+    "v0.2 raises completeness from representative topic labels to explicit evidence for isomerism, spectroscopy, synthesis-route reasoning, oxygen-containing-group property comparison, biomolecule chemistry and polymer structure-property relations.",
+    "Chirality awareness is retained as an extended concept without making stereochemistry a mandatory core identity field; canonical stereochemistry remains owned by packages/structure."
+  ]
+}

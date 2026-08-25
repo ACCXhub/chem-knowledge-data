@@ -1,0 +1,24 @@
+{
+  "rule_set": "inorganic_electrolytes_hs_v1",
+  "version": "1.0.0",
+  "scope": "高中离子方程式拆写与 Equation Lab 模式投影。",
+  "phase_gate": {
+    "split_only_when_phase": ["aq"],
+    "never_split_phases": ["s","l","g"],
+    "notes_zh": "同一化学式在不同相态下拆写规则不同；相态优先于物质默认属性。"
+  },
+  "strong_acids": ["substance:hydrogen-chloride","substance:hydrogen-bromide","substance:hydrogen-iodide","substance:nitric-acid","substance:sulfuric-acid"],
+  "strong_bases": ["substance:sodium-hydroxide","substance:potassium-hydroxide","substance:barium-hydroxide","substance:calcium-hydroxide"],
+  "weak_acids_keep_molecular": ["substance:hydrogen-fluoride","substance:carbonic-acid","substance:sulfurous-acid","substance:phosphoric-acid","substance:hypochlorous-acid","substance:hydrogen-sulfide"],
+  "weak_bases_keep_molecular": ["substance:ammonia"],
+  "always_keep_molecular": ["substance:water"],
+  "soluble_salt_rule": "If substance.aqueous_behavior == strong_electrolyte and participant phase == aq, project substance.ions using stored integer coefficients.",
+  "insoluble_rule": "Substances marked insoluble or sparingly_soluble remain unsplit when written as precipitates/solids.",
+  "sulfuric_acid_note_zh": "普通高中净离子方程式中通常将稀硫酸按强电解质拆写；涉及 HSO4- 的精细逐级电离问题应进入专门酸碱平衡语境。",
+  "mode_rules": {
+    "molecular": "show Substance participants; hide ion-only palette by default",
+    "ionic": "split eligible strong electrolytes in aqueous phase; retain weak electrolytes, gases, precipitates and water",
+    "net_ionic": "apply ionic projection, cancel unchanged spectator ions, then verify atom and total-charge conservation"
+  },
+  "sources": ["src:editorial-hs-inorganic-v1","src:moe-hs-chem-2020"]
+}

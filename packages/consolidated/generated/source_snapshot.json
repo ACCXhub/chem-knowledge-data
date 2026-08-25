@@ -1,0 +1,28 @@
+{
+  "inputs": {
+    "inorganic": {
+      "release": "1.0.1",
+      "state": "ready_for_consolidation",
+      "total_records": 642
+    },
+    "organic": {
+      "reactions": 31,
+      "release": "0.2.0",
+      "state": "complete",
+      "substances": 57
+    },
+    "structural_chemistry": {
+      "release": "structural-chemistry-v1.0.2",
+      "state": "READY_FOR_CONSOLIDATION",
+      "total_records": 291
+    },
+    "structure_registry": {
+      "inorganic_links": 23,
+      "organic_deferrals": 9,
+      "organic_links": 46,
+      "release": "structure-registry-foundation-1.0.1",
+      "state": "PUBLISHED",
+      "structures": 87
+    }
+  }
+}

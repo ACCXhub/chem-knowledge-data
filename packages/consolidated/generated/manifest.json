@@ -1,0 +1,84 @@
+{
+  "blocking_findings": 0,
+  "counts": {
+    "findings": 13,
+    "knowledge_records": 637,
+    "reactions": 183,
+    "source_crosswalks": 309,
+    "species": 309,
+    "structure_links": 66,
+    "teaching_projections": 309
+  },
+  "files": {
+    "crosswalk.jsonl": {
+      "records": 309,
+      "sha256": "9eda29afbe92ba6249616fcee403159e4f6d41cabd4a3c0f15b479d47a9d741c"
+    },
+    "curriculum/inorganic.json": {
+      "sha256": "464e11764ab62c344ebeb3ec06245dfb337af59d72731861241d4873c663170f"
+    },
+    "curriculum/organic.json": {
+      "sha256": "e251231728947220895d4731f52db1a40e9c4fc9e1afec77d81fb30dec76eda5"
+    },
+    "curriculum/structural_chemistry_coverage.json": {
+      "sha256": "bcca88e954f0898f139a15f4d78b1dbf990964d2ee8f0e31646a75bbd2f5ff4b"
+    },
+    "curriculum/structural_chemistry_scope.json": {
+      "sha256": "de23efd5648de9bee62e5581af459f22b644feedc5df3197d4c3821154c6b327"
+    },
+    "knowledge_records.jsonl": {
+      "records": 637,
+      "sha256": "37bfd85c069cc68dceffa1dd5fa5e01d8c256d06f029702843919b1ae1b43bf5"
+    },
+    "reactions.jsonl": {
+      "records": 183,
+      "sha256": "b6087a3277b681b9f0bd053b1b75d5e86ae3ee41275df87204fdb2ec400e7ceb"
+    },
+    "rules/electrolytes.json": {
+      "sha256": "6f86004249f7e5a87fc48a201d778e6a0d50ab8323c6c71bb41389304581e886"
+    },
+    "rules/equation_composer.json": {
+      "sha256": "477a9e691cee90ed9a4e87114fdb2072d038dd7a56cf2a5cb270d9c88c85cf9f"
+    },
+    "rules/flame_tests.json": {
+      "sha256": "166faa0e5f505a4c063ce5dd36e7f1376d1d6d965c3ac09e9c1a2280c8dd63c6"
+    },
+    "rules/metal_activity.json": {
+      "sha256": "1677fa3864ced5b5df0726777e4c3927aee9b46ca12b135edc0dc048e74002d5"
+    },
+    "rules/oxidation_states.json": {
+      "sha256": "a75e0a7fcaf74ca5c3418705bb093de841057d65c94ba7fe02265ccd5ec1e588"
+    },
+    "rules/qualitative_tests.json": {
+      "sha256": "41e87eb8be12a90678b29356c4644e0be391f0456a2e2f7b97e47c366bcccd96"
+    },
+    "rules/solubility.json": {
+      "sha256": "fe131dffb14778f51acc94454325b84ccdd87faafb7570660630b9604bef8acd"
+    },
+    "source_snapshot.json": {
+      "sha256": "1cd88b68fd103a55a4a68a178183bc22283de9eda23b7914f9564e74df3f1df1"
+    },
+    "species.jsonl": {
+      "records": 309,
+      "sha256": "a4f8ccf78143d166a3b5d2979355899cecf63924d675094e5e4a43d7d14c985b"
+    },
+    "structure_links.jsonl": {
+      "records": 66,
+      "sha256": "af995175fb92c2131256f477da3d58fb12547901dc0877754cfa9fc5acb3724a"
+    },
+    "teaching_projection.jsonl": {
+      "records": 309,
+      "sha256": "a5c1aade5ac741ff7db0db4579bcdd94bc82260e6fd43e58ed60413b7dfe96f0"
+    },
+    "unresolved_findings.jsonl": {
+      "records": 13,
+      "sha256": "34666316333872b14e2873fbb2fd95f0e0b6fc9c12224d13d106c6864f35e14d"
+    }
+  },
+  "info_findings": 13,
+  "package": "consolidated",
+  "release": "consolidated-draft-1",
+  "review_findings": 0,
+  "source_snapshot_file": "source_snapshot.json",
+  "state": "generated_candidate"
+}

@@ -1,0 +1,17 @@
+{
+  "blocking_findings": 0,
+  "counts": {
+    "findings": 13,
+    "knowledge_records": 637,
+    "reactions": 183,
+    "source_crosswalks": 309,
+    "species": 309,
+    "structure_links": 66,
+    "teaching_projections": 309
+  },
+  "errors": [],
+  "info_findings": 13,
+  "review_findings": 0,
+  "status": "passed",
+  "warnings": []
+}

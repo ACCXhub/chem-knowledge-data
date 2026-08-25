@@ -1,0 +1,16 @@
+{
+  "rule_set": "flame_tests_hs_v1",
+  "version": "1.0.0",
+  "scope": "高中常见金属元素焰色试验教学投影；颜色用于定性提示，不替代仪器分析。",
+  "entries": [
+    {"element":"Li","color_zh":"紫红色","teaching_priority":"common","notes_zh":"锂盐典型焰色。"},
+    {"element":"Na","color_zh":"黄色","teaching_priority":"core","notes_zh":"钠的黄色焰色很强，易遮盖其他颜色。"},
+    {"element":"K","color_zh":"紫色","teaching_priority":"core","notes_zh":"观察钾焰色时常借助蓝色钴玻璃减弱钠黄光干扰。"},
+    {"element":"Ca","color_zh":"砖红色","teaching_priority":"core"},
+    {"element":"Sr","color_zh":"洋红色至红色","teaching_priority":"common"},
+    {"element":"Ba","color_zh":"黄绿色","teaching_priority":"core"},
+    {"element":"Cu","color_zh":"绿色至蓝绿色","teaching_priority":"common","notes_zh":"实际颜色会受化合物、火焰条件等影响。"}
+  ],
+  "display_policy": "UI should present this as an observational clue with interference/condition note rather than a universal identity test.",
+  "sources": ["src:editorial-hs-inorganic-v1","src:moe-hs-chem-2020"]
+}

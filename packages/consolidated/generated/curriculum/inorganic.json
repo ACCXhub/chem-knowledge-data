@@ -1,0 +1,91 @@
+{
+  "map": "inorganic_high_school_curriculum_v1",
+  "version": "1.0.1",
+  "basis": "普通高中化学课程标准（2017年版2020年修订）的无机/通用化学知识范围，结合本项目高中交互式知识底座需求整理；不复制课程标准正文。",
+  "coverage_status": "core_complete_for_v1",
+  "domains": [
+    {
+      "id":"curriculum:matter-classification",
+      "name_zh":"物质分类、分散系与基本转化",
+      "status":"covered",
+      "concept_ids":["concept:colloid","concept:electrolyte","concept:strong-weak-electrolyte","concept:thermal-decomposition"],
+      "exam_tag_ids":["examtag:classification"],
+      "notes_zh":"覆盖单质/氧化物/酸/碱/盐、分散系、电解质及高中常见基本反应类型的基础教学投影。"
+    },
+    {
+      "id":"curriculum:chemical-quantity",
+      "name_zh":"物质的量与溶液计量",
+      "status":"covered",
+      "concept_ids":["concept:mole","concept:avogadro-constant","concept:molar-gas-volume","concept:molar-concentration"],
+      "exam_tag_ids":["examtag:stoichiometry","examtag:mole-particles","examtag:gas-molar-volume","examtag:molar-concentration","examtag:solution-preparation"]
+    },
+    {
+      "id":"curriculum:ionic-redox",
+      "name_zh":"离子反应与氧化还原",
+      "status":"covered",
+      "concept_ids":["concept:ionic-reaction","concept:net-ionic-equation","concept:redox","concept:oxidizing-reducing-agent","concept:reaction-conservation","concept:acid-base-neutralization","concept:gas-evolution","concept:precipitation","concept:solubility"],
+      "exam_tag_ids":["examtag:ionic-equation","examtag:ionic-coexistence","examtag:redox-balance"],
+      "notes_zh":"离子反应部分同时覆盖中和、生成沉淀、生成气体和常见溶解性判断这些高中粒子层反应判据。"
+    },
+    {
+      "id":"curriculum:periodic-law",
+      "name_zh":"原子结构教学投影与元素周期律",
+      "status":"covered",
+      "concept_ids":["concept:periodic-law","concept:halogen-periodicity"],
+      "exam_tag_ids":["examtag:periodic-trend","examtag:halogen-displacement"],
+      "notes_zh":"完整原子/元素基础事实继续由主项目 Element Data canonical owner 提供，本包只负责高中教学投影与反应实例。"
+    },
+    {
+      "id":"curriculum:metals",
+      "name_zh":"金属及其化合物",
+      "status":"covered",
+      "concept_ids":["concept:metal-activity","concept:alkali-metal-sodium","concept:aluminium","concept:iron","concept:copper","concept:amphoteric","concept:metallurgy"],
+      "exam_tag_ids":["examtag:metal-activity","examtag:iron-transformations","examtag:aluminium-amphoteric"],
+      "notes_zh":"包含钠等典型活泼金属、铝/铁/铜及其化合物和冶金的高中无机主线。"
+    },
+    {
+      "id":"curriculum:nonmetals",
+      "name_zh":"典型非金属及其化合物",
+      "status":"covered",
+      "concept_ids":["concept:chlorine","concept:nitrogen","concept:sulfur","concept:carbon-carbonate","concept:silicon","concept:phosphorus","concept:ammonia-ammonium","concept:nitric-acid-oxidizing","concept:concentrated-sulfuric-acid"],
+      "exam_tag_ids":["examtag:ammonia-ammonium","examtag:oxidizing-acids","examtag:sulfur-dioxide","examtag:carbonate-system","examtag:silicon-materials","examtag:phosphorus-system"]
+    },
+    {
+      "id":"curriculum:reaction-heat-rate-equilibrium",
+      "name_zh":"反应热、反应速率与化学平衡",
+      "status":"covered",
+      "concept_ids":["concept:reaction-enthalpy","concept:exo-endo","concept:thermochemical-equation","concept:reaction-rate","concept:catalyst","concept:activation-energy","concept:chemical-equilibrium","concept:le-chatelier"],
+      "exam_tag_ids":["examtag:reaction-enthalpy","examtag:reaction-rate","examtag:equilibrium-shift"]
+    },
+    {
+      "id":"curriculum:aqueous-equilibrium",
+      "name_zh":"水溶液中的离子平衡",
+      "status":"covered",
+      "concept_ids":["concept:weak-electrolyte-ionization","concept:ionization-constant","concept:water-autoionization","concept:ph","concept:acid-base-indicator","concept:acid-base-titration","concept:salt-hydrolysis","concept:buffer-solution","concept:solubility-equilibrium","concept:ksp"],
+      "exam_tag_ids":["examtag:ph-calculation","examtag:acid-base-titration","examtag:salt-hydrolysis","examtag:solubility-equilibrium"]
+    },
+    {
+      "id":"curriculum:electrochemistry",
+      "name_zh":"电化学基础",
+      "status":"covered",
+      "concept_ids":["concept:galvanic-cell","concept:electrode-reaction","concept:electrolysis","concept:electroplating-refining","concept:corrosion-protection"],
+      "exam_tag_ids":["examtag:galvanic-cell","examtag:electrolysis","examtag:corrosion"]
+    },
+    {
+      "id":"curriculum:experiments-analysis",
+      "name_zh":"无机实验、现象与定性分析",
+      "status":"covered",
+      "concept_ids":["concept:qualitative-analysis","concept:reaction-condition"],
+      "exam_tag_ids":["examtag:precipitate-color","examtag:gas-identification"],
+      "notes_zh":"危险或高风险实验在 dataset 中标为 teacher_demo，并保留安全说明；数据集不提供脱离教学环境的危险操作配方。"
+    }
+  ],
+  "v1_boundaries": [
+    "有机物、FunctionalGroup 与有机反应由 packages/organic/ 负责。",
+    "分子结构 canonical identity 由 packages/structure/ 负责。",
+    "Mechanism、atom mapping、bond diff 不在无机 v1 数据包内生成。",
+    "具体高考真题统计与动态 ExamHeat 不由本包伪造；exam_tag 仅提供稳定教学标签。",
+    "数值型热力学/平衡常数/电极电势等数据只有在字段级权威来源和温度/条件明确后才进入后续 enrichment release。"
+  ],
+  "sources": ["src:moe-hs-chem-2020","src:editorial-hs-inorganic-v1"]
+}
