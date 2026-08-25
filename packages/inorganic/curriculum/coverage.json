@@ -1,6 +1,6 @@
 {
   "map": "inorganic_high_school_curriculum_v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "basis": "普通高中化学课程标准（2017年版2020年修订）的无机/通用化学知识范围，结合本项目高中交互式知识底座需求整理；不复制课程标准正文。",
   "coverage_status": "core_complete_for_v1",
   "domains": [
@@ -8,9 +8,9 @@
       "id":"curriculum:matter-classification",
       "name_zh":"物质分类、分散系与基本转化",
       "status":"covered",
-      "concept_ids":["concept:colloid","concept:electrolyte"],
+      "concept_ids":["concept:colloid","concept:electrolyte","concept:strong-weak-electrolyte","concept:thermal-decomposition"],
       "exam_tag_ids":["examtag:classification"],
-      "notes_zh":"覆盖单质/氧化物/酸/碱/盐、分散系与电解质的基础教学投影。"
+      "notes_zh":"覆盖单质/氧化物/酸/碱/盐、分散系、电解质及高中常见基本反应类型的基础教学投影。"
     },
     {
       "id":"curriculum:chemical-quantity",
@@ -23,8 +23,9 @@
       "id":"curriculum:ionic-redox",
       "name_zh":"离子反应与氧化还原",
       "status":"covered",
-      "concept_ids":["concept:ionic-reaction","concept:net-ionic-equation","concept:redox","concept:oxidizing-reducing-agent","concept:reaction-conservation"],
-      "exam_tag_ids":["examtag:ionic-equation","examtag:ionic-coexistence","examtag:redox-balance"]
+      "concept_ids":["concept:ionic-reaction","concept:net-ionic-equation","concept:redox","concept:oxidizing-reducing-agent","concept:reaction-conservation","concept:acid-base-neutralization","concept:gas-evolution","concept:precipitation","concept:solubility"],
+      "exam_tag_ids":["examtag:ionic-equation","examtag:ionic-coexistence","examtag:redox-balance"],
+      "notes_zh":"离子反应部分同时覆盖中和、生成沉淀、生成气体和常见溶解性判断这些高中粒子层反应判据。"
     },
     {
       "id":"curriculum:periodic-law",
@@ -38,8 +39,9 @@
       "id":"curriculum:metals",
       "name_zh":"金属及其化合物",
       "status":"covered",
-      "concept_ids":["concept:metal-activity","concept:aluminium","concept:iron","concept:copper","concept:amphoteric","concept:metallurgy"],
-      "exam_tag_ids":["examtag:metal-activity","examtag:iron-transformations","examtag:aluminium-amphoteric"]
+      "concept_ids":["concept:metal-activity","concept:alkali-metal-sodium","concept:aluminium","concept:iron","concept:copper","concept:amphoteric","concept:metallurgy"],
+      "exam_tag_ids":["examtag:metal-activity","examtag:iron-transformations","examtag:aluminium-amphoteric"],
+      "notes_zh":"包含钠等典型活泼金属、铝/铁/铜及其化合物和冶金的高中无机主线。"
     },
     {
       "id":"curriculum:nonmetals",
