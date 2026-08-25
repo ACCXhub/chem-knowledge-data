@@ -1,30 +1,30 @@
-# Structure package status
+# Structure 数据包状态
 
-**Status:** COMPLETE_FOUNDATION_V1 / PUBLISHED / LOCKED
+**状态：** COMPLETE_FOUNDATION_V1 / PUBLISHED / LOCKED（基础版完成 / 已发布 / 已锁定）
 
-**Owner:** Structure canonical owner
+**Owner：** Structure canonical owner
 
-**Write scope:** `packages/structure/**`
+**写入范围：** `packages/structure/**`
 
-**Release:** `structure-foundation-1.0.0`
+**发布版本：** `structure-foundation-1.0.0`
 
-**Published:** 2026-08-25
+**发布日期：** 2026-08-25
 
-## Completion definition met
+## 当前完成情况
 
-The Structure foundation is complete against the stable source-package inputs available now:
+在目前已经稳定的跨包输入范围内，Structure 基础版已经完成：
 
-- Organic v0.1: **50/50** entities explicitly accounted for by accepted full-identity links or explicit deferrals;
-- current Inorganic ion seed: **23/23** ions linked;
-- **87** canonical Structure records: 46 molecules, 24 ions, 12 formula units and 5 polymer repeat units;
-- canonical data are reproducibly generated from pinned evidence;
-- formula units, ions, molecules and polymer repeat units have distinct semantics;
-- unresolved stereochemical/polymer/macromolecular identities are explicit deferrals rather than guessed structures;
-- downstream workstreams have stable accepted-link and deferral seams.
+- Organic v0.1：**50/50** 个实体都已经由完整身份 link 或显式 deferral 交代；
+- 当前 Inorganic 离子 seed：**23/23** 个离子已经建立结构链接；
+- 共发布 **87** 条 canonical Structure：46 个分子、24 个离子、12 个化学式单元、5 个聚合物重复单元；
+- canonical 数据可以由固定证据确定性重建；
+- molecule、ion、formula unit、polymer repeat unit 具有明确不同的语义；
+- 立体化学、完整聚合物、大分子身份等未解决情况使用显式 deferral，不通过猜测补齐；
+- 下游工作流已有稳定的 link / deferral 接口。
 
-## Fresh verification
+## 最新验证
 
-Working-branch GitHub Actions run `32809697660` succeeded, and pull-request run `32809798607` independently rebuilt the release and passed the no-diff reproducibility gate before merge.
+工作分支 GitHub Actions 运行 `32809697660` 成功；Pull Request 运行 `32809798607` 又独立重建了一次完整发布数据，并在合并前通过了“生成结果无 diff”的可复现性检查。
 
 ```text
 built 87 structures; inorganic links=23; organic links=46; organic deferrals=9
@@ -33,16 +33,16 @@ Ran 16 tests
 OK
 ```
 
-PR #3 was squash-merged to `main` as `db02499d04475b3f710e7399b4e0a3dbaeea198e`. The canonical `main` manifest was re-read after merge and confirms dataset version `structure-foundation-1.0.0`, schema `1.2.0`, total `87`, Inorganic links `23`, Organic links `46`, and Organic deferrals `9`.
+PR #3 已 squash merge 到 `main`，合并提交为 `db02499d04475b3f710e7399b4e0a3dbaeea198e`。合并后重新核对 `main` 的 canonical manifest，确认：dataset version=`structure-foundation-1.0.0`、schema=`1.2.0`、总记录数=87、Inorganic link=23、Organic link=46、Organic deferral=9。
 
-## Evidence-bound future additions
+## 后续按证据增量扩展的内容
 
-These are additive future releases, not missing foundation records:
+下面这些不是当前基础版“漏做”，而是需要后续证据或正式请求后再新增：
 
-- Inorganic Substance structures that are not yet emitted as stable requests by the active Inorganic workstream;
-- coordination entities without explicit metal–ligand connectivity evidence;
-- crystal records without crystallographic evidence/requests;
-- full polymer molecular identities where chain length/end groups/tacticity are unspecified;
-- generic fructose/alanine stereochemical identities until the teaching/source identity is disambiguated.
+- Inorganic 工作流今后发布的新稳定 Substance 对应结构；
+- 没有明确金属—配体连接证据的配位实体；
+- 没有晶体学证据 / 请求的 crystal record；
+- 链长、端基、tacticity 未指定时的完整 polymer identity；
+- 教学实体身份尚未固定时的 fructose / alanine 等立体化学表示。
 
-Other workstreams must continue to treat `packages/structure/**` as read-only and consume published `structure_id` / link / deferral records through the documented integration seam.
+其他工作流继续把 `packages/structure/**` 视为只读，通过文档约定的 integration seam 使用已发布的 `structure_id`、link 和 deferral。

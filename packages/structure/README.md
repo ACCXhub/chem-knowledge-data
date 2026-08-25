@@ -1,14 +1,16 @@
-# Structure package
+# Structure：化学结构数据包
 
-化学结构与结构派生数据包，也是仓库内 **Structure canonical owner**。
+`packages/structure/` 是仓库内**化学结构数据与结构派生数据**的 canonical owner。
 
-当前发布：**`structure-foundation-1.0.0`**。本包已经覆盖当前 Organic v0.1 与 Inorganic ion seed 的结构接缝；其他工作流只读 published `structure_id`，不得在自己的包里复制、修补或重建 canonical Structure。
+这里的 “Structure” 指 SMILES、InChI、InChIKey、离子 / 分子 / 化学式单元 / 聚合物重复单元等**机器可用化学结构数据**，不是高中课程里的“结构化学（原子结构、化学键、VSEPR、杂化、晶体类型等）”。结构化学知识应由独立知识包负责。
 
-## Ownership
+当前发布版本：**`structure-foundation-1.0.0`**。
 
-本包独立负责：
+本包已经覆盖当前 Organic v0.1 与 Inorganic 离子 seed 的结构接缝；其他工作流只读已发布的 `structure_id`，不得在自己的包里复制、修补或重建 canonical Structure。
 
-- source-neutral `structure_id`
+## 本包负责
+
+- 与外部来源无关的 `structure_id`
 - molecule / ion / formula unit / polymer repeat unit 的结构表示
 - canonical / isomeric SMILES（仅适用于离散分子或离子）
 - Standard InChI / InChIKey（适用时）
@@ -18,49 +20,60 @@
 - 跨包 `entity_ref ↔ structure_id` 接受关系
 - 无法安全归一化的结构 deferral
 
-不负责无机/有机教学分类，也不拥有 Reaction / Experiment / Phenomenon / Concept。
+## 本包不负责
 
-## Current release
+- 无机 / 有机教学分类
+- Substance 的中文教学知识
+- Reaction / Experiment / Phenomenon / Concept
+- 高中结构化学知识点
+- 用户界面的中文名称、常规化学式排版与教学解释
+
+## 当前发布数据
 
 `data/manifest.json` 是机器可读发布清单：
 
-- 46 molecules
-- 24 ions
-- 12 formula units
-- 5 polymer repeat units
-- 87 canonical structures
-- Organic v0.1：50 / 50 Substance 全部被 primary/formula-unit link 或显式 deferral 覆盖
-- Inorganic current ion seed：23 / 23 全部有 accepted ion-structure link
+- 46 个分子（molecule）
+- 24 个离子（ion）
+- 12 个化学式单元（formula unit）
+- 5 个聚合物重复单元（polymer repeat unit）
+- 共 87 条 canonical Structure
+- Organic v0.1：50 / 50 个 Substance 全部由正式 link 或显式 deferral 覆盖
+- Inorganic 当前离子 seed：23 / 23 全部有 accepted ion-structure link
 
-五个 polymer repeat units 是教学结构抽象，不代表具有固定链长、端基、分子量或 tacticity 的完整聚合物分子。
+5 个 polymer repeat unit 是教学级结构抽象，不代表具有固定链长、端基、分子量或 tacticity 的完整聚合物分子。
 
-## Canonical entry points
+## 主要入口
 
-- `CONTRACT.md`：ownership、ID 与表示规则
-- `INTEGRATION.md`：其他包如何引用 Structure
+- `CONTRACT.md`：ownership、ID 与结构表示规则
+- `INTEGRATION.md`：其他数据包如何引用 Structure
 - `schema/structure-record.schema.json`
 - `schema/structure-link.schema.json`
 - `schema/structure-deferral.schema.json`
-- `sources/pubchem_evidence.jsonl`
-- `sources/cross_track_targets.json`
+- `sources/`：来源策略与固定 evidence
 - `data/canonical/*.jsonl`
 - `data/links/*.jsonl`
 - `data/deferrals/*.jsonl`
-- `data/coverage/*.json`
+- `data/coverage.json`
 - `data/manifest.json`
 - `validation/validate_dataset.py`
 - `RELEASE.md` / `STATUS.md`
 
-## Rebuild and validate
+## 重建与验证
 
 ```bash
-python packages/structure/pipelines/build_seed.py
+python packages/structure/pipelines/build_release.py
 python packages/structure/validation/validate_dataset.py --strict
 python -m unittest discover -s packages/structure/tests -v
 ```
 
-`build_seed.py` 的历史文件名为兼容保留；它现在重建完整 foundation release，而不是旧的 33-record seed。
+`build_seed.py` 仅作为历史兼容入口保留；当前正式构建入口是 `build_release.py`。
 
-## Parallel rule
+## 并行协作规则
 
-`WORKSTREAMS.md` 将本包标记为 `PUBLISHED / LOCKED` 时，只有 Structure canonical owner 修改 `packages/structure/**`。无机、有机、consolidation 只消费 published IDs / links / deferrals；新增需求通过结构 request seam 提交，不在调用方内部造第二份结构事实。
+当 `WORKSTREAMS.md` 将本包标记为 `PUBLISHED / LOCKED` 时，只有 Structure canonical owner 可以修改 `packages/structure/**`。
+
+无机、有机、consolidation 只消费已发布的 `structure_id`、link 与 deferral；新增需求通过 structure request seam 提交，不在调用方内部建立第二份结构事实。
+
+## 文档语言约定
+
+给人阅读的说明文档以中文为主；代码、schema 字段、文件名以及 SMILES / InChI / InChIKey 等国际标准标识保持英文和标准形式。
