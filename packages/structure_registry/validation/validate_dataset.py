@@ -44,6 +44,7 @@ LINK_FILES = {
     "links/organic.jsonl": "organic",
 }
 DEFERRAL_FILES = {"deferrals/organic.jsonl": "organic"}
+EXPECTED_MANIFEST_FILES = set(STRUCTURE_FILES) | set(LINK_FILES) | set(DEFERRAL_FILES) | {"coverage.json"}
 EXPECTED_COUNTS = {
     "molecule": 46,
     "ion": 24,
@@ -184,6 +185,14 @@ def validate_manifest(manifest: dict, counts: dict[str, int], errors: list[str])
     total = sum(counts.values())
     if manifest_counts.get("total") != total:
         errors.append(f"manifest total mismatch: {manifest_counts.get('total')!r} != {total}")
+
+    actual_files = set(manifest.get("files", {}))
+    if actual_files != EXPECTED_MANIFEST_FILES:
+        errors.append(
+            "manifest file set mismatch: "
+            f"missing={sorted(EXPECTED_MANIFEST_FILES - actual_files)}, "
+            f"extra={sorted(actual_files - EXPECTED_MANIFEST_FILES)}"
+        )
 
     for relative, metadata in manifest.get("files", {}).items():
         path = PACKAGE_ROOT / "data" / relative
