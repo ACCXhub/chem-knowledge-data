@@ -1,7 +1,7 @@
 coverage:
   package: organic
   level: senior_high_school_cn
-  scope_status: review_v0_2
+  scope_status: complete_v0_2
   source_refs:
     - moe-hs-chem-2020
     - moe-lab-guidance-2025
