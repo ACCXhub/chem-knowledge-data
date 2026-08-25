@@ -120,6 +120,10 @@ def validate_structure_chemistry(record: dict) -> list[str]:
             errors.append(f"formula mismatch: stored {record.get('molecular_formula')!r}, derived {formula!r}")
         if charge != record.get("formal_charge"):
             errors.append(f"charge mismatch: stored {record.get('formal_charge')!r}, derived {charge!r}")
+        if scope == "molecule" and charge != 0:
+            errors.append(f"molecule scope requires zero net formal charge; derived {charge}")
+        if scope == "ion" and charge == 0:
+            errors.append("ion scope requires nonzero net formal charge")
         if standard_inchi:
             derived_inchi = inchi.MolToInchi(mol)
             if derived_inchi != standard_inchi:
@@ -132,6 +136,21 @@ def validate_structure_chemistry(record: dict) -> list[str]:
             errors.append("formula_unit must not publish salt SMILES as a molecular representation")
         if not standard_inchi or not standard_inchikey:
             errors.append("formula_unit release requires pinned Standard InChI/InChIKey evidence")
+        else:
+            inchi_mol = inchi.MolFromInchi(standard_inchi, sanitize=True, removeHs=False)
+            if inchi_mol is None:
+                errors.append("formula_unit Standard InChI cannot be parsed by RDKit")
+            else:
+                formula = hill_formula_no_charge(inchi_mol)
+                charge = sum(atom.GetFormalCharge() for atom in inchi_mol.GetAtoms())
+                if formula != record.get("molecular_formula"):
+                    errors.append(
+                        f"formula mismatch: stored {record.get('molecular_formula')!r}, derived from Standard InChI {formula!r}"
+                    )
+                if charge != record.get("formal_charge"):
+                    errors.append(
+                        f"formula-unit charge mismatch: stored {record.get('formal_charge')!r}, derived from Standard InChI {charge!r}"
+                    )
         if record.get("formal_charge") != 0:
             errors.append("published neutral formula-unit record must have formal_charge=0")
 
