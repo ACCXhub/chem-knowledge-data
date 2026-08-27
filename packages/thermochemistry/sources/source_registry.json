@@ -1,0 +1,45 @@
+{
+  "package": "thermochemistry",
+  "policy_version": "1.0.0",
+  "sources": [
+    {
+      "key": "cantera_nasa_gas_2_6",
+      "name": "Cantera NASA gas thermodynamic database",
+      "publisher": "Cantera Developers / NASA source compilation",
+      "commit": "9573e6b1e1097dca3bf86da37726333ab62663bb",
+      "url": "https://raw.githubusercontent.com/Cantera/cantera/9573e6b1e1097dca3bf86da37726333ab62663bb/data/nasa_gas.yaml",
+      "role": "gas_phase_nasa7_thermochemistry",
+      "license": "Cantera BSD 3-Clause; source thermodynamic references retained in upstream file",
+      "usage": "evaluate published NASA7 coefficients at reference temperature; retain source species name and note"
+    },
+    {
+      "key": "cantera_nasa_condensed_2_6",
+      "name": "Cantera NASA condensed-phase thermodynamic database",
+      "publisher": "Cantera Developers / NASA source compilation",
+      "commit": "9573e6b1e1097dca3bf86da37726333ab62663bb",
+      "url": "https://raw.githubusercontent.com/Cantera/cantera/9573e6b1e1097dca3bf86da37726333ab62663bb/data/nasa_condensed.yaml",
+      "role": "condensed_phase_nasa7_thermochemistry",
+      "license": "Cantera BSD 3-Clause; source thermodynamic references retained in upstream file",
+      "usage": "evaluate selected condensed-phase NASA7 records; do not infer phase identity from formula alone"
+    },
+    {
+      "key": "cantera_graphite_2_5",
+      "name": "Cantera graphite NASA thermodynamic data",
+      "publisher": "Cantera Developers / NASA source compilation",
+      "commit": "6ce695d96d7bbbcc59bdc42825e9fab413ffe430",
+      "url": "https://raw.githubusercontent.com/Cantera/cantera/6ce695d96d7bbbcc59bdc42825e9fab413ffe430/data/graphite.yaml",
+      "role": "carbon_standard_state_reference",
+      "license": "Cantera BSD 3-Clause; NASA source references retained in upstream file",
+      "usage": "graphite standard-state reference for C-containing formation Gibbs calculations"
+    },
+    {
+      "key": "internal_consolidated_1_0_0",
+      "name": "chem-knowledge-data consolidated consumer release",
+      "publisher": "ACCXhub/chem-knowledge-data",
+      "url": "packages/consolidated/generated/species.jsonl",
+      "role": "canonical_species_foreign_keys",
+      "license": "internal project data boundary",
+      "usage": "read-only identity seam; this package never creates replacement Species identities"
+    }
+  ]
+}
