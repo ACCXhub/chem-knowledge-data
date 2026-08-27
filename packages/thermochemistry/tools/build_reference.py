@@ -16,6 +16,16 @@ CONSOLIDATED_SPECIES = REPO_ROOT / "packages" / "consolidated" / "generated" / "
 R = 8.31446261815324
 
 
+class ChemistrySafeLoader(yaml.SafeLoader):
+    """Safe YAML loader that does not interpret chemical formula NO as YAML 1.1 false."""
+
+
+ChemistrySafeLoader.yaml_implicit_resolvers = {
+    key: [item for item in value if item[0] != "tag:yaml.org,2002:bool"]
+    for key, value in yaml.SafeLoader.yaml_implicit_resolvers.items()
+}
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -33,7 +43,7 @@ def write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
 def fetch_yaml(url: str) -> dict[str, Any]:
     request = urllib.request.Request(url, headers={"User-Agent": "chem-knowledge-data-thermochemistry/0.1"})
     with urllib.request.urlopen(request, timeout=120) as response:
-        payload = yaml.safe_load(response.read())
+        payload = yaml.load(response.read(), Loader=ChemistrySafeLoader)
     if not isinstance(payload, dict):
         raise ValueError(f"source {url} did not return a mapping")
     return payload
