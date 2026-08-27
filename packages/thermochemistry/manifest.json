@@ -1,0 +1,36 @@
+{
+  "calculation_priority": [
+    "phase_specific_standard_formation_enthalpy",
+    "bond_enthalpy_estimate_fallback"
+  ],
+  "canonical_boundary": {
+    "does_not_own": [
+      "Substance identity",
+      "Ion identity",
+      "Structure identity",
+      "Reaction identity",
+      "Mechanism"
+    ],
+    "owns": [
+      "phase facts",
+      "phase-specific thermochemistry",
+      "phase-transition enthalpy facts",
+      "bond-enthalpy estimate references"
+    ]
+  },
+  "package": "thermochemistry",
+  "records": {
+    "bond_enthalpies": 14,
+    "phase_transitions": 2,
+    "species_phase_facts": 18,
+    "species_thermochemistry": 20
+  },
+  "reference_conditions": {
+    "standard_pressure_bar": 1.0,
+    "temperature_k": 298.15
+  },
+  "release": "thermochemistry-v0.1.0",
+  "state": "READY_FOR_CONSOLIDATION",
+  "total_records": 54,
+  "unresolved_source_mappings": 0
+}
