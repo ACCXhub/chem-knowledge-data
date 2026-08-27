@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accxhub.github.io/chem-knowledge-data/thermochemistry/species_thermochemistry.schema.json",
+  "title": "Phase-specific Species Thermochemistry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id","species_id","phase","temperature_k","standard_pressure_bar","delta_f_h_kj_mol","delta_f_g_kj_mol","s_j_mol_k","cp_j_mol_k","method","source_species_name","source_note","source_refs","status"],
+  "properties": {
+    "id":{"type":"string","minLength":1},
+    "species_id":{"type":"string","minLength":1},
+    "phase":{"enum":["s","l","g","aq"]},
+    "temperature_k":{"type":"number","exclusiveMinimum":0},
+    "standard_pressure_bar":{"type":"number","exclusiveMinimum":0},
+    "delta_f_h_kj_mol":{"type":"number"},
+    "delta_f_g_kj_mol":{"type":["number","null"]},
+    "s_j_mol_k":{"type":"number","minimum":0},
+    "cp_j_mol_k":{"type":"number","exclusiveMinimum":0},
+    "method":{"const":"NASA7_evaluated"},
+    "source_species_name":{"type":"string","minLength":1},
+    "source_note":{"type":["string","null"]},
+    "source_refs":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}},
+    "status":{"const":"published"}
+  }
+}
