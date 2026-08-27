@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accxhub.github.io/chem-knowledge-data/thermochemistry/bond_enthalpy.schema.json",
+  "title": "Educational Bond Enthalpy Reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id","atom1","atom2","bond_order","environment_key","enthalpy_kj_mol","temperature_k","phase_scope","method","qualifier","source_refs","status"],
+  "properties": {
+    "id":{"type":"string","minLength":1},
+    "atom1":{"type":"string","pattern":"^[A-Z][a-z]?$"},
+    "atom2":{"type":"string","pattern":"^[A-Z][a-z]?$"},
+    "bond_order":{"type":"number","enum":[1.0,2.0,3.0]},
+    "environment_key":{"type":"string","minLength":1},
+    "enthalpy_kj_mol":{"type":"number","exclusiveMinimum":0},
+    "temperature_k":{"type":"number","exclusiveMinimum":0},
+    "phase_scope":{"const":"gas"},
+    "method":{"const":"thermochemical_atomization_estimate"},
+    "qualifier":{"type":"string","minLength":1},
+    "source_refs":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}},
+    "status":{"const":"published"}
+  }
+}
