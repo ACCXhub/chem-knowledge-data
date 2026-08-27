@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "reference_temperature_k": 298.15,
+  "standard_pressure_bar": 1.0,
+  "species": [
+    {"species_id":"species:inorganic:substance:hydrogen","formula":"H2","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["H2"]},
+    {"species_id":"species:inorganic:substance:oxygen","formula":"O2","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["O2"]},
+    {"species_id":"species:inorganic:substance:nitrogen","formula":"N2","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["N2"]},
+    {"species_id":"species:inorganic:substance:water","formula":"H2O","standard_phase":"l","allowed_teaching_phases":["l","g"],"gas_names":["H2O"],"condensed":{"l":["H2O(L)"],"s":["H2O(cr)","H2O(s)"]}},
+    {"species_id":"species:inorganic:substance:hydrogen-peroxide","formula":"H2O2","standard_phase":"l","allowed_teaching_phases":["l","g"],"gas_names":["H2O2"],"condensed":{"l":["H2O2(L)"]}},
+    {"species_id":"species:inorganic:substance:carbon-monoxide","formula":"CO","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["CO"]},
+    {"species_id":"species:inorganic:substance:carbon-dioxide","formula":"CO2","standard_phase":"g","allowed_teaching_phases":["g","s"],"gas_names":["CO2"],"condensed":{"s":["CO2(cr)","CO2(s)"]}},
+    {"species_id":"species:inorganic:substance:ammonia","formula":"NH3","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["NH3"]},
+    {"species_id":"species:inorganic:substance:nitric-oxide","formula":"NO","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["NO"]},
+    {"species_id":"species:inorganic:substance:nitrogen-dioxide","formula":"NO2","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["NO2"]},
+    {"species_id":"species:inorganic:substance:nitrous-oxide","formula":"N2O","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["N2O"]},
+    {"species_id":"species:inorganic:substance:dinitrogen-tetroxide","formula":"N2O4","standard_phase":"g","allowed_teaching_phases":["g","l"],"gas_names":["N2O4"],"condensed":{"l":["N2O4(L)"]}},
+    {"species_id":"species:inorganic:substance:hydrogen-chloride","formula":"HCl","standard_phase":"g","allowed_teaching_phases":["g","aq"],"gas_names":["HCL","HCl"]},
+    {"species_id":"species:inorganic:substance:hydrogen-fluoride","formula":"HF","standard_phase":"g","allowed_teaching_phases":["g","aq"],"gas_names":["HF"]},
+    {"species_id":"species:inorganic:substance:hydrogen-sulfide","formula":"H2S","standard_phase":"g","allowed_teaching_phases":["g","aq"],"gas_names":["H2S"]},
+    {"species_id":"species:inorganic:substance:sulfur-dioxide","formula":"SO2","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["SO2"]},
+    {"species_id":"species:inorganic:substance:chlorine","formula":"Cl2","standard_phase":"g","allowed_teaching_phases":["g","aq"],"gas_names":["CL2","Cl2"]},
+    {"species_id":"species:organic:org-substance:methane","formula":"CH4","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["CH4"]},
+    {"species_id":"species:organic:org-substance:ethyne","formula":"C2H2","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["C2H2,acetylene","C2H2"]},
+    {"species_id":"species:organic:org-substance:ethene","formula":"C2H4","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["C2H4"]},
+    {"species_id":"species:organic:org-substance:ethane","formula":"C2H6","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["C2H6"]},
+    {"species_id":"species:organic:org-substance:propane","formula":"C3H8","standard_phase":"g","allowed_teaching_phases":["g"],"gas_names":["C3H8"]},
+    {"species_id":"species:organic:org-substance:methanol","formula":"CH4O","standard_phase":"l","allowed_teaching_phases":["l","g"],"gas_names":["CH3OH"],"condensed":{"l":["CH3OH(L)"]}},
+    {"species_id":"species:organic:org-substance:ethanol","formula":"C2H6O","standard_phase":"l","allowed_teaching_phases":["l","g"],"gas_names":["C2H5OH"],"condensed":{"l":["C2H5OH(L)"]}},
+    {"species_id":"species:organic:org-substance:acetaldehyde","formula":"C2H4O","standard_phase":"l","allowed_teaching_phases":["l","g"],"gas_names":["CH3CHO"],"condensed":{"l":["CH3CHO(L)"]}},
+    {"species_id":"species:organic:org-substance:benzene","formula":"C6H6","standard_phase":"l","allowed_teaching_phases":["l","g"],"gas_names":["C6H6"],"condensed":{"l":["C6H6(L)"]}}
+  ]
+}
