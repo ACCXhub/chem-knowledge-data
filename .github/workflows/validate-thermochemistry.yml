@@ -1,0 +1,73 @@
+name: Validate thermochemistry data
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/thermochemistry/**"
+      - ".github/workflows/validate-thermochemistry.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thermochemistry-main
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip thermo ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install builder dependency
+        run: python -m pip install --disable-pip-version-check PyYAML==6.0.2
+
+      - name: Build pinned thermochemistry reference
+        run: python packages/thermochemistry/tools/build_reference.py
+
+      - name: Validate thermochemistry package
+        run: python packages/thermochemistry/validation/validate_dataset.py
+
+      - name: Verify deterministic rebuild
+        shell: bash
+        run: |
+          cp packages/thermochemistry/manifest.json /tmp/thermo-manifest.json
+          cp packages/thermochemistry/data/species_phase_facts.jsonl /tmp/phase.jsonl
+          cp packages/thermochemistry/data/species_thermochemistry.jsonl /tmp/thermo.jsonl
+          cp packages/thermochemistry/data/phase_transitions.jsonl /tmp/transitions.jsonl
+          cp packages/thermochemistry/data/bond_enthalpies.jsonl /tmp/bonds.jsonl
+          python packages/thermochemistry/tools/build_reference.py
+          diff -u /tmp/thermo-manifest.json packages/thermochemistry/manifest.json
+          diff -u /tmp/phase.jsonl packages/thermochemistry/data/species_phase_facts.jsonl
+          diff -u /tmp/thermo.jsonl packages/thermochemistry/data/species_thermochemistry.jsonl
+          diff -u /tmp/transitions.jsonl packages/thermochemistry/data/phase_transitions.jsonl
+          diff -u /tmp/bonds.jsonl packages/thermochemistry/data/bond_enthalpies.jsonl
+
+      - name: Publish generated package data
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain -- packages/thermochemistry)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add packages/thermochemistry/manifest.json
+            git add packages/thermochemistry/data/species_phase_facts.jsonl
+            git add packages/thermochemistry/data/species_thermochemistry.jsonl
+            git add packages/thermochemistry/data/phase_transitions.jsonl
+            git add packages/thermochemistry/data/bond_enthalpies.jsonl
+            git add packages/thermochemistry/data/unresolved_source_mappings.json
+            git commit -m "data(thermochemistry): publish validated reference [skip thermo ci]"
+            git push
+          else
+            echo "Thermochemistry generated data is current."
+          fi
