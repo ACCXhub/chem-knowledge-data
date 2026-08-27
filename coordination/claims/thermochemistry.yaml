@@ -1,0 +1,20 @@
+workstream: thermochemistry
+status: ACTIVE
+owner: chatgpt-web-thermochemistry
+started_at: 2026-08-27
+package: packages/thermochemistry
+scope:
+  - species phase facts keyed by existing consolidated species_id
+  - standard thermochemistry keyed by species_id + phase
+  - phase-transition enthalpies
+  - educational bond-enthalpy fallback references
+read_only_inputs:
+  - packages/consolidated/generated/species.jsonl
+  - packages/consolidated/generated/reactions.jsonl
+  - packages/structure_registry
+boundaries:
+  - does not create Substance, Ion, Structure, or Reaction identities
+  - does not modify locked source packages
+  - formation-enthalpy data is preferred for reaction thermochemistry
+  - bond enthalpy is explicitly an estimate fallback
+handoff_target: packages/consolidated consumer release after this package is validated
