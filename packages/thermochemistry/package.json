@@ -1,0 +1,21 @@
+{
+  "name": "thermochemistry",
+  "display_name_zh": "物态、热化学与键能",
+  "version": "0.1.0",
+  "release": "thermochemistry-v0.1.0",
+  "status": "ACTIVE",
+  "owner": "chatgpt-web-thermochemistry",
+  "manifest": "manifest.json",
+  "builder": "tools/build_reference.py",
+  "validator": "validation/validate_dataset.py",
+  "canonical_entrypoints": [
+    "data/species_phase_facts.jsonl",
+    "data/species_thermochemistry.jsonl",
+    "data/phase_transitions.jsonl",
+    "data/bond_enthalpies.jsonl"
+  ],
+  "read_only_inputs": [
+    "packages/consolidated/generated/species.jsonl",
+    "packages/structure_registry"
+  ]
+}
