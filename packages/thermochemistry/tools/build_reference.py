@@ -152,6 +152,21 @@ def record_for(
     }
 
 
+def try_reference_record(
+    *, species_id: str, phase: str, source_key: str, source_row: dict[str, Any], temperature_k: float,
+    pressure_bar: float, element_g: dict[str, float]
+) -> tuple[dict[str, Any] | None, str | None]:
+    try:
+        return record_for(
+            species_id=species_id, phase=phase, source_key=source_key, source_row=source_row,
+            temperature_k=temperature_k, pressure_bar=pressure_bar, element_g=element_g
+        ), None
+    except ValueError as exc:
+        if "outside NASA7 range" in str(exc):
+            return None, str(exc)
+        raise
+
+
 def atomization_enthalpy(gas: dict[str, dict[str, Any]], molecule: str, atoms: dict[str, int], t: float) -> float:
     molecule_row = pick(gas, [molecule])
     if molecule_row is None:
@@ -244,24 +259,32 @@ def main() -> int:
         available_phases: list[str] = []
         gas_row = pick(gas, spec.get("gas_names", []))
         if gas_row is not None:
-            thermochemistry.append(record_for(
-                species_id=species_id, phase="g", source_key="cantera_nasa_gas_2_6",
-                source_row=gas_row, temperature_k=t, pressure_bar=p_bar, element_g=element_g
-            ))
-            available_phases.append("g")
+            record, reason = try_reference_record(
+                species_id=species_id, phase="g", source_key="cantera_nasa_gas_2_6", source_row=gas_row,
+                temperature_k=t, pressure_bar=p_bar, element_g=element_g
+            )
+            if record is not None:
+                thermochemistry.append(record)
+                available_phases.append("g")
+            else:
+                missing_sources.append({"species_id": species_id, "phase": "g", "reason": reason, "candidates": spec.get("gas_names", [])})
         elif spec.get("gas_names"):
-            missing_sources.append({"species_id": species_id, "phase": "g", "candidates": spec["gas_names"]})
+            missing_sources.append({"species_id": species_id, "phase": "g", "reason": "source_species_not_found", "candidates": spec["gas_names"]})
 
         for phase, names in spec.get("condensed", {}).items():
             row = pick(condensed, names)
             if row is None:
-                missing_sources.append({"species_id": species_id, "phase": phase, "candidates": names})
+                missing_sources.append({"species_id": species_id, "phase": phase, "reason": "source_species_not_found", "candidates": names})
                 continue
-            thermochemistry.append(record_for(
-                species_id=species_id, phase=phase, source_key="cantera_nasa_condensed_2_6",
-                source_row=row, temperature_k=t, pressure_bar=p_bar, element_g=element_g
-            ))
-            available_phases.append(phase)
+            record, reason = try_reference_record(
+                species_id=species_id, phase=phase, source_key="cantera_nasa_condensed_2_6", source_row=row,
+                temperature_k=t, pressure_bar=p_bar, element_g=element_g
+            )
+            if record is not None:
+                thermochemistry.append(record)
+                available_phases.append(phase)
+            else:
+                missing_sources.append({"species_id": species_id, "phase": phase, "reason": reason, "candidates": names})
 
         phase_facts.append({
             "id": f"phase-fact:{species_id}",
