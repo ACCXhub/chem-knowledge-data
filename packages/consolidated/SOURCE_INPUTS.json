@@ -32,6 +32,17 @@
       "state": "READY_FOR_CONSOLIDATION",
       "release_commit": "a840e79f5600e346fc6f89fddfb0caad0437a977",
       "expected_total_records": 291
+    },
+    "thermochemistry": {
+      "path": "packages/thermochemistry",
+      "release": "thermochemistry-v0.1.0",
+      "state": "READY_FOR_CONSOLIDATION",
+      "release_commit": "c1b34e72856ca51f129a59bbed8db36d390cad95",
+      "expected_species_phase_facts": 18,
+      "expected_species_thermochemistry": 20,
+      "expected_phase_transitions": 2,
+      "expected_bond_enthalpies": 14,
+      "expected_unresolved_source_mappings": 0
     }
   }
 }

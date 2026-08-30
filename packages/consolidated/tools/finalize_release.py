@@ -18,7 +18,9 @@ from build_release import (
     ORGANIC_SUBSTANCE_FILES,
     SOURCE_INPUTS_FILE,
     STRUCTURAL_CHEMISTRY,
+    STRUCTURAL_TYPE_MAP,
     STRUCTURE_REGISTRY,
+    THERMOCHEMISTRY,
     build_manifest,
     finding_id,
     load_json,
@@ -30,19 +32,6 @@ from build_release import (
 )
 
 ALIAS_FILE = CONSOLIDATED / "data" / "source_reference_aliases.yaml"
-
-STRUCTURAL_TYPE_MAP = {
-    "atomic_configurations": "atomic_configuration",
-    "concepts": "concept",
-    "vsepr_models": "vsepr_model",
-    "molecular_examples": "molecular_example",
-    "bonding_examples": "bonding_example",
-    "crystal_models": "crystal_model",
-    "coordination_examples": "coordination_example",
-    "relations": "relation",
-    "structure_property_rules": "structure_property_rule",
-    "exam_tags": "exam_tag",
-}
 
 
 def git_show_bytes(commit: str, repo_path: str) -> bytes:
@@ -60,9 +49,10 @@ def git_show_bytes(commit: str, repo_path: str) -> bytes:
 def aggregate_digest(items: list[tuple[str, bytes]]) -> str:
     digest = hashlib.sha256()
     for repo_path, content in sorted(items):
+        canonical_content = content.replace(b"\r\n", b"\n")
         digest.update(repo_path.encode("utf-8"))
         digest.update(b"\0")
-        digest.update(hashlib.sha256(content).digest())
+        digest.update(hashlib.sha256(canonical_content).digest())
         digest.update(b"\0")
     return digest.hexdigest()
 
@@ -121,6 +111,24 @@ def structural_chemistry_paths() -> list[str]:
     return sorted(set(paths))
 
 
+def thermochemistry_paths() -> list[str]:
+    paths = [
+        "packages/thermochemistry/manifest.json",
+        "packages/thermochemistry/data/species_phase_facts.jsonl",
+        "packages/thermochemistry/data/species_thermochemistry.jsonl",
+        "packages/thermochemistry/data/phase_transitions.jsonl",
+        "packages/thermochemistry/data/bond_enthalpies.jsonl",
+        "packages/thermochemistry/data/source_species_map.json",
+        "packages/thermochemistry/data/unresolved_source_mappings.json",
+        "packages/thermochemistry/sources/source_registry.json",
+    ]
+    paths.extend(
+        f"packages/thermochemistry/schema/{path.name}"
+        for path in sorted((THERMOCHEMISTRY / "schema").glob("*.json"))
+    )
+    return sorted(set(paths))
+
+
 def consumed_paths(package: str) -> list[str]:
     if package == "inorganic":
         return inorganic_paths()
@@ -130,6 +138,8 @@ def consumed_paths(package: str) -> list[str]:
         return structure_registry_paths()
     if package == "structural_chemistry":
         return structural_chemistry_paths()
+    if package == "thermochemistry":
+        return thermochemistry_paths()
     raise ValueError(f"unknown source package: {package}")
 
 
@@ -345,6 +355,8 @@ def normalize_structural_knowledge_types() -> None:
             continue
         old_type = str(item["source_type"])
         new_type = STRUCTURAL_TYPE_MAP.get(old_type)
+        if new_type is None and old_type in STRUCTURAL_TYPE_MAP.values():
+            new_type = old_type
         if new_type is None:
             raise RuntimeError(f"unknown structural chemistry source_type: {old_type}")
         item["source_type"] = new_type
@@ -363,6 +375,11 @@ def rewrite_manifest_as_release() -> None:
         "teaching_projection.jsonl",
         "reactions.jsonl",
         "knowledge_records.jsonl",
+        "knowledge_links.jsonl",
+        "species_phase_facts.jsonl",
+        "species_thermochemistry.jsonl",
+        "phase_transitions.jsonl",
+        "bond_enthalpies.jsonl",
         "unresolved_findings.jsonl",
     ]
     counts = {
@@ -372,13 +389,18 @@ def rewrite_manifest_as_release() -> None:
         "teaching_projections": len(load_jsonl(GENERATED / "teaching_projection.jsonl")),
         "reactions": len(load_jsonl(GENERATED / "reactions.jsonl")),
         "knowledge_records": len(load_jsonl(GENERATED / "knowledge_records.jsonl")),
+        "knowledge_links": len(load_jsonl(GENERATED / "knowledge_links.jsonl")),
+        "species_phase_facts": len(load_jsonl(GENERATED / "species_phase_facts.jsonl")),
+        "species_thermochemistry": len(load_jsonl(GENERATED / "species_thermochemistry.jsonl")),
+        "phase_transitions": len(load_jsonl(GENERATED / "phase_transitions.jsonl")),
+        "bond_enthalpies": len(load_jsonl(GENERATED / "bond_enthalpies.jsonl")),
         "findings": len(load_jsonl(GENERATED / "unresolved_findings.jsonl")),
     }
     findings = load_jsonl(GENERATED / "unresolved_findings.jsonl")
     manifest = build_manifest(counts, findings)
-    manifest["release"] = "consolidated-1.0.0"
+    manifest["release"] = "consolidated-1.1.0"
     manifest["state"] = "READY_FOR_APP_IMPORT"
-    manifest["audit_gate"] = "independent-pre-release-v1"
+    manifest["audit_gate"] = "independent-pre-release-v1.1"
     manifest["artifact_contract"] = artifact_files
     write_json(GENERATED / "manifest.json", manifest)
 

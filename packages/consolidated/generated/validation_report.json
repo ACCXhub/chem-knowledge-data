@@ -1,11 +1,16 @@
 {
   "blocking_findings": 0,
   "counts": {
+    "bond_enthalpies": 14,
     "findings": 13,
+    "knowledge_links": 176,
     "knowledge_records": 637,
+    "phase_transitions": 2,
     "reactions": 183,
     "source_crosswalks": 309,
     "species": 309,
+    "species_phase_facts": 18,
+    "species_thermochemistry": 20,
     "structure_links": 69,
     "teaching_projections": 309
   },

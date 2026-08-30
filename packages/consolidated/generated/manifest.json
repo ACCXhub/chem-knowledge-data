@@ -6,71 +6,101 @@
     "teaching_projection.jsonl",
     "reactions.jsonl",
     "knowledge_records.jsonl",
+    "knowledge_links.jsonl",
+    "species_phase_facts.jsonl",
+    "species_thermochemistry.jsonl",
+    "phase_transitions.jsonl",
+    "bond_enthalpies.jsonl",
     "unresolved_findings.jsonl"
   ],
-  "audit_gate": "independent-pre-release-v1",
+  "audit_gate": "independent-pre-release-v1.1",
   "blocking_findings": 0,
   "counts": {
+    "bond_enthalpies": 14,
     "findings": 13,
+    "knowledge_links": 176,
     "knowledge_records": 637,
+    "phase_transitions": 2,
     "reactions": 183,
     "source_crosswalks": 309,
     "species": 309,
+    "species_phase_facts": 18,
+    "species_thermochemistry": 20,
     "structure_links": 69,
     "teaching_projections": 309
   },
   "files": {
+    "bond_enthalpies.jsonl": {
+      "records": 14,
+      "sha256": "4fe059636e6686afba72fa68702d43c6eeaf0cc20e790aa1ee33e5ab9cc74afe"
+    },
     "crosswalk.jsonl": {
       "records": 309,
       "sha256": "9eda29afbe92ba6249616fcee403159e4f6d41cabd4a3c0f15b479d47a9d741c"
     },
     "curriculum/inorganic.json": {
-      "sha256": "464e11764ab62c344ebeb3ec06245dfb337af59d72731861241d4873c663170f"
+      "sha256": "8bead05e59ce0d4d38bc658d10f36704714950b741b9cf4b51dbb6e326ab9b87"
     },
     "curriculum/organic.json": {
       "sha256": "e251231728947220895d4731f52db1a40e9c4fc9e1afec77d81fb30dec76eda5"
     },
     "curriculum/structural_chemistry_coverage.json": {
-      "sha256": "bcca88e954f0898f139a15f4d78b1dbf990964d2ee8f0e31646a75bbd2f5ff4b"
+      "sha256": "78b4eb7b1fac553339aa1950578ab46b97ca1a4d1567e4e9abaa40ac4877e336"
     },
     "curriculum/structural_chemistry_scope.json": {
-      "sha256": "de23efd5648de9bee62e5581af459f22b644feedc5df3197d4c3821154c6b327"
+      "sha256": "a7faf660a0a6ab53c6f0cc6c14b4eea6151c40493f8d0a811b59ab58d7eecbc4"
+    },
+    "knowledge_links.jsonl": {
+      "records": 176,
+      "sha256": "5f35f07a3c68a50e90e3fb799065a3f886cd63a80ecbf0f986cbf640001c5f10"
     },
     "knowledge_records.jsonl": {
       "records": 637,
       "sha256": "490d9aaf326bb92e6aaab659c2683c6cf7240da7f98f6860579cca647b9db1da"
+    },
+    "phase_transitions.jsonl": {
+      "records": 2,
+      "sha256": "ea2cf45fbca809f65f70dcb065059455a89052662046b84931d3f34cde212e11"
     },
     "reactions.jsonl": {
       "records": 183,
       "sha256": "b6087a3277b681b9f0bd053b1b75d5e86ae3ee41275df87204fdb2ec400e7ceb"
     },
     "rules/electrolytes.json": {
-      "sha256": "6f86004249f7e5a87fc48a201d778e6a0d50ab8323c6c71bb41389304581e886"
+      "sha256": "40b672890eb601808a445a13dc7076b2c4070b5816bcd7a083a83196945133b3"
     },
     "rules/equation_composer.json": {
-      "sha256": "477a9e691cee90ed9a4e87114fdb2072d038dd7a56cf2a5cb270d9c88c85cf9f"
+      "sha256": "9e361e124c837e0640ec0ef4ca6b6fd3b4b753563ed8afabaa872243068f4334"
     },
     "rules/flame_tests.json": {
-      "sha256": "166faa0e5f505a4c063ce5dd36e7f1376d1d6d965c3ac09e9c1a2280c8dd63c6"
+      "sha256": "e244d18eb504d39a2fed009f0896b8484f91172022ee25259087ba0f79537d7f"
     },
     "rules/metal_activity.json": {
-      "sha256": "1677fa3864ced5b5df0726777e4c3927aee9b46ca12b135edc0dc048e74002d5"
+      "sha256": "35dc5e3fb7c3731d53ca675a4c87e9db0cf4f70c6ec84e3983842a2987a82ae9"
     },
     "rules/oxidation_states.json": {
-      "sha256": "a75e0a7fcaf74ca5c3418705bb093de841057d65c94ba7fe02265ccd5ec1e588"
+      "sha256": "a1eb01b47d8458c621961f8cec58cf37e9d84b47d5fd2dc0cc5e98c4c92ca200"
     },
     "rules/qualitative_tests.json": {
-      "sha256": "41e87eb8be12a90678b29356c4644e0be391f0456a2e2f7b97e47c366bcccd96"
+      "sha256": "af0f64703f185b6e449975785de425f9fb59425460f28e0cc3621100e173a849"
     },
     "rules/solubility.json": {
-      "sha256": "fe131dffb14778f51acc94454325b84ccdd87faafb7570660630b9604bef8acd"
+      "sha256": "118c87c46e22f628a3e917df3f739d8d0c304e8d0fafc0c3a51105409b239ae8"
     },
     "source_snapshot.json": {
-      "sha256": "86ca591c45a2d677a5693c0addff8586375ec190e2b0ca3e48a9a4abacdbb029"
+      "sha256": "d604d891ceaf84c1f411f03dfa8e0b9dbfdb1ea9a2cd9565634b2b42eafdc11e"
     },
     "species.jsonl": {
       "records": 309,
       "sha256": "9077b5d070f5f40b23b3c001d09f370068239d9edf910b93296a2dd8292293fb"
+    },
+    "species_phase_facts.jsonl": {
+      "records": 18,
+      "sha256": "61c7762dc5f78d14ee041e278fdbfba427240a09ba29ef536dc1601e5e7cc293"
+    },
+    "species_thermochemistry.jsonl": {
+      "records": 20,
+      "sha256": "c977f3ff7797773919d0ae74476878d1134f86ab1606547bb5d48ffae7706bbe"
     },
     "structure_links.jsonl": {
       "records": 69,
@@ -87,7 +117,7 @@
   },
   "info_findings": 13,
   "package": "consolidated",
-  "release": "consolidated-1.0.0",
+  "release": "consolidated-1.1.0",
   "review_findings": 0,
   "source_snapshot_file": "source_snapshot.json",
   "state": "READY_FOR_APP_IMPORT"

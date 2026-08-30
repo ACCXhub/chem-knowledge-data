@@ -1,12 +1,12 @@
 # Consolidation contract
 
-本契约定义 `inorganic`、`organic`、`structure_registry`、`structural_chemistry` 如何汇聚为一套 consumer-ready 高中化学知识发布物。
+本契约定义 `inorganic`、`organic`、`structure_registry`、`structural_chemistry`、`thermochemistry` 如何汇聚为一套 consumer-ready 高中化学知识发布物。
 
-当前已审计发布：**`consolidated-1.0.0` / `READY_FOR_APP_IMPORT`**。
+当前已审计发布：**`consolidated-1.1.0` / `READY_FOR_APP_IMPORT`**。
 
 ## 1. Source ownership
 
-- 四个源包继续拥有各自已发布事实与稳定 ID。
+- 五个源包继续拥有各自已发布事实与稳定 ID。
 - Consolidation 只读取源包稳定边界，写入 `packages/consolidated/**`。
 - 源数据错误通过 integration finding 反馈给对应源包的新 revision；consolidation 不就地修补源包。
 - `structure_registry` 的 published `structure_id` 是唯一结构身份。
@@ -66,6 +66,14 @@ Consolidated release 使用统一 envelope：consumer ID + source package + sour
 - 多来源冲突显式记录，不静默覆盖；
 - external verification target 与已验证事实区分保存。
 
+## 7A. Resolved knowledge links
+
+`knowledge_links.jsonl` 只承载 reviewed structural-teaching navigation seam，可指向既有 knowledge、consumer species、accepted Structure 或 atomic-number/symbol element bridge。每条 link 保留 relation、resolution method 与 evidence refs；formula-only 不足以解析有歧义的 molecular identity，无法安全解析的记录保持未链接。
+
+## 7B. Thermochemistry
+
+Thermochemistry 使用独立 typed artifacts，不塞入 generic knowledge payload。Phase fact 以 species 为稳定身份；phase-specific thermochemistry 以 species + phase + temperature + standard pressure 为稳定键；phase transition 与 bond-enthalpy reference 保留其原始方法、条件、estimate qualifier 与 provenance。`s/l/g/aq` 是 canonical phase code；phase 不产生新的 Substance identity，缺失值不补零，也不跨 phase 复制。
+
 ## 8. 高中教学与搜索投影
 
 化学事实与 UI/教学投影分离。
@@ -111,6 +119,11 @@ Formula + charge + composition 只可作为简单无机粒子/formula-unit 的�
 - `reactions.jsonl`
 - `teaching_projection.jsonl`
 - `knowledge_records.jsonl`
+- `knowledge_links.jsonl`
+- `species_phase_facts.jsonl`
+- `species_thermochemistry.jsonl`
+- `phase_transitions.jsonl`
+- `bond_enthalpies.jsonl`
 - `unresolved_findings.jsonl`
 - `rules/`
 - `curriculum/`
@@ -124,7 +137,7 @@ Formula + charge + composition 只可作为简单无机粒子/formula-unit 的�
 
 发布为 `READY_FOR_APP_IMPORT` 前必须满足：
 
-1. 四个冻结输入的 release/version/state/count 与 `SOURCE_INPUTS.json` 一致；
+1. 五个冻结输入的 release/version/state/count 与 `SOURCE_INPUTS.json` 一致；
 2. 当前工作树中实际消费的源文件内容与各自 pinned `release_commit` 中的同一路径内容逐文件一致，并形成 source-file-set hash；
 3. 每个 consolidated species/reaction/knowledge record 可追溯到 source ID；
 4. source crosswalk 唯一且无一源多目标冲突；
@@ -138,7 +151,9 @@ Formula + charge + composition 只可作为简单无机粒子/formula-unit 的�
 12. generated file counts 与 SHA-256 和 manifest 一致；
 13. independent audit 为零 error、零 blocking、零 review；
 14. 同一冻结 source snapshot 连续执行两次完整 build/finalize/validate/audit 后，`generated/` 必须 byte-for-byte zero-diff。
+15. knowledge links 的 source 与 typed target 全部存在，无 dangling target；
+16. thermochemistry species refs 全部解析，typed artifact counts 与 frozen source 一致，phase-specific 唯一键保持稳定。
 
-## 12. v1.0.0 audit result
+## 12. v1.1.0 audit result
 
-`consolidated-1.0.0` 已在 GitHub Actions run `32856769997` 通过上述门禁：309 species、309 crosswalks、69/69 accepted Structure links、183 reactions、637 knowledge records、309 teaching projections；独立审计为 0 error / 0 blocking / 0 review，完整第二次生成 zero-diff。
+`consolidated-1.1.0` 通过上述门禁：309 species、309 crosswalks、69/69 accepted Structure links、183 reactions、637 knowledge records、176 knowledge links、309 teaching projections，以及 thermochemistry 18 / 20 / 2 / 14 typed records；独立审计为 0 error / 0 blocking / 0 review，完整第二次生成 zero-diff。

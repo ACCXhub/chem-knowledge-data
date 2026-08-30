@@ -21,6 +21,21 @@ INORGANIC = PACKAGES / "inorganic"
 ORGANIC = PACKAGES / "organic"
 STRUCTURE_REGISTRY = PACKAGES / "structure_registry"
 STRUCTURAL_CHEMISTRY = PACKAGES / "structural_chemistry"
+THERMOCHEMISTRY = PACKAGES / "thermochemistry"
+STRUCTURAL_KNOWLEDGE_LINKS_FILE = CONSOLIDATED / "data" / "structural_knowledge_links.yaml"
+
+STRUCTURAL_TYPE_MAP = {
+    "atomic_configurations": "atomic_configuration",
+    "concepts": "concept",
+    "vsepr_models": "vsepr_model",
+    "molecular_examples": "molecular_example",
+    "bonding_examples": "bonding_example",
+    "crystal_models": "crystal_model",
+    "coordination_examples": "coordination_example",
+    "relations": "relation",
+    "structure_property_rules": "structure_property_rule",
+    "exam_tags": "exam_tag",
+}
 
 ORGANIC_SUBSTANCE_FILES = [
     "core_substances.yaml",
@@ -132,6 +147,11 @@ def stable_reaction_id(package: str, source_id: str) -> str:
 
 def stable_knowledge_id(package: str, source_type: str, source_id: str) -> str:
     return f"knowledge:{package}:{source_type}:{source_id}"
+
+
+def stable_knowledge_link_id(source_id: str, relation: str, target_kind: str, target_id: str) -> str:
+    raw = "|".join((source_id, relation, target_kind, target_id))
+    return "knowledge-link:" + hashlib.sha256(raw.encode("utf-8")).hexdigest()[:24]
 
 
 def finding_id(kind: str, refs: list[str], ordinal: int = 0) -> str:
@@ -253,6 +273,7 @@ def source_snapshot(findings: list[dict[str, Any]]) -> dict[str, Any]:
     organic = load_yaml(ORGANIC / "package.yaml")
     registry = load_json(STRUCTURE_REGISTRY / "data" / "manifest.json")
     structural = load_json(STRUCTURAL_CHEMISTRY / "manifest.json")
+    thermochemistry = load_json(THERMOCHEMISTRY / "manifest.json")
     actual = {
         "inputs": {
             "inorganic": {
@@ -279,6 +300,15 @@ def source_snapshot(findings: list[dict[str, Any]]) -> dict[str, Any]:
                 "state": structural.get("state"),
                 "total_records": structural.get("total_records"),
             },
+            "thermochemistry": {
+                "release": thermochemistry.get("release"),
+                "state": thermochemistry.get("state"),
+                "species_phase_facts": thermochemistry.get("records", {}).get("species_phase_facts"),
+                "species_thermochemistry": thermochemistry.get("records", {}).get("species_thermochemistry"),
+                "phase_transitions": thermochemistry.get("records", {}).get("phase_transitions"),
+                "bond_enthalpies": thermochemistry.get("records", {}).get("bond_enthalpies"),
+                "unresolved_source_mappings": thermochemistry.get("unresolved_source_mappings"),
+            },
         }
     }
     checks = [
@@ -294,6 +324,12 @@ def source_snapshot(findings: list[dict[str, Any]]) -> dict[str, Any]:
         ("structure_registry", "organic_deferrals", pins["structure_registry"]["expected_organic_deferrals"], actual["inputs"]["structure_registry"]["organic_deferrals"]),
         ("structural_chemistry", "release", pins["structural_chemistry"]["release"], actual["inputs"]["structural_chemistry"]["release"]),
         ("structural_chemistry", "total_records", pins["structural_chemistry"]["expected_total_records"], actual["inputs"]["structural_chemistry"]["total_records"]),
+        ("thermochemistry", "release", pins["thermochemistry"]["release"], actual["inputs"]["thermochemistry"]["release"]),
+        ("thermochemistry", "species_phase_facts", pins["thermochemistry"]["expected_species_phase_facts"], actual["inputs"]["thermochemistry"]["species_phase_facts"]),
+        ("thermochemistry", "species_thermochemistry", pins["thermochemistry"]["expected_species_thermochemistry"], actual["inputs"]["thermochemistry"]["species_thermochemistry"]),
+        ("thermochemistry", "phase_transitions", pins["thermochemistry"]["expected_phase_transitions"], actual["inputs"]["thermochemistry"]["phase_transitions"]),
+        ("thermochemistry", "bond_enthalpies", pins["thermochemistry"]["expected_bond_enthalpies"], actual["inputs"]["thermochemistry"]["bond_enthalpies"]),
+        ("thermochemistry", "unresolved_source_mappings", pins["thermochemistry"]["expected_unresolved_source_mappings"], actual["inputs"]["thermochemistry"]["unresolved_source_mappings"]),
     ]
     for package, field, expected, observed in checks:
         if expected != observed:
@@ -914,6 +950,196 @@ def build_knowledge_records(inorganic_manifest: dict[str, Any]) -> list[dict[str
     return output
 
 
+def build_knowledge_links(
+    knowledge: list[dict[str, Any]],
+    species: list[dict[str, Any]],
+    structure_links: list[dict[str, Any]],
+    findings: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    structural_by_source = {
+        str(item["source_id"]): item
+        for item in knowledge
+        if item.get("source_package") == "structural_chemistry"
+    }
+    species_ids = {str(item["id"]) for item in species}
+    structures_by_species: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in structure_links:
+        structures_by_species[str(item["species_id"])].append(item)
+
+    def knowledge_id(item: dict[str, Any]) -> str:
+        source_type = STRUCTURAL_TYPE_MAP.get(str(item["source_type"]), str(item["source_type"]))
+        return stable_knowledge_id("structural_chemistry", source_type, str(item["source_id"]))
+
+    output: list[dict[str, Any]] = []
+
+    def add_link(
+        source_knowledge_id: str,
+        relation: str,
+        target_kind: str,
+        target_id: str,
+        resolution_method: str,
+        evidence_refs: list[str],
+    ) -> None:
+        output.append(
+            {
+                "id": stable_knowledge_link_id(source_knowledge_id, relation, target_kind, target_id),
+                "source_knowledge_id": source_knowledge_id,
+                "relation": relation,
+                "target_kind": target_kind,
+                "target_id": target_id,
+                "resolution_method": resolution_method,
+                "evidence_refs": sorted(set(evidence_refs)),
+            }
+        )
+
+    for item in structural_by_source.values():
+        payload = item["payload"]
+        source_id = knowledge_id(item)
+        source_type = str(item["source_type"])
+        if source_type == "atomic_configurations":
+            atomic_number = int(payload["atomic_number"])
+            add_link(
+                source_id,
+                "describes_element",
+                "element",
+                f"element:{atomic_number}:{payload['symbol']}",
+                "atomic_number_and_symbol",
+                ["structural_chemistry:atomic-configuration", *item["provenance_refs"]],
+            )
+
+        if source_type == "molecular_examples" and isinstance(payload.get("vsepr_pattern"), str):
+            pattern = str(payload["vsepr_pattern"])
+            model = next(
+                (
+                    candidate
+                    for candidate in structural_by_source.values()
+                    if candidate.get("source_type") == "vsepr_models"
+                    and candidate["payload"].get("ax_e_notation") == pattern
+                ),
+                None,
+            )
+            if model is not None:
+                add_link(
+                    source_id,
+                    "uses_teaching_model",
+                    "knowledge",
+                    knowledge_id(model),
+                    "reviewed_field_reference",
+                    [f"structural_chemistry:vsepr-pattern:{pattern}"],
+                )
+
+        if source_type == "bonding_examples":
+            for interaction in payload.get("interactions", []):
+                concept_ref = str(interaction.get("concept_ref", ""))
+                target = structural_by_source.get(concept_ref)
+                if target is None:
+                    add_finding(
+                        findings,
+                        severity="blocking",
+                        kind="dangling_structural_knowledge_reference",
+                        message="Bonding example references missing structural chemistry concept",
+                        refs=[str(item["source_id"]), concept_ref],
+                    )
+                    continue
+                add_link(
+                    source_id,
+                    "uses_bonding_concept",
+                    "knowledge",
+                    knowledge_id(target),
+                    "reviewed_field_reference",
+                    [f"structural_chemistry:{item['source_id']}"],
+                )
+
+        if source_type == "relations":
+            source_ref = str(payload.get("source_ref", ""))
+            target_ref = str(payload.get("target_ref", ""))
+            source = structural_by_source.get(source_ref)
+            target = structural_by_source.get(target_ref)
+            if source is None or target is None:
+                add_finding(
+                    findings,
+                    severity="blocking",
+                    kind="dangling_structural_knowledge_reference",
+                    message="Structural chemistry relation has a missing endpoint",
+                    refs=[str(item["source_id"]), source_ref, target_ref],
+                )
+                continue
+            add_link(
+                knowledge_id(source),
+                str(payload["relation_type"]),
+                "knowledge",
+                knowledge_id(target),
+                "reviewed_relation_record",
+                [source_id],
+            )
+
+    reviewed = load_yaml(STRUCTURAL_KNOWLEDGE_LINKS_FILE).get("reviewed_species_links", [])
+    for index, link in enumerate(reviewed):
+        if not isinstance(link, dict):
+            continue
+        source_record = structural_by_source.get(str(link.get("source_id")))
+        target_species_id = str(link.get("species_id"))
+        refs = ["consolidated:data/structural_knowledge_links.yaml", *link.get("evidence_refs", [])]
+        if source_record is None or target_species_id not in species_ids:
+            add_finding(
+                findings,
+                severity="blocking",
+                kind="invalid_reviewed_knowledge_link",
+                message="Reviewed structural knowledge link has a missing source or species target",
+                refs=[str(link.get("source_id")), target_species_id],
+                details=link,
+                ordinal=index,
+            )
+            continue
+        source_knowledge_id = knowledge_id(source_record)
+        add_link(
+            source_knowledge_id,
+            "describes_species",
+            "species",
+            target_species_id,
+            "reviewed_identity_resolution",
+            refs,
+        )
+        for structure_link in structures_by_species.get(target_species_id, []):
+            add_link(
+                source_knowledge_id,
+                "describes_structure",
+                "structure",
+                str(structure_link["structure_id"]),
+                "accepted_structure_link",
+                [*refs, f"structure_registry:{structure_link['source_link_id']}"],
+            )
+
+    deduplicated = {item["id"]: item for item in output}
+    return sorted(deduplicated.values(), key=lambda item: item["id"])
+
+
+def build_thermochemistry(
+    species: list[dict[str, Any]], findings: list[dict[str, Any]]
+) -> dict[str, list[dict[str, Any]]]:
+    species_ids = {str(item["id"]) for item in species}
+    artifacts = {
+        "species_phase_facts": load_jsonl(THERMOCHEMISTRY / "data" / "species_phase_facts.jsonl"),
+        "species_thermochemistry": load_jsonl(THERMOCHEMISTRY / "data" / "species_thermochemistry.jsonl"),
+        "phase_transitions": load_jsonl(THERMOCHEMISTRY / "data" / "phase_transitions.jsonl"),
+        "bond_enthalpies": load_jsonl(THERMOCHEMISTRY / "data" / "bond_enthalpies.jsonl"),
+    }
+    for family in ("species_phase_facts", "species_thermochemistry", "phase_transitions"):
+        for item in artifacts[family]:
+            species_id = str(item.get("species_id"))
+            if species_id not in species_ids:
+                add_finding(
+                    findings,
+                    severity="blocking",
+                    kind="unresolved_thermochemistry_species",
+                    message="Thermochemistry record references a missing consolidated species",
+                    refs=[f"thermochemistry:{item.get('id')}", species_id],
+                )
+    for records in artifacts.values():
+        records.sort(key=lambda item: str(item["id"]))
+    return artifacts
+
+
 def copy_rules_and_curriculum(inorganic_manifest: dict[str, Any]) -> None:
     rules_dir = GENERATED / "rules"
     curriculum_dir = GENERATED / "curriculum"
@@ -995,6 +1221,8 @@ def main() -> int:
     teaching = build_teaching_projection(species)
     reactions = build_reactions(inorganic_reactions, organic_reactions, crosswalk_map, findings)
     knowledge = build_knowledge_records(inorganic_manifest)
+    knowledge_links = build_knowledge_links(knowledge, species, structure_links, findings)
+    thermochemistry = build_thermochemistry(species, findings)
 
     findings.sort(key=lambda item: (item["severity"], item["kind"], item["id"]))
     write_jsonl(GENERATED / "species.jsonl", species)
@@ -1003,6 +1231,11 @@ def main() -> int:
     write_jsonl(GENERATED / "teaching_projection.jsonl", teaching)
     write_jsonl(GENERATED / "reactions.jsonl", reactions)
     write_jsonl(GENERATED / "knowledge_records.jsonl", knowledge)
+    write_jsonl(GENERATED / "knowledge_links.jsonl", knowledge_links)
+    write_jsonl(GENERATED / "species_phase_facts.jsonl", thermochemistry["species_phase_facts"])
+    write_jsonl(GENERATED / "species_thermochemistry.jsonl", thermochemistry["species_thermochemistry"])
+    write_jsonl(GENERATED / "phase_transitions.jsonl", thermochemistry["phase_transitions"])
+    write_jsonl(GENERATED / "bond_enthalpies.jsonl", thermochemistry["bond_enthalpies"])
     write_jsonl(GENERATED / "unresolved_findings.jsonl", findings)
     write_json(GENERATED / "source_snapshot.json", snapshot)
     copy_rules_and_curriculum(inorganic_manifest)
@@ -1014,6 +1247,11 @@ def main() -> int:
         "teaching_projections": len(teaching),
         "reactions": len(reactions),
         "knowledge_records": len(knowledge),
+        "knowledge_links": len(knowledge_links),
+        "species_phase_facts": len(thermochemistry["species_phase_facts"]),
+        "species_thermochemistry": len(thermochemistry["species_thermochemistry"]),
+        "phase_transitions": len(thermochemistry["phase_transitions"]),
+        "bond_enthalpies": len(thermochemistry["bond_enthalpies"]),
         "findings": len(findings),
     }
     manifest = build_manifest(counts, findings)

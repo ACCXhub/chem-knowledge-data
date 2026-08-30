@@ -2,9 +2,9 @@
 
 `packages/consolidated/` 是 `chem-wiki` 的统一 consumer-ready 高中化学知识数据层。
 
-当前稳定发布：**`consolidated-1.0.0` / `READY_FOR_APP_IMPORT`**。
+当前稳定发布：**`consolidated-1.1.0` / `READY_FOR_APP_IMPORT`**。
 
-它不重写四个源包，而是把各源包已经发布/完成的稳定边界转换为一套可直接导入应用的统一发布物。
+它不重写五个源包，而是把各源包已经发布/完成的稳定边界转换为一套可直接导入应用的统一发布物。
 
 ## Frozen inputs
 
@@ -12,18 +12,21 @@
 - `packages/organic/` — v0.2.0，完整性复核完成
 - `packages/structure_registry/` — `structure-registry-foundation-1.0.1`，published Structure canonical owner
 - `packages/structural_chemistry/` — `structural-chemistry-v1.0.2`，`READY_FOR_CONSOLIDATION`
+- `packages/thermochemistry/` — `thermochemistry-v0.1.0`，`READY_FOR_CONSOLIDATION`
 
-`SOURCE_INPUTS.json` 固定 source release commit；独立审计进一步对这些 commit 中实际被消费的源文件逐一计算 SHA-256。源包后续升级通过新的 source snapshot / consolidated revision 接入，不在已发布 1.0.0 上静默漂移。
+`SOURCE_INPUTS.json` 固定 source release commit；独立审计进一步对这些 commit 中实际被消费的源文件逐一计算 SHA-256。源包后续升级通过新的 source snapshot / consolidated revision 接入，不在已发布 release 上静默漂移。
 
 ## Release contents
 
-`consolidated-1.0.0` 当前包含：
+`consolidated-1.1.0` 当前包含：
 
 - 309 species 与 309 source crosswalks；
 - 69 accepted Structure links；
 - 183 reactions；
 - 309 teaching/search/Equation Lab projections；
 - 637 non-species knowledge records；
+- 176 reviewed resolved knowledge links；
+- 18 phase facts、20 phase-specific thermochemistry records、2 phase transitions、14 educational bond-enthalpy references；
 - inorganic rules 与三类 curriculum projections；
 - 13 个显式 informational findings；
 - 0 review / 0 blocking finding。
@@ -38,6 +41,8 @@
 - 高中分类、搜索 token、默认 Palette 排序与 equation-mode projection；
 - 无机规则集与课程投影的发布打包；
 - Organic / Inorganic / Structural Chemistry 非 species 知识记录的统一 envelope/index；
+- Structural Chemistry → knowledge/species/Structure/element 的 reviewed resolved links；
+- Thermochemistry typed consumer artifacts；
 - release manifest、unresolved findings 与机器验证报告。
 
 ## Identity and Structure
@@ -46,7 +51,7 @@
 
 未经审查的 formula/name 相同不会自动合并。跨包实体只有在明确 cross-reference、共享受信结构身份或 reviewed resolution 下才可共享同一 consolidated identity。
 
-`structure_registry` 的 published `structure_id` 直接复用，不重新计算、不复制成第二套结构身份。Structure Registry 的历史 source ID 与当前源包 ID 不一致时，只允许在有结构身份、价态和来源证据一致的 reviewed bridge 下重绑定；v1.0.0 已收敛 `copper-2 → copper-ii`、`iron-2 → iron-ii`、`iron-3 → iron-iii` 三条历史链接，因此 69/69 accepted links 均进入 consumer release。
+`structure_registry` 的 published `structure_id` 直接复用，不重新计算、不复制成第二套结构身份。Structure Registry 的历史 source ID 与当前源包 ID 不一致时，只允许在有结构身份、价态和来源证据一致的 reviewed bridge 下重绑定；当前 release 已收敛 `copper-2 → copper-ii`、`iron-2 → iron-ii`、`iron-3 → iron-iii` 三条历史链接，因此 69/69 accepted links 均进入 consumer release。
 
 ## Equation Lab / Reaction Builder
 
@@ -72,7 +77,7 @@ python packages/consolidated/validation/validate_release.py
 python packages/consolidated/validation/audit_release.py
 ```
 
-GitHub Actions 在发布门禁中重复执行完整链路，并对第一次与第二次生成目录做 byte-for-byte 比较。`consolidated-1.0.0` 的首发审计结果为 **0 error / 0 warning / 0 blocking / 0 review / deterministic zero-diff**。
+发布门禁重复执行完整链路，并对第一次与第二次生成目录做 byte-for-byte 比较。`consolidated-1.1.0` 的审计结果为 **0 error / 0 warning / 0 blocking / 0 review / deterministic zero-diff**。
 
 ## 目录
 

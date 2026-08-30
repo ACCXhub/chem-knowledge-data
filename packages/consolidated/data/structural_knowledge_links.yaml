@@ -1,0 +1,32 @@
+schema_version: 1.0.0
+reviewed_species_links:
+  - source_id: sc:molecule-example:co2
+    species_id: species:inorganic:substance:carbon-dioxide
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:molecule-example:ch4
+    species_id: species:organic:org-substance:methane
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:molecule-example:nh3
+    species_id: species:inorganic:substance:ammonia
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:molecule-example:h2o
+    species_id: species:inorganic:substance:water
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:molecule-example:c2h4
+    species_id: species:organic:org-substance:ethene
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:molecule-example:c2h2
+    species_id: species:organic:org-substance:ethyne
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:bond-example:h2o
+    species_id: species:inorganic:substance:water
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:bond-example:nh3
+    species_id: species:inorganic:substance:ammonia
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:bond-example:c2h4
+    species_id: species:organic:org-substance:ethene
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]
+  - source_id: sc:bond-example:c2h2
+    species_id: species:organic:org-substance:ethyne
+    evidence_refs: [structural_chemistry:reviewed-name-and-formula, consolidated:species-crosswalk]

@@ -21,6 +21,7 @@ INORGANIC = ROOT / "packages" / "inorganic"
 ORGANIC = ROOT / "packages" / "organic"
 STRUCTURE_REGISTRY = ROOT / "packages" / "structure_registry"
 STRUCTURAL_CHEMISTRY = ROOT / "packages" / "structural_chemistry"
+THERMOCHEMISTRY = ROOT / "packages" / "thermochemistry"
 
 STRUCTURAL_TYPES = {
     "atomic_configuration",
@@ -99,9 +100,10 @@ def git_show_bytes(commit: str, repo_path: str) -> bytes:
 def aggregate_digest(items: list[tuple[str, bytes]]) -> str:
     digest = hashlib.sha256()
     for repo_path, content in sorted(items):
+        canonical_content = content.replace(b"\r\n", b"\n")
         digest.update(repo_path.encode("utf-8"))
         digest.update(b"\0")
-        digest.update(hashlib.sha256(content).digest())
+        digest.update(hashlib.sha256(canonical_content).digest())
         digest.update(b"\0")
     return digest.hexdigest()
 
@@ -602,6 +604,162 @@ def audit_structural_types(
     stats["structural_source_types"] = sorted(observed)
 
 
+def audit_manifest_artifacts(
+    manifest: dict[str, Any], errors: list[str], stats: dict[str, Any]
+) -> None:
+    contract = manifest.get("artifact_contract", [])
+    files = manifest.get("files", {})
+    checked = 0
+    for relative in contract:
+        path = GENERATED / str(relative)
+        metadata = files.get(relative)
+        if not path.is_file() or not isinstance(metadata, dict):
+            errors.append(f"manifest artifact is missing: {relative}")
+            continue
+        actual_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        if metadata.get("sha256") != actual_hash:
+            errors.append(f"manifest artifact hash mismatch: {relative}")
+        if path.suffix == ".jsonl":
+            actual_records = len(load_jsonl(path))
+            if metadata.get("records") != actual_records:
+                errors.append(f"manifest artifact count mismatch: {relative}")
+        checked += 1
+    stats["manifest_artifacts"] = {"contract_files": len(contract), "checked": checked}
+
+
+def audit_knowledge_links(
+    knowledge_links: list[dict[str, Any]],
+    knowledge: list[dict[str, Any]],
+    species: list[dict[str, Any]],
+    structure_links: list[dict[str, Any]],
+    errors: list[str],
+    stats: dict[str, Any],
+) -> None:
+    knowledge_ids = {str(item["id"]) for item in knowledge}
+    species_ids = {str(item["id"]) for item in species}
+    structure_ids = {str(item["structure_id"]) for item in structure_links}
+    link_ids: set[str] = set()
+    target_counts: Counter[str] = Counter()
+
+    for item in knowledge_links:
+        link_id = str(item["id"])
+        if link_id in link_ids:
+            errors.append(f"duplicate knowledge link id: {link_id}")
+        link_ids.add(link_id)
+
+        source_id = str(item["source_knowledge_id"])
+        if source_id not in knowledge_ids:
+            errors.append(f"knowledge link source is missing: {source_id}")
+
+        target_kind = str(item["target_kind"])
+        target_id = str(item["target_id"])
+        target_counts[target_kind] += 1
+        if target_kind == "knowledge" and target_id not in knowledge_ids:
+            errors.append(f"knowledge link target is missing knowledge: {target_id}")
+        elif target_kind == "species" and target_id not in species_ids:
+            errors.append(f"knowledge link target is missing species: {target_id}")
+        elif target_kind == "structure" and target_id not in structure_ids:
+            errors.append(f"knowledge link target is missing Structure: {target_id}")
+        elif target_kind == "element" and re.fullmatch(r"element:[1-9][0-9]*:[A-Z][a-z]?", target_id) is None:
+            errors.append(f"knowledge link has invalid element bridge: {target_id}")
+        elif target_kind not in {"knowledge", "species", "structure", "element"}:
+            errors.append(f"knowledge link has unsupported target kind: {target_kind}")
+
+    stats["knowledge_links"] = {
+        "records": len(knowledge_links),
+        "targets": dict(sorted(target_counts.items())),
+    }
+
+
+def audit_thermochemistry(
+    phase_facts: list[dict[str, Any]],
+    species_thermochemistry: list[dict[str, Any]],
+    phase_transitions: list[dict[str, Any]],
+    bond_enthalpies: list[dict[str, Any]],
+    species: list[dict[str, Any]],
+    errors: list[str],
+    stats: dict[str, Any],
+) -> None:
+    source_manifest = load_json(THERMOCHEMISTRY / "manifest.json")
+    expected = source_manifest["records"]
+    actual = {
+        "species_phase_facts": len(phase_facts),
+        "species_thermochemistry": len(species_thermochemistry),
+        "phase_transitions": len(phase_transitions),
+        "bond_enthalpies": len(bond_enthalpies),
+    }
+    if actual != expected:
+        errors.append(f"thermochemistry source coverage mismatch: expected {expected}, got {actual}")
+
+    species_ids = {str(item["id"]) for item in species}
+    phases = {"s", "l", "g", "aq"}
+    fact_species: set[str] = set()
+    for item in phase_facts:
+        species_id = str(item["species_id"])
+        if species_id not in species_ids:
+            errors.append(f"phase fact references missing species: {species_id}")
+        if species_id in fact_species:
+            errors.append(f"duplicate phase fact species: {species_id}")
+        fact_species.add(species_id)
+        stated_phases = {
+            str(item["standard_phase"]),
+            *(str(value) for value in item.get("allowed_teaching_phases", [])),
+        }
+        if not stated_phases.issubset(phases):
+            errors.append(f"phase fact has unsupported phase code: {item['id']}")
+
+    thermo_keys: set[tuple[str, str, str, str]] = set()
+    phases_by_species: dict[str, set[str]] = {}
+    for item in species_thermochemistry:
+        species_id = str(item["species_id"])
+        phase = str(item["phase"])
+        if species_id not in species_ids:
+            errors.append(f"species thermochemistry references missing species: {species_id}")
+        if phase not in phases:
+            errors.append(f"species thermochemistry has unsupported phase: {item['id']}")
+        key = (
+            species_id,
+            phase,
+            str(item["temperature_k"]),
+            str(item["standard_pressure_bar"]),
+        )
+        if key in thermo_keys:
+            errors.append(f"duplicate species thermochemistry key: {key}")
+        thermo_keys.add(key)
+        phases_by_species.setdefault(species_id, set()).add(phase)
+
+    transition_ids: set[str] = set()
+    for item in phase_transitions:
+        transition_id = str(item["id"])
+        if transition_id in transition_ids:
+            errors.append(f"duplicate phase transition id: {transition_id}")
+        transition_ids.add(transition_id)
+        if str(item["species_id"]) not in species_ids:
+            errors.append(f"phase transition references missing species: {item['species_id']}")
+        if {str(item["from_phase"]), str(item["to_phase"])} - phases:
+            errors.append(f"phase transition has unsupported phase: {transition_id}")
+
+    bond_ids = [str(item["id"]) for item in bond_enthalpies]
+    if len(bond_ids) != len(set(bond_ids)):
+        errors.append("duplicate bond enthalpy id")
+
+    water_id = "species:inorganic:substance:water"
+    if phases_by_species.get(water_id) != {"g", "l"}:
+        errors.append(
+            "water phase-specific thermochemistry must remain one canonical species with g/l records"
+        )
+
+    stats["thermochemistry"] = {
+        **actual,
+        "referenced_species": len(
+            fact_species
+            | set(phases_by_species)
+            | {str(item["species_id"]) for item in phase_transitions}
+        ),
+        "water_phases": sorted(phases_by_species.get(water_id, set())),
+    }
+
+
 def main() -> int:
     errors: list[str] = []
     stats: dict[str, Any] = {}
@@ -612,6 +770,11 @@ def main() -> int:
     teaching = load_jsonl(GENERATED / "teaching_projection.jsonl")
     reactions = load_jsonl(GENERATED / "reactions.jsonl")
     knowledge = load_jsonl(GENERATED / "knowledge_records.jsonl")
+    knowledge_links = load_jsonl(GENERATED / "knowledge_links.jsonl")
+    phase_facts = load_jsonl(GENERATED / "species_phase_facts.jsonl")
+    species_thermochemistry = load_jsonl(GENERATED / "species_thermochemistry.jsonl")
+    phase_transitions = load_jsonl(GENERATED / "phase_transitions.jsonl")
+    bond_enthalpies = load_jsonl(GENERATED / "bond_enthalpies.jsonl")
     findings = load_jsonl(GENERATED / "unresolved_findings.jsonl")
     manifest = load_json(GENERATED / "manifest.json")
     validation = load_json(GENERATED / "validation_report.json")
@@ -623,6 +786,17 @@ def main() -> int:
     audit_teaching_projection(species, teaching, errors, stats)
     audit_rule_references(crosswalk, reactions, knowledge, errors, stats)
     audit_structural_types(knowledge, errors, stats)
+    audit_manifest_artifacts(manifest, errors, stats)
+    audit_knowledge_links(knowledge_links, knowledge, species, links, errors, stats)
+    audit_thermochemistry(
+        phase_facts,
+        species_thermochemistry,
+        phase_transitions,
+        bond_enthalpies,
+        species,
+        errors,
+        stats,
+    )
 
     blocking = [item for item in findings if item.get("severity") == "blocking"]
     review = [item for item in findings if item.get("severity") == "review"]
@@ -634,7 +808,7 @@ def main() -> int:
     if validation.get("status") != "passed" or validation.get("errors") or validation.get("warnings"):
         errors.append(f"base validator is not clean: {validation}")
 
-    if manifest.get("release") != "consolidated-1.0.0":
+    if manifest.get("release") != "consolidated-1.1.0":
         errors.append(f"unexpected release identity: {manifest.get('release')}")
     if manifest.get("state") != "READY_FOR_APP_IMPORT":
         errors.append(f"release state is not READY_FOR_APP_IMPORT: {manifest.get('state')}")

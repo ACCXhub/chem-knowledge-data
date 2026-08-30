@@ -110,6 +110,31 @@
       "release_commit": "d8a0d62c4b408c62836de108841afa6e54dcf1b5",
       "state": "PUBLISHED",
       "structures": 87
+    },
+    "thermochemistry": {
+      "bond_enthalpies": 14,
+      "consumed_files": [
+        "packages/thermochemistry/data/bond_enthalpies.jsonl",
+        "packages/thermochemistry/data/phase_transitions.jsonl",
+        "packages/thermochemistry/data/source_species_map.json",
+        "packages/thermochemistry/data/species_phase_facts.jsonl",
+        "packages/thermochemistry/data/species_thermochemistry.jsonl",
+        "packages/thermochemistry/data/unresolved_source_mappings.json",
+        "packages/thermochemistry/manifest.json",
+        "packages/thermochemistry/schema/bond_enthalpy.schema.json",
+        "packages/thermochemistry/schema/phase_transition.schema.json",
+        "packages/thermochemistry/schema/species_phase_fact.schema.json",
+        "packages/thermochemistry/schema/species_thermochemistry.schema.json",
+        "packages/thermochemistry/sources/source_registry.json"
+      ],
+      "input_sha256": "ed429168362ac637fd92b4ffac69aa62c000aff1ff09619bdbc8f5fb3f720067",
+      "phase_transitions": 2,
+      "release": "thermochemistry-v0.1.0",
+      "release_commit": "c1b34e72856ca51f129a59bbed8db36d390cad95",
+      "species_phase_facts": 18,
+      "species_thermochemistry": 20,
+      "state": "READY_FOR_CONSOLIDATION",
+      "unresolved_source_mappings": 0
     }
   }
 }

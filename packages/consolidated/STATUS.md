@@ -2,11 +2,11 @@
 
 **State:** `READY_FOR_APP_IMPORT`
 
-**Release:** `consolidated-1.0.0`
+**Release:** `consolidated-1.1.0`
 
 **Owner:** `chatgpt-web-consolidation`
 
-**Audited:** 2026-08-25
+**Audited:** 2026-08-31
 
 ## Frozen inputs
 
@@ -14,6 +14,7 @@
 - Organic v0.2.0 — 57 substances / 31 reactions and reviewed supporting knowledge.
 - Structure Registry `structure-registry-foundation-1.0.1` — 87 published Structures and 69 accepted cross-track links.
 - Structural Chemistry `structural-chemistry-v1.0.2` — 291 canonical records, `READY_FOR_CONSOLIDATION`.
+- Thermochemistry `thermochemistry-v0.1.0` — 18 phase facts / 20 phase-specific records / 2 phase transitions / 14 bond-enthalpy references, `READY_FOR_CONSOLIDATION`.
 
 `SOURCE_INPUTS.json` pins the release commits. The independent release audit also hashes every source file actually consumed from those commits, so a same-version content rewrite cannot enter the release silently.
 
@@ -25,17 +26,20 @@
 - 183 reactions;
 - 309 teaching/search/Equation Lab projections;
 - 637 non-species knowledge records;
+- 176 resolved knowledge links (36 element / 125 knowledge / 10 species / 5 Structure targets);
+- 18 species phase facts and 20 phase-specific thermochemistry records;
+- 2 phase-transition records and 14 educational bond-enthalpy references;
 - 13 informational findings;
 - 0 review findings;
 - 0 blocking findings.
 
 ## Audit closure
 
-The first consumer release passed all release gates on GitHub Actions run `32856769997`.
+The additive `consolidated-1.1.0` release passed the local canonical validator and independent audit.
 
 Independent checks covered:
 
-- 71 source files frozen against the declared source release commits;
+- 83 source files frozen against the declared source release commits;
 - all 69 accepted Structure Registry links reconciled into the consumer release, including the reviewed historical `copper-2 / iron-2 / iron-3` source-ID rebound to current inorganic IDs;
 - 174 ordinary reactions rechecked for mapped atom/charge conservation;
 - 13 net-ionic equations independently rechecked for atom/charge conservation;
@@ -43,6 +47,8 @@ Independent checks covered:
 - 194 rule references checked against published species/reaction/experiment/phenomenon IDs;
 - complete Reaction → Concept / Experiment / Phenomenon references;
 - complete 309-record teaching projection with contiguous Palette ranks and no runtime user preference data;
+- all 176 resolved knowledge links checked for source and target integrity;
+- thermochemistry source coverage checked at 18 / 20 / 2 / 14, including one canonical water species with distinct gas/liquid records;
 - manifest counts and SHA-256 hashes reconciled with generated files;
 - a second full build/finalize/validate/audit cycle produced byte-for-byte zero diff.
 
@@ -57,10 +63,13 @@ Final validator result: **passed / 0 errors / 0 warnings / 0 blocking / 0 review
 - `generated/reactions.jsonl` — resolved reactions;
 - `generated/teaching_projection.jsonl` — search/Palette/equation-mode projection;
 - `generated/knowledge_records.jsonl` — non-species knowledge envelopes;
+- `generated/knowledge_links.jsonl` — reviewed resolved links to knowledge/species/Structure/element targets;
+- `generated/species_phase_facts.jsonl` and `generated/species_thermochemistry.jsonl` — phase and phase-specific thermochemistry read data;
+- `generated/phase_transitions.jsonl` and `generated/bond_enthalpies.jsonl` — typed transition and educational bond-enthalpy data;
 - `generated/rules/` and `generated/curriculum/` — reviewed rules and curriculum projections;
 - `generated/unresolved_findings.jsonl` — explicit non-blocking integration findings;
 - `generated/validation_report.json` — machine validation result.
 
 ## Next boundary
 
-`consolidated-1.0.0` is now the stable application-import baseline. The four source packages remain read-only inputs for this release. Future source revisions enter through a new pinned source snapshot and a new consolidated release revision rather than mutating this published baseline in place.
+`consolidated-1.1.0` is now the stable application-import baseline. The five source packages remain read-only inputs for this release. Future source revisions enter through a new pinned source snapshot and a new consolidated release revision rather than mutating a published baseline in place.

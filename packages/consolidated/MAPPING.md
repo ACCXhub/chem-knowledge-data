@@ -1,8 +1,8 @@
 # Source → consolidated mapping
 
-本文件记录当前四个源包到 consumer release 的具体映射。源包 schema 保持不变；统一发生在 generated artifacts 中。
+本文件记录当前五个源包到 consumer release 的具体映射。源包 schema 保持不变；统一发生在 generated artifacts 中。
 
-当前稳定发布：`consolidated-1.0.0`。
+当前稳定发布：`consolidated-1.1.0`。
 
 ## 1. Species
 
@@ -43,13 +43,13 @@
 
 仅 `status=accepted` 可进入 consumer `structure_links.jsonl`，且 target 必须是 published Structure。
 
-若 accepted link 的 `entity_ref` 属于 Structure Registry 冻结输入中的历史 source ID，而当前冻结业务包已经完成稳定 ID 迁移，允许在 reviewed historical bridge 下映射到当前 source ID。v1.0.0 有且仅有三条该类桥接：
+若 accepted link 的 `entity_ref` 属于 Structure Registry 冻结输入中的历史 source ID，而当前冻结业务包已经完成稳定 ID 迁移，允许在 reviewed historical bridge 下映射到当前 source ID。当前 release 有且仅有三条该类桥接：
 
 - `ion:copper-2` → `ion:copper-ii`
 - `ion:iron-2` → `ion:iron-ii`
 - `ion:iron-3` → `ion:iron-iii`
 
-桥接通过相同 Structure target、对应 formal charge/价态、formula/composition 与原 cross-track evidence 核验，原 `source_link_id` 保留。因此 v1.0.0 对 Structure Registry 的 **69/69 accepted links** 完整对账，没有静默跳过 accepted link。
+桥接通过相同 Structure target、对应 formal charge/价态、formula/composition 与原 cross-track evidence 核验，原 `source_link_id` 保留。因此当前 release 对 Structure Registry 的 **69/69 accepted links** 完整对账，没有静默跳过 accepted link。
 
 Organic v0.2 中仍残留的历史说明字符串 `packages/structure` 被视为旧 owner 名称，不作为有效 target path；当前 canonical owner 始终是 `packages/structure_registry/`。
 
@@ -127,13 +127,30 @@ payload
 
 `payload` 保存源包 reviewed record；因此 Concept、Phenomenon、Experiment、FunctionalGroup、ChemicalClass、ExamTag 和 structural chemistry 的教学模型/关系都能在单一 release 中消费，同时不丢领域字段。
 
-## 7. Rules 与 curriculum
+## 7. Resolved knowledge links
+
+`knowledge_links.jsonl` 从 Structural Chemistry reviewed records 生成 bounded navigation projection：原子排布以 atomic number + symbol 链接 element；显式 relation/model/concept refs 链接 knowledge；`data/structural_knowledge_links.yaml` 中人工审核且唯一可辩护的 identity resolution 链接 consumer species，并在该 species 已有 accepted Structure 时增加 Structure target。Formula-only、同分异构体、多晶型、水合物、配位实体与 polymer cases 不做猜测式链接。
+
+当前 176 条 link 包含 36 element、125 knowledge、10 species 与 5 Structure targets。
+
+## 8. Thermochemistry
+
+`thermochemistry-v0.1.0` 只经 pinned consolidated input 消费，映射为四个 typed artifacts：
+
+- `species_phase_facts.jsonl`：species identity、standard phase、allowed teaching phases、reference conditions；
+- `species_thermochemistry.jsonl`：species + phase + temperature + standard pressure 唯一键及 nullable thermochemical quantities；
+- `phase_transitions.jsonl`：species、transition、from/to phase、enthalpy、conditions/provenance；
+- `bond_enthalpies.jsonl`：教育用途 bond/environment/order reference 与 estimate qualifier。
+
+所有 species refs 必须解析到现有 consumer species。Phase 不生成新 species；例如 H2O(g) 与 H2O(l) 是同一 water species 的两条 phase-specific records。
+
+## 9. Rules 与 curriculum
 
 - Inorganic 7 个 rule sets 复制到 consumer release 的 `rules/`，保持原 JSON 语义；其中 `equation_composer.json` 是 Equation Lab 候选/组合基础。
 - Inorganic curriculum coverage、Organic curriculum coverage、Structural Chemistry curriculum coverage 统一打包到 `curriculum/`，但保留 source package namespace。
 - 发布审计验证 rule 中的 species / reaction / experiment / phenomenon 引用均能解析到冻结源包的 published records。
 
-## 8. Findings policy
+## 10. Findings policy
 
 以下项目允许进入 informational/review finding，但不会被自动“修掉”：
 
@@ -144,4 +161,4 @@ payload
 
 必需 Reaction participant 未解析、accepted Structure target 不存在、accepted link 无法解释、crosswalk 冲突、source freeze 漂移、守恒失败或引用悬空属于 blocking error。
 
-`consolidated-1.0.0` 最终为 13 informational findings、0 review findings、0 blocking findings。
+`consolidated-1.1.0` 最终为 13 informational findings、0 review findings、0 blocking findings。

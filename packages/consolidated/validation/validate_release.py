@@ -22,6 +22,11 @@ ARTIFACT_SCHEMAS = {
     "reactions.jsonl": "reaction.schema.json",
     "structure_links.jsonl": "structure_link.schema.json",
     "knowledge_records.jsonl": "knowledge_record.schema.json",
+    "knowledge_links.jsonl": "knowledge_link.schema.json",
+    "species_phase_facts.jsonl": "species_phase_fact.schema.json",
+    "species_thermochemistry.jsonl": "species_thermochemistry.schema.json",
+    "phase_transitions.jsonl": "phase_transition.schema.json",
+    "bond_enthalpies.jsonl": "bond_enthalpy.schema.json",
     "unresolved_findings.jsonl": "finding.schema.json",
 }
 
@@ -107,6 +112,12 @@ def validate_snapshot(snapshot: dict[str, Any], errors: list[str]) -> None:
         ("structure_registry", "organic_deferrals", pins["structure_registry"]["expected_organic_deferrals"], actual.get("structure_registry", {}).get("organic_deferrals")),
         ("structural_chemistry", "release", pins["structural_chemistry"]["release"], actual.get("structural_chemistry", {}).get("release")),
         ("structural_chemistry", "total_records", pins["structural_chemistry"]["expected_total_records"], actual.get("structural_chemistry", {}).get("total_records")),
+        ("thermochemistry", "release", pins["thermochemistry"]["release"], actual.get("thermochemistry", {}).get("release")),
+        ("thermochemistry", "species_phase_facts", pins["thermochemistry"]["expected_species_phase_facts"], actual.get("thermochemistry", {}).get("species_phase_facts")),
+        ("thermochemistry", "species_thermochemistry", pins["thermochemistry"]["expected_species_thermochemistry"], actual.get("thermochemistry", {}).get("species_thermochemistry")),
+        ("thermochemistry", "phase_transitions", pins["thermochemistry"]["expected_phase_transitions"], actual.get("thermochemistry", {}).get("phase_transitions")),
+        ("thermochemistry", "bond_enthalpies", pins["thermochemistry"]["expected_bond_enthalpies"], actual.get("thermochemistry", {}).get("bond_enthalpies")),
+        ("thermochemistry", "unresolved_source_mappings", pins["thermochemistry"]["expected_unresolved_source_mappings"], actual.get("thermochemistry", {}).get("unresolved_source_mappings")),
     ]
     for package, field, expected, observed in checks:
         if expected != observed:
@@ -177,11 +188,21 @@ def main() -> int:
     reactions = artifacts["reactions.jsonl"]
     structure_links = artifacts["structure_links.jsonl"]
     knowledge = artifacts["knowledge_records.jsonl"]
+    knowledge_links = artifacts["knowledge_links.jsonl"]
+    phase_facts = artifacts["species_phase_facts.jsonl"]
+    species_thermochemistry = artifacts["species_thermochemistry.jsonl"]
+    phase_transitions = artifacts["phase_transitions.jsonl"]
+    bond_enthalpies = artifacts["bond_enthalpies.jsonl"]
     findings = artifacts["unresolved_findings.jsonl"]
 
     species_ids = unique_ids(species, "species", errors)
     unique_ids(reactions, "reaction", errors)
-    unique_ids(knowledge, "knowledge", errors)
+    knowledge_ids = unique_ids(knowledge, "knowledge", errors)
+    unique_ids(knowledge_links, "knowledge_link", errors)
+    unique_ids(phase_facts, "species_phase_fact", errors)
+    unique_ids(species_thermochemistry, "species_thermochemistry", errors)
+    unique_ids(phase_transitions, "phase_transition", errors)
+    unique_ids(bond_enthalpies, "bond_enthalpy", errors)
     unique_ids(findings, "finding", errors)
 
     crosswalk_by_source: dict[tuple[str, str], str] = {}
@@ -250,6 +271,55 @@ def main() -> int:
             if preferred not in structures_by_species.get(str(item.get("id")), set()):
                 errors.append(f"species {item.get('id')} preferred Structure lacks normalized link: {preferred}")
 
+    link_keys: set[tuple[str, str, str, str]] = set()
+    for item in knowledge_links:
+        source_knowledge_id = str(item.get("source_knowledge_id"))
+        target_kind = str(item.get("target_kind"))
+        target_id = str(item.get("target_id"))
+        if source_knowledge_id not in knowledge_ids:
+            errors.append(f"knowledge link source is missing: {source_knowledge_id}")
+        if target_kind == "knowledge" and target_id not in knowledge_ids:
+            errors.append(f"knowledge link target is missing knowledge: {target_id}")
+        elif target_kind == "species" and target_id not in species_ids:
+            errors.append(f"knowledge link target is missing species: {target_id}")
+        elif target_kind == "structure" and target_id not in published_structures:
+            errors.append(f"knowledge link target is missing published Structure: {target_id}")
+        elif target_kind == "element" and not target_id.startswith("element:"):
+            errors.append(f"knowledge link has invalid element target: {target_id}")
+        key = (source_knowledge_id, str(item.get("relation")), target_kind, target_id)
+        if key in link_keys:
+            errors.append(f"duplicate knowledge link {key}")
+        link_keys.add(key)
+
+    phase_fact_species: set[str] = set()
+    for item in phase_facts:
+        species_id = str(item.get("species_id"))
+        if species_id not in species_ids:
+            errors.append(f"phase fact references missing species {species_id}")
+        if species_id in phase_fact_species:
+            errors.append(f"duplicate phase fact for species {species_id}")
+        phase_fact_species.add(species_id)
+
+    thermo_keys: set[tuple[str, str, Any, Any]] = set()
+    for item in species_thermochemistry:
+        species_id = str(item.get("species_id"))
+        if species_id not in species_ids:
+            errors.append(f"species thermochemistry references missing species {species_id}")
+        key = (species_id, str(item.get("phase")), item.get("temperature_k"), item.get("standard_pressure_bar"))
+        if key in thermo_keys:
+            errors.append(f"duplicate species thermochemistry key {key}")
+        thermo_keys.add(key)
+
+    transition_keys: set[tuple[str, str, str, str]] = set()
+    for item in phase_transitions:
+        species_id = str(item.get("species_id"))
+        if species_id not in species_ids:
+            errors.append(f"phase transition references missing species {species_id}")
+        key = (species_id, str(item.get("transition")), str(item.get("from_phase")), str(item.get("to_phase")))
+        if key in transition_keys:
+            errors.append(f"duplicate phase transition key {key}")
+        transition_keys.add(key)
+
     for reaction in reactions:
         reaction_id = str(reaction.get("id"))
         for item in reaction.get("participants", []):
@@ -282,6 +352,11 @@ def main() -> int:
         "teaching_projections": len(teaching),
         "reactions": len(reactions),
         "knowledge_records": len(knowledge),
+        "knowledge_links": len(knowledge_links),
+        "species_phase_facts": len(phase_facts),
+        "species_thermochemistry": len(species_thermochemistry),
+        "phase_transitions": len(phase_transitions),
+        "bond_enthalpies": len(bond_enthalpies),
         "findings": len(findings),
     }
     if manifest.get("counts") != counts:
